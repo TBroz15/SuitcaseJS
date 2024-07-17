@@ -1,0 +1,22 @@
+{
+  "name": "suitcasejs",
+  "version": "0.0.0",
+  "description": "Soon...",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TBroz15/SuitcaseJS.git"
+  },
+  "keywords": [
+    "minecraft"
+  ],
+  "author": "TBroz15",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TBroz15/SuitcaseJS/issues"
+  },
+  "homepage": "https://github.com/TBroz15/SuitcaseJS#readme"
+}
