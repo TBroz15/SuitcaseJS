@@ -1,10 +1,10 @@
 {
   "name": "suitcasejs",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "description": "Soon...",
   "main": "index.js",
   "bin": {
-    "suitcase": "node ./index.js"
+    "suitcase": "index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
