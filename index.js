@@ -1,1 +1,2 @@
-console.log("soon")
+console.log("soon");
+module.exports = "Soon...";
