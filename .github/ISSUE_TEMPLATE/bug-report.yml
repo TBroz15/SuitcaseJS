@@ -27,17 +27,16 @@ body:
     id: reprod-url
     attributes:
       label: "Link to pack(s)"
-      description: Please enter your pack if by chance to reproduce the bug.
+      description: "Please enter your pack if by chance to reproduce the bug."
       placeholder: ex. https://github.com/USERNAME/REPO-NAME
 
   - type: textarea
     id: describe
     attributes:
       label: "Describe the bug"
-      description: ""
+      description: "It had to be clear and concise description on what has happend. You can also state if you're willing to send a PR."
       placeholder: |
-        1. Run suitcase --compile "default" --in "./packs" --out "./pack.mcpack"
-        2. Oopsie doopsie it crashed!
+        I am doing this and that happend. I expect the compiler doing this and not doing that... I am willing to send a PR as I can.
     validations:
       required: true
 
@@ -57,8 +56,14 @@ body:
       label: "Additional Information"
       description: "You should add an error message/stack or thoughts on fixing this issue."
       placeholder: |
-        1. Run suitcase --compile "default" --in "./packs" --out "./pack.mcpack"
-        2. Oopsie doopsie it crashed!
+        Here is my error message
+
+        ```
+        SyntaxError: Expected property name or '}' in JSON at position 1 (line 1 column 2)
+          at JSON.parse (<anonymous>)
+          at ...
+          at ...
+        ```
 
   - type: markdown
     attributes:
