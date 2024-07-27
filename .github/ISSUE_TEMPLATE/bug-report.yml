@@ -1,6 +1,7 @@
 name: Bug Report
 description: Report a bug
 labels: ["ISSUE/PR: To Be Handled", "TYPE: Bug"]
+title: "[🐞]"
 body:
   - type: dropdown
     id: component
