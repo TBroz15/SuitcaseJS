@@ -1,0 +1,66 @@
+name: Bug Report
+description: Report a bug
+labels: ["ISSUE/PR: To Be Handled", "TYPE: Bug"]
+body:
+  - type: dropdown
+    id: component
+    attributes:
+      label: "Which component is affected?"
+      options:
+        - "CLI"
+        - "Compiler: Minifier"
+        - "Compiler: Other"
+      validations:
+        required: true
+
+  - type: dropdown
+    id: dependency
+    attributes:
+      label: "Is it a dependency(ies) related problem?"
+      options:
+        - "Yes"
+        - "No"
+      validations:
+        required: true
+
+  - type: input
+    id: reprod-url
+    attributes:
+      label: "Link to pack(s)"
+      description: Please enter your pack if by chance to reproduce the bug.
+      placeholder: ex. https://github.com/USERNAME/REPO-NAME
+
+  - type: textarea
+  id: describe
+  attributes:
+    label: "Describe the bug"
+    description: ""
+    placeholder: |
+      1. Run suitcase --compile "default" --in "./packs" --out "./pack.mcpack"
+      2. Oopsie doopsie it crashed!
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: "Steps to reproduce"
+      placeholder: |
+        1. Run suitcase --compile "default" --in "./packs" --out "./pack.mcpack"
+        2. Oopsie doopsie it crashed!
+    validations:
+      required: true
+
+
+
+  - type: textarea
+    id: additional-info
+    attributes:
+      label: "Additional Information"
+      description: "You should add an error message/stack or thoughts on fixing this issue."
+      placeholder: |
+        1. Run suitcase --compile "default" --in "./packs" --out "./pack.mcpack"
+        2. Oopsie doopsie it crashed!
+
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting this issue! We will get that riff-raff bug out right away!
