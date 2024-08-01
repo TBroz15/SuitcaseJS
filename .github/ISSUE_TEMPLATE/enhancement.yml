@@ -38,6 +38,7 @@ body:
       label: "Additional Information"
       description: "You can add extra info and context on the suggestion. You can also state if you're willing to send a PR."
       placeholder: |
+        I could do a PR as I can and [...]
 
   - type: markdown
     attributes:
