@@ -1,5 +1,5 @@
-name: Bug Report
-description: Report a bug
+name: 🐞 Bug Report
+description: Is something unexpected happen? A error? A crash? You've come to a right place!
 labels: ["ISSUE/PR: To Be Handled", "TYPE: Bug"]
 title: "[🐞]"
 body:
