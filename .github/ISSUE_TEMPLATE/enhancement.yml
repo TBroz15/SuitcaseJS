@@ -1,0 +1,45 @@
+name: 🚀 Enhancement/Suggestion Request
+description: Suggest an idea to improve SuitcaseJS!
+labels: ["ISSUE/PR: To Be Handled", "TYPE: Enhancement"]
+title: "[🚀]"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ### Before submitting a Enhancement/Suggestion!
+
+        **The goal of SuitcaseJS is to compress files and data to _reduce_ bandwidth.**
+
+        So it must be on topic with this project!
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: "Describe the problem"
+      description: "It has to be reasonable and clear."
+      placeholder: |
+        I am always getting that [...] and I am annoyed with [...]
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: "Describe the solution"
+      description: "Give a good solution to solve that problem."
+      placeholder: |
+        I am wondering if we could [...] and it might help!
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional-info
+    attributes:
+      label: "Additional Information"
+      description: "You can add extra info and context on the suggestion. You can also state if you're willing to send a PR."
+      placeholder: |
+
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting! We'll see what has to be done with your solution.
