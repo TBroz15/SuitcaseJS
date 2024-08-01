@@ -6,11 +6,8 @@ body:
   - type: markdown
     attributes:
       value: |
-        ### Before submitting a Enhancement/Suggestion!
-
-        **The goal of SuitcaseJS is to compress files and data to _reduce_ bandwidth.**
-
-        So it must be on topic with this project!
+        > [!IMPORTANT]  
+        > Before submitting a Enhancement/Suggestion, The goal of SuitcaseJS is to compress files and data to reduce bandwidth. So it must be on topic with this project!
 
   - type: textarea
     id: problem
