@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="./SuitcaseJSL.png" />
+    <img src="https://raw.githubusercontent.com/TBroz15/SuitcaseJS/main/SuitcaseJS_Logo.png" />
     <h3 align="center">State of the art Minecraft Bedrock Behavior and Resource Pack Compiler.</h3>
 </p>
 
@@ -34,8 +34,6 @@ _You can install it locally as you want to, **but you have to include npx**._
 ```cmd
 suitcase --compile "default" --in "./packs/" --out "./pack.mcpack"
 ```
-
-<p align="justify"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As of now, you have to only modify the <code>--in</code> and <code>--out</code> arguments. The <code>--compile</code> argument is mean't to define a supposed config file when compiling packs. These features are to be released in version 0.2.0.</i></p>
 
 ## [Wiki](https://github.com/TBroz15/SuitcaseJS/wiki)
 
