@@ -7,7 +7,7 @@ esbuild
     entryPoints: await new fdir().withFullPaths().crawl("./src/").withPromise(),
 
     platform: "node",
-    target: "node22",
+    target: "node18",
     outdir: resolve("./dist/"),
   })
   .then(() => {
