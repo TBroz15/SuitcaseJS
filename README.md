@@ -35,6 +35,8 @@ _You can install it locally as you want to, **but you have to include npx**._
 suitcase --compile "default" --in "./packs/" --out "./pack.mcpack"
 ```
 
+*For more commands, please run `suitcase --help`.*
+
 ## [Wiki](https://github.com/TBroz15/SuitcaseJS/wiki)
 
 For usages, benchmarks, and tips, please check out the [**Suitcase.js** wiki page](https://github.com/TBroz15/SuitcaseJS/wiki)!
