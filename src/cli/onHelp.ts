@@ -52,4 +52,3 @@ ${helpUsage      }
 ${versionUsage   }
 ${fullCompileUsage}
 `);
- 
