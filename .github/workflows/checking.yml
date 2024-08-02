@@ -30,10 +30,9 @@ jobs:
         run: pnpm install
       - name: Typescript Checking
         run: |
-          npx tsc > tsc.log
+          npx tsc
           exit_code=$?
           if [ $exit_code -ne 0 ]; then
             echo "Typescript errors found!"
-            cat tsc.log
             exit $exit_code
           fi
