@@ -8,10 +8,9 @@ import { italic } from "./utils/picocolors.js";
 import { getRuntime } from "./utils/check_version.js";
 
 console.log(`
- ❓ undefined ${italic("v0.1.0")}
+ ❓ Suitcase.js ${italic("v1.1.0")}
 `);
 
-if (typeof process.argv[2] === "undefined") process.exit(0);
 switch (process.argv[2]) {
   case "-v":
   case "--version":
