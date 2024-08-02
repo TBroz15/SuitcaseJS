@@ -29,7 +29,17 @@
   "description": "Soon...",
   "homepage": "https://github.com/TBroz15/SuitcaseJS#readme",
   "keywords": [
-    "minecraft"
+    "minecraft",
+    "json",
+    "compression",
+    "compiler",
+    "minify",
+    "zip",
+    "bedrock",
+    "compress",
+    "bedrock-edition",
+    "mcpack",
+    "pack-compiler"
   ],
   "license": "MIT",
   "scripts": {
