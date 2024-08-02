@@ -29,5 +29,4 @@ jobs:
       - name: PNPM Install
         run: pnpm install
       - name: Typescript Checking
-        run: |
-          npx tsc
+        run: tsc
