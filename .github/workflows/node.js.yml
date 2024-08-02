@@ -41,7 +41,7 @@ jobs:
           node-version: 22.x
           cache: "npm"
       - run: npm ci
-      - run: npm build
+      - run: node build
       - run: npm run semantic-release
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
