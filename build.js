@@ -15,4 +15,5 @@ esbuild
   })
   .catch((reason) => {
     console.error(`Build failed! Reason: ${reason}`);
+    process.exit(1);
   });

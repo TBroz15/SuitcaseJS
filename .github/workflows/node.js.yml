@@ -20,8 +20,17 @@ jobs:
         with:
           node-version: 22.x
           cache: "npm"
-      - run: npm ci
-      - run: node build
+      - name: NPM Clean Install
+        run: npm ci
+      - name: ESBuild
+        run: |
+          node build > esbuild.log
+          exit_code=$?
+          if [ $exit_code -ne 0 ]; then
+            echo "Esbuild errors found!"
+            cat esbuild.log
+            exit $exit_code
+          fi
       - run: npm run semantic-release
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
