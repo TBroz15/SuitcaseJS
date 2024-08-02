@@ -8,7 +8,7 @@ import { italic } from "./utils/picocolors.js";
 import { getRuntime } from "./utils/check_version.js";
 
 console.log(`
- ❓ Suitcase.js ${italic("v1.1.0")}
+ 💼 Suitcase.js ${italic("v1.0.1")}
 `);
 
 switch (process.argv[2]) {
