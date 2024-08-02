@@ -5,7 +5,7 @@ import { usage } from "../utils/usage.js";
 
 export const suitcaseUsage = usage(
     "suitcase",
-    "Used for compiling packs. When ran without arguments, it prompts you to input details how the pack will be compiled.",
+    "Used for compiling packs.",
     true, 2
 )
 
