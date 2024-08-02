@@ -30,13 +30,13 @@ const compileUsage = usage(
 const inUsage = usage(
     ["--in", "-i"],
     "Specify a directory of packs to be compiled.",
-    "path(s) to directory", 6
+    "path to directory", 6
 );
 
 const outUsage = usage(
     ["--out", "-o"],
     `Specify where will the output mcpack/zip file will be. ${italic("Always include the file extension.")}`,
-    "path(s) to directory", 6
+    "path to directory", 6
 );
 
 export const fullCompileUsage =
