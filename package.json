@@ -18,7 +18,8 @@
     "@types/yargs": "^17.0.32",
     "cz-conventional-changelog": "^3.3.0",
     "esbuild": "^0.23.0",
-    "semantic-release": "^24.0.0"
+    "semantic-release": "^24.0.0",
+    "typescript": "^5.5.4"
   },
   "bin": {
     "suitcase": "/dist/cli.js"
