@@ -6,7 +6,16 @@ import { compile } from "./compiler.js";
 import { onHelp } from "./cli/onHelp.js";
 import { italic } from "./utils/picocolors.js";
 import { getRuntime } from "./utils/check_version.js";
-import { version } from "../package.json" assert { type: "json" };
+import { readFileSync } from "fs";
+import { fileURLToPath } from "url";
+import { dirname, resolve } from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const { version } = JSON.parse(
+  readFileSync(resolve(__dirname, "../package.json"), "utf-8")
+);
 
 console.log(`
  💼 Suitcase.js ${italic(`v${version}`)}
