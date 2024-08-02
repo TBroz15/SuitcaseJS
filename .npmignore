@@ -3,3 +3,5 @@ src/
 SuitcaseJS_Logo.png
 build.js
 .releaserc.json
+tsconfig.json
+.prettierignore
