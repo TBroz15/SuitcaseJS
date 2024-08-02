@@ -10,12 +10,6 @@ import { copyFile, mkdir } from "node:fs/promises";
 
 const { threads, cache, temp } = workerData;
 
-// Warm up fdir
-new fdir({ includeDirs: true })
-  .withRelativePaths()
-  .crawl("warmup")
-  .withPromise();
-
 const functions: { [key: string]: (key: any) => void } = {
   async getFiles({ inPath }: any) {
     const directories: string[] = [];
