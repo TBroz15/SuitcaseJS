@@ -21,6 +21,12 @@ const versionUsage = usage(
     false, 4
 )
 
+const clearCacheUsage = usage(
+    ["--clear-cache", "-clr-c"],
+    "Clears all of the cached files.",
+    false, 4
+)
+
 const compileUsage = usage(
     ["--compile", "-c"],
     `Starts the compilation process according to the flags.`,
@@ -47,8 +53,9 @@ ${outUsage     }`
 export const onHelp = () => console.log(
 `${green(" ──Usage── ")}
 
-${suitcaseUsage  }
-${helpUsage      }
-${versionUsage   }
+${suitcaseUsage   }
+${helpUsage       }
+${versionUsage    }
+${clearCacheUsage }
 ${fullCompileUsage}
 `);

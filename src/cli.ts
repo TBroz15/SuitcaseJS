@@ -9,6 +9,7 @@ import { getRuntime } from "./utils/check_version.js";
 import { readFileSync } from "fs";
 import { fileURLToPath } from "url";
 import { dirname, resolve } from "path";
+import { clearCache } from "./clear_cache.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -30,6 +31,11 @@ switch (process.argv[2]) {
   case "-c":
   case "--compile":
     await compile();
+    break;
+
+  case "-clr-c":
+  case "--clear-cache":
+    await clearCache();
     break;
 
   case "-h":
