@@ -6,9 +6,10 @@ import { compile } from "./compiler.js";
 import { onHelp } from "./cli/onHelp.js";
 import { italic } from "./utils/picocolors.js";
 import { getRuntime } from "./utils/check_version.js";
+import { version } from "../package.json" assert { type: "json" };
 
 console.log(`
- 💼 Suitcase.js ${italic("v1.0.1")}
+ 💼 Suitcase.js ${italic(`v${version}`)}
 `);
 
 switch (process.argv[2]) {
