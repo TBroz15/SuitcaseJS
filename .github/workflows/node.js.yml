@@ -35,14 +35,7 @@ jobs:
       - name: PNPM Install
         run: pnpm install
       - name: Typescript Checking
-        run: |
-          npx tsc > tsc.log
-          exit_code=$?
-          if [ $exit_code -ne 0 ]; then
-            echo "Typescript errors found!"
-            cat tsc.log
-            exit 1
-          fi
+        run: tsc
       - name: ESBuild
         run: |
           node build > esbuild.log
