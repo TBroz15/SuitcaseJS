@@ -2,7 +2,7 @@ export const splitArray = (array: any[], arrayNumber: number) => {
   if (arrayNumber === 1) return [array];
 
   // its intentional!
-  const newArr: Array<any>[] = [] as string;
+  const newArr: Array<any>[] = [] as string | undefined;
 
   for (let i = 0; i < arrayNumber; i++) {
     newArr[i] = [];
