@@ -9,6 +9,9 @@
         <img alt="NPM Version" src="https://img.shields.io/npm/v/suitcasejs?">
     </a>
 </div>
+<div align="center">
+    <a href="https://www.buymeacoffee.com/tbroz15" target="_blank"><img src="https://img.shields.io/badge/-buy_me_a_coffee!-gray?logo=buy-me-a-coffee" alt="Buy Me A Coffee" width=150></a>
+</div>
 
 ## Why?
 
@@ -35,7 +38,7 @@ _You can install it locally as you want to, **but you have to include npx**._
 suitcase --compile "default" --in "./packs/" --out "./pack.mcpack"
 ```
 
-*For more commands, please run `suitcase --help`.*
+_For more commands, please run `suitcase --help`._
 
 ## [Wiki](https://github.com/TBroz15/SuitcaseJS/wiki)
 
@@ -44,5 +47,7 @@ For usages, benchmarks, and tips, please check out the [**Suitcase.js** wiki pag
 ## Contributing
 
 As of now, contributing to **Suitcase.js** is quite limited. You can contribute through looking for issues or suggest a feature/enhancement.
+
+[A donation is well appreciated to make this project matter!](https://www.buymeacoffee.com/tbroz15)
 
 _If there is a problem when installing or running_ **_Suitcase.js_**, _please report an issue right away. Thanks!_
