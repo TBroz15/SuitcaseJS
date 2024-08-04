@@ -32,17 +32,16 @@ export const ThreadPool = (threads: number) => {
 
   const requestQueue: {
     fn: string;
-    resolve: any;
-    reject: any;
-    data?: any;
+    resolve: (value: unknown) => void;
+    reject: unknown;
+    data?: unknown;
   }[] = [];
 
   const processQueue = () => {
     const idleThread = threadPool.find((worker) => !worker.busy);
     if (!idleThread || requestQueue.length === 0) return;
 
-    // @ts-ignore
-    const { fn, resolve, data } = requestQueue.shift();
+    const { fn, resolve, data } = requestQueue.shift()!;
     const worker = idleThread?.worker;
     idleThread.busy = true;
 
@@ -58,25 +57,31 @@ export const ThreadPool = (threads: number) => {
     });
   };
 
-  const runThread = (fn: string, data: any) =>
+  const runThread = (fn: string, data: unknown) =>
     new Promise((resolve, reject) => {
       requestQueue.push({ fn, resolve, reject, data });
       processQueue();
     });
 
-  const run = (taskName: string, fn: string, data: any) =>
+  const run = (taskName: string, fn: string, data: unknown) =>
     new Promise((resolve) => {
       const runningText = `${upFirstChar(taskName)}...`;
       const afterText = `Finished ${lowFirstChar(taskName)}.`;
 
       const spinner = newSpinner(runningText);
-      runThread(fn, data).then((data) => {
+      void runThread(fn, data).then((data) => {
         resolve(data);
         spinner("success", { text: afterText });
       });
     });
 
-  const runArray = (taskName: string, fn: string, array: any[], data: any) =>
+  const runArray = (
+    taskName: string,
+    fn: string,
+    array: unknown[],
+    data: object
+  ) =>
+    // eslint-disable-next-line no-async-promise-executor, @typescript-eslint/no-misused-promises
     new Promise<void>(async (resolve) => {
       const runningText = `${upFirstChar(taskName)}...`;
       const afterText = `Finished ${lowFirstChar(taskName)}.`;
@@ -93,7 +98,7 @@ export const ThreadPool = (threads: number) => {
 
   const terminate = () => {
     for (let i = 0; i < threads; i++) {
-      threadPool[i].worker.terminate();
+      void threadPool[i].worker.terminate();
     }
   };
 

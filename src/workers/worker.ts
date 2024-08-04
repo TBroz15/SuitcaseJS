@@ -10,10 +10,14 @@ import { copyFile, mkdir } from "node:fs/promises";
 import { CONFIG_FILE_NAMES } from "../config/get_config.js";
 import Config from "../config/get_config.js";
 
-const { threads, cache, temp } = workerData;
+const { threads, cache, temp } = workerData as {
+  threads: number;
+  cache: string;
+  temp: string;
+};
 
-const functions: { [key: string]: (key: any) => void } = {
-  async getFiles({ inPath }: any) {
+const functions: Functions = {
+  async getFiles({ inPath }) {
     const directories: string[] = [];
     const JSONFiles: string[] = [];
     const etc: string[] = [];
@@ -107,13 +111,7 @@ const functions: { [key: string]: (key: any) => void } = {
       etc: splitEtc,
     };
   },
-  async copyEtc({
-    inPath,
-    element: etc,
-  }: {
-    inPath: string;
-    element: string[];
-  }) {
+  async copyEtc({ inPath, element: etc }) {
     // If array is empty, ignore it right away
     if (!etc[0]) return;
 
@@ -123,17 +121,11 @@ const functions: { [key: string]: (key: any) => void } = {
 
     await Promise.all(promises);
   },
-  async minifyJSON({
-    inPath,
-    element: JSONFiles,
-  }: {
-    inPath: string;
-    element: string[];
-  }) {
+  async minifyJSON({ inPath, element: JSONFiles }) {
     // If array is empty, ignore it right away
     if (!JSONFiles[0]) return;
 
-    const errorList: any[] = [];
+    const errorList: unknown[] = [];
 
     const promises = JSONFiles.map(async (path) => {
       const filePath = join(temp, path);
@@ -147,8 +139,9 @@ const functions: { [key: string]: (key: any) => void } = {
 
       try {
         data = removeComments(data);
-        data = JSON.parse(data);
-        data = JSON.stringify(data);
+        // This minifies the JSON, and at the same time check one error.
+        // Far better to just lint it through any editor such as VSCode.
+        data = JSON.stringify(JSON.parse(data));
       } catch (error) {
         errorList.push({ error, path });
       }
@@ -163,7 +156,7 @@ const functions: { [key: string]: (key: any) => void } = {
       if (!existsSync(errorListFile)) writeFileSync(errorListFile, "[]");
       const allErrors = JSON.parse(
         readFileSync(errorListFile, "utf-8")
-      ) as any[];
+      ) as unknown[];
       allErrors.push(...errorList);
       writeFileSync(errorListFile, JSON.stringify(allErrors));
     }
@@ -172,13 +165,18 @@ const functions: { [key: string]: (key: any) => void } = {
 
 const decoder = new TextDecoder();
 
-const receiveEncodedJSON = (buffer: AllowSharedBufferSource) => {
+const receiveEncodedJSON = (buffer: ArrayBuffer) => {
   const jsonString = decoder.decode(buffer);
-  return JSON.parse(jsonString);
+  return JSON.parse(jsonString) as object | never[];
 };
 
+// eslint-disable-next-line @typescript-eslint/no-misused-promises
 parentPort!.on("message", async ({ buffer }) => {
-  const { fn, data } = receiveEncodedJSON(buffer);
+  const { fn, data } = receiveEncodedJSON(buffer as ArrayBuffer) as {
+    fn: keyof Functions;
+    data: never;
+  };
+
   if (typeof functions[fn] === "undefined")
     throw new Error("Function is not defined!");
 

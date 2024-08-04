@@ -25,11 +25,9 @@ class Config {
     const config = this.get_config();
     let configFile;
     config.forEach((name) => {
-      const { base: fileName, ext: extension } = path.parse(name);
+      const { ext: extension } = path.parse(name);
       const loader = loaders[extension];
-      if (loader) {
-        configFile = loader(name);
-      }
+      if (loader) configFile = loader(name);
     });
     return configFile;
   };
@@ -39,24 +37,25 @@ class Config {
       fs.statSync(path);
       return true;
     } catch (error) {
-      return false;
+      if (error) return false;
     }
   }
 }
 
-const loaders: Record<string, (path: string) => any> = {
-  ".yaml"(path: string): any {
+const loaders: Record<string, (path: string) => unknown> = {
+  ".yaml"(path: string): unknown {
     const content = fs.readFileSync(path, "utf8");
     try {
       return parseYaml(content);
-    } catch (error) {
+    } catch (error: unknown) {
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       console.error(`Error parsing ${path} as YAML: ${error}`);
     }
   },
-  ".yml"(path: string): any {
+  ".yml"(path: string): unknown {
     return loaders[".yaml"](path);
   },
-  ""(path: string): any {
+  ""(path: string): unknown {
     return loaders[".yaml"](path);
   },
 };
