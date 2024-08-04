@@ -16,7 +16,7 @@ const __dirname = dirname(__filename);
 
 const { version } = JSON.parse(
   readFileSync(resolve(__dirname, "../package.json"), "utf-8")
-);
+) as { version: string };
 
 console.log(`
  💼 Suitcase.js ${italic(`v${version}`)}
@@ -35,7 +35,7 @@ switch (process.argv[2]) {
 
   case "-clr-c":
   case "--clear-cache":
-    await clearCache();
+    clearCache();
     break;
 
   case "-h":

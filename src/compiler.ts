@@ -1,5 +1,4 @@
-import { cpus, homedir } from "node:os";
-import { join } from "node:path";
+import { cpus } from "node:os";
 import { createWriteStream, existsSync, rmSync, statSync } from "node:fs";
 import fastFolderSizeSync from "fast-folder-size/sync.js";
 import { newSpinner } from "./utils/spinner.js";
@@ -11,8 +10,6 @@ import { ThreadPool } from "./workers/thread_pool.js";
 import { bold, green, italic, red } from "./utils/picocolors.js";
 import { fullCompileUsage, suitcaseUsage } from "./cli/onHelp.js";
 import { mkTemp, mkTempPack, tempPack } from "./utils/temp_folder.js";
-
-const cache = join(homedir(), ".suitcase", "cache");
 
 const threads = cpus().length;
 
@@ -49,7 +46,7 @@ const compile = async () => {
 
   const { JSONFiles, etc } = (await run("Getting all files", "getFiles", {
     inPath,
-  })) as { JSONFiles: any[]; etc: any[] };
+  })) as { JSONFiles: string[]; etc: string[] };
 
   await Promise.all([
     runArray("Copying other files", "copyEtc", etc, { inPath }),
