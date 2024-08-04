@@ -21,7 +21,7 @@ class Config {
     return files;
   };
 
-  load_config = (): string | undefined=> {
+  load_config = (): string | undefined => {
     const config = this.get_config();
     let configFile;
     config.forEach((name) => {
