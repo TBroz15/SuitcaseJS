@@ -1,0 +1,46 @@
+# Use only for scenarios when auto publish has skipped or failed.
+
+name: Force Manual Publish
+
+on:
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js 22.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+      - run: npm install -g pnpm
+      - name: Determine pnpm store path
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+      - uses: actions/cache@v4
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+            ${{ runner.os }}-pnpm-store-
+            ${{ runner.os }}-pnpm-
+      - name: PNPM Install
+        run: pnpm install
+      - name: Typescript Checking
+        run: tsc
+      - name: ESBuild
+        run: |
+          node build > esbuild.log
+          exit_code=$?
+          if [ $exit_code -ne 0 ]; then
+            echo "ESbuild errors found!"
+            cat esbuild.log
+            exit $exit_code
+          fi
+      - run: npm run semantic-release
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
