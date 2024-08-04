@@ -12,10 +12,14 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    # To explain this W  I  D  E of a code...
-    # This checks if commits message is a feat, fix, docs, perf, build, or ci.
-    # PR is welcome! -TBroz15
-    if: ${{ github.ref == 'refs/heads/main' && (startsWith(github.event.pull_request.title, 'feat') || startsWith(github.event.pull_request.title, 'fix') || startsWith(github.event.pull_request.title, 'docs') || startsWith(github.event.pull_request.title, 'perf') || startsWith(github.event.pull_request.title, 'build') || startsWith(github.event.pull_request.title, 'ci') || startsWith(github.event.pull_request.title, 'build') || startsWith(github.event.pull_request.title, 'ci'))}}
+    if: |
+      COMMIT_PATTERN='^(feat|fix|docs|perf|build|ci)-'
+      if [ "${{ github.event_name }}" == "push" ]; then
+        git log -1 --pretty="%s" | grep -qE "$COMMIT_PATTERN"
+      elif [ "${{ github.event_name }}" == "pull_request" ]; then
+        echo "${{ github.event.pull_request.title }}" | grep -qE "$COMMIT_PATTERN"
+      fi
+      test $? -eq 0
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js 22.x
