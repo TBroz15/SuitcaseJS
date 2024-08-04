@@ -13,6 +13,14 @@
           "tag": "beta"
         }
       }
+    ],
+    "@semantic-release/changelog",
+    "@semantic-release/git",
+    [
+      "@semantic-release/github",
+      {
+        "assets": ["CHANGELOG.md"]
+      }
     ]
   ]
 }
