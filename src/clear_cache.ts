@@ -1,4 +1,3 @@
-import { fdir } from "fdir";
 import { rmSync } from "fs";
 import { newSpinner } from "./utils/spinner.js";
 import { cache } from "./utils/temp_folder.js";

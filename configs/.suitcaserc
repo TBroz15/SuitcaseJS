@@ -1,0 +1,19 @@
+ignore_folders:
+- "node_modules"
+- ".git"
+- ".vscode"
+- ".github"
+
+ignore_files:
+- ".gitignore"
+- ".gitattributes"
+- ".suitcaserc.yaml"
+- ".suitcaserc.json"
+- ".suitcaserc.toml"
+
+ignore_extensions:
+- ".mjs"
+- ".cjs"
+- ".yaml"
+- ".yml"
+- ".toml"
