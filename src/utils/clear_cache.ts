@@ -1,8 +1,8 @@
 import { rmSync } from "fs";
-import { newSpinner } from "./utils/spinner.js";
-import { cache } from "./utils/temp_folder.js";
+import { newSpinner } from "./spinner.js";
+import { cache } from "./temp_folder.js";
 
-export const clearCache = async () => {
+export const clearCache = () => {
   const clearTempSpinner = newSpinner("Clearing cached files...");
   rmSync(cache, { recursive: true, force: true });
   clearTempSpinner("success", {

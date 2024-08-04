@@ -9,7 +9,7 @@ import { getRuntime } from "./utils/check_version.js";
 import { readFileSync } from "fs";
 import { fileURLToPath } from "url";
 import { dirname, resolve } from "path";
-import { clearCache } from "./clear_cache.js";
+import { clearCache } from "./utils/clear_cache.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
