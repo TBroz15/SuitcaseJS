@@ -1,16 +1,19 @@
 import esbuild from "esbuild";
-import { basename, extname, join } from "path";
+import { basename, extname, join, resolve } from "path";
 import { fdir } from "fdir";
 import { copyFile, mkdir } from "fs/promises";
 
-const src = "src";
+const src = "./src";
 const dist = "dist";
 
 const directories = [];
 const TSFiles = [];
 const etc = [];
 
-const arr = await new fdir().withFullPaths().crawl(src).withPromise();
+const arr = await new fdir({ includeDirs: true })
+  .withRelativePaths()
+  .crawl(src)
+  .withPromise();
 
 arr.shift();
 
@@ -18,9 +21,12 @@ const regexExt = /\.([^.]+)$/;
 
 arr.forEach((path) => {
   let ext = extname(path);
+
+  const completePath = resolve(src, path);
+
   if (ext === "") {
     const realExt = regexExt.exec(basename(path));
-    if (realExt === null) return directories.push(path);
+    if (realExt === null) return directories.push(completePath);
     ext = realExt[0];
   }
 
@@ -28,27 +34,25 @@ arr.forEach((path) => {
     const splitPath = path.split(".");
 
     // if file is a suspected .d.ts
-    if (splitPath[1] === "d") return etc.push(path);
+    if (splitPath[1] === "d") return etc.push(completePath);
 
-    return TSFiles.push(path);
+    return TSFiles.push(completePath);
   } else {
-    return etc.push(path);
+    return etc.push(completePath);
   }
 });
 
 const directoryPromises = directories.map((path) =>
-  mkdir(join(src, path), { recursive: true })
+  mkdir(path, { recursive: true })
 );
 
 await Promise.all(directoryPromises);
 
-const etcPromises = etc.map((path) =>
-  copyFile(join(src, path), join(dist, path))
-);
+const etcPromises = etc.map((path) => copyFile(path, join(dist, path)));
 
 await Promise.all(etcPromises);
 
-await esbuild
+esbuild
   .build({
     entryPoints: TSFiles,
 
