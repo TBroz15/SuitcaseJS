@@ -84,18 +84,23 @@ const compile = async () => {
     )
   );
 
-  const folderPackSize = (fastFolderSizeSync(inPath) as number) / 1000;
-  const packSize = statSync(outPath).size / 1000;
+  try {
+    const folderPackSize = (fastFolderSizeSync(inPath) as number) / 1000;
+    const packSize = statSync(outPath).size / 1000;
 
-  const howSmall = (folderPackSize / packSize).toFixed(2);
+    const howSmall = (folderPackSize / packSize).toFixed(2);
 
-  // prettier-ignore
-  console.log(`
+    // prettier-ignore
+    console.log(`
 📉 Your pack is now ${italic(`${howSmall}x smaller`)}!
 
    Then: ${italic(`${folderPackSize} KB`)}
    Now:  ${italic(`${packSize} KB`)}
   `);
+  } catch (error) {
+    if (error)
+      console.log("  File Size Comparison is not available at that moment.");
+  }
 
   const clearTempSpinner = newSpinner("Clearing Temporary Files...");
   rmSync(tempPack, { recursive: true, force: true });
