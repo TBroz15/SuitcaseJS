@@ -1,13 +1,18 @@
+# On Build
+ci/
 src/
-.github/
-SuitcaseJS_Logo.png
-build.js
+esbuild.log
 .releaserc.json
+
+# GitHub
+.github/
+configs/
+CHANGELOG.md
+CONTRIBUTING.md
+CODE_OF_CONDUCT.md
+SuitcaseJS_Logo.png
+
+# VSCode & Dev Stuff
+.vscode/
 tsconfig.json
 .prettierignore
-CODE_OF_CONDUCT.md
-CONTRIBUTING.md
-esbuild.log
-configs/
-.vscode/
-CHANGELOG.md

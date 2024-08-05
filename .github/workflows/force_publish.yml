@@ -29,18 +29,12 @@ jobs:
             ${{ runner.os }}-pnpm-
       - name: PNPM Install
         run: pnpm install
-      - name: Typescript Checking
-        run: tsc
+      - name: Typescript Linting and Checking
+        run: npm run lint
       - name: ESBuild
-        run: |
-          node build > esbuild.log
-          exit_code=$?
-          if [ $exit_code -ne 0 ]; then
-            echo "ESbuild errors found!"
-            cat esbuild.log
-            exit $exit_code
-          fi
-      - run: npm run semantic-release
+        run: npm run build
+      - name: Publish to NPM
+        run: npm run semantic-release
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

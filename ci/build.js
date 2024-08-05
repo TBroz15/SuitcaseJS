@@ -1,5 +1,5 @@
 import esbuild from "esbuild";
-import { basename, extname, join, resolve } from "path";
+import { basename, extname, join } from "path";
 import { fdir } from "fdir";
 import { copyFile, mkdir } from "fs/promises";
 
@@ -22,11 +22,12 @@ const regexExt = /\.([^.]+)$/;
 arr.forEach((path) => {
   let ext = extname(path);
 
-  const completePath = resolve(src, path);
+  const srcPath = join(src, path);
+  const distPath = join(dist, path);
 
   if (ext === "") {
     const realExt = regexExt.exec(basename(path));
-    if (realExt === null) return directories.push(completePath);
+    if (realExt === null) return directories.push(distPath);
     ext = realExt[0];
   }
 
@@ -34,11 +35,11 @@ arr.forEach((path) => {
     const splitPath = path.split(".");
 
     // if file is a suspected .d.ts
-    if (splitPath[1] === "d") return etc.push(completePath);
+    if (splitPath[1] === "d") return etc.push(path);
 
-    return TSFiles.push(completePath);
+    return TSFiles.push(srcPath);
   } else {
-    return etc.push(completePath);
+    return etc.push(path);
   }
 });
 
@@ -48,7 +49,9 @@ const directoryPromises = directories.map((path) =>
 
 await Promise.all(directoryPromises);
 
-const etcPromises = etc.map((path) => copyFile(path, join(dist, path)));
+const etcPromises = etc.map((path) =>
+  copyFile(join(src, path), join(dist, path))
+);
 
 await Promise.all(etcPromises);
 

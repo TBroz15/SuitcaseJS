@@ -5,7 +5,7 @@ export default tselint.config(
   eslint.configs.recommended,
   ...tselint.configs.recommendedTypeChecked,
   {
-    ignores: ["node_modules", "*.mjs", "ci"],
+    ignores: ["node_modules/**/*", "*.mjs", "ci/*.js", "dist/**/*"],
     languageOptions: {
       parserOptions: {
         projectService: true,
