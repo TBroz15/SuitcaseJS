@@ -28,5 +28,5 @@ jobs:
             ${{ runner.os }}-pnpm-
       - name: PNPM Install
         run: pnpm install
-      - name: Typescript Checking
-        run: tsc
+      - name: Typescript Linting and Checking
+        run: npm run lint
