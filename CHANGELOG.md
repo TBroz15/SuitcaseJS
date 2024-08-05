@@ -1,3 +1,10 @@
+## [1.2.3](https://github.com/TBroz15/SuitcaseJS/compare/v1.2.2...v1.2.3) (2024-08-05)
+
+
+### Bug Fixes
+
+* add error checking on comparison ([751330f](https://github.com/TBroz15/SuitcaseJS/commit/751330f3f2fb6379f479682e1c5d540a64900ec8))
+
 ## [1.2.1](https://github.com/TBroz15/SuitcaseJS/compare/v1.1.2...v1.2.1) (2024-07-05)
 
 
