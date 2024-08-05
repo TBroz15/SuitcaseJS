@@ -1,9 +1,8 @@
-import { spawnPromise } from "./promise_spawn.js";
+import { runCommands } from "./promise_spawn.js";
 
-const commands = ["npx tsc --noEmit", "npx eslint src"];
+export const lintCmds = [
+  ["npx", "tsc", "--noEmit"],
+  ["npx", "eslint", "src"],
+];
 
-const promises = await Promise.allSettled(
-  commands.map((cmd) => spawnPromise(cmd))
-);
-
-promises;
+await runCommands(lintCmds);

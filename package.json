@@ -51,11 +51,11 @@
   ],
   "license": "MIT",
   "scripts": {
-    "build": "node build",
-    "test": "node build && node ./dist/cli.js",
+    "build": "node ci/build",
+    "test": "node ci/build && node ./dist/cli.js",
     "semantic-release": "semantic-release --branches main",
     "commit": "git-cz",
-    "lint": "npx eslint src"
+    "lint": "node ci/lint"
   },
   "type": "module",
   "dependencies": {
