@@ -1,5 +1,6 @@
 ## [1.1.2](https://github.com/TBroz15/SuitcaseJS/compare/v1.1.2...v1.2.1) (2024-07-05)
 
+
 *This changelog was manually made. I haven't setup changelog system for semantic release... -TBroz15* 
 
 ### New Features
