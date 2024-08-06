@@ -23,6 +23,10 @@ jobs:
             echo "ignore me lol" | grep -qE "$COMMIT_PATTERN"
           fi
           exit $?
+      - name: Commit Type Not Matched
+        if: failure()
+        run: |
+          echo Commit type not matched...
       - name: Use Node.js 22.x
         uses: actions/setup-node@v4
         if: success()
