@@ -67,7 +67,11 @@ const functions: Functions = {
       */
 
       // If its a folder or extension and it's in the ignore list, ignore it
-      if (ignoreFolders.includes(path.split("/")[0]) || ignoreExtensions.includes(extname(path))) return;
+      if (
+        ignoreFolders.includes(path.split("/")[0]) ||
+        ignoreExtensions.includes(extname(path))
+      )
+        return;
 
       let ext = extname(path);
 
@@ -99,7 +103,7 @@ const functions: Functions = {
       mkdir(join(temp, path), { recursive: true })
     );
 
-    // Distribute according to the amount of threads
+    // Distribute according to the amount of threads while making directories
     const [splitJSONFiles, splitEtc] = await Promise.all([
       splitArray(JSONFiles, threads),
       splitArray(etc, threads),
