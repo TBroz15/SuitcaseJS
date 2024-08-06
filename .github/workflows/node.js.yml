@@ -12,17 +12,20 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    if: |
-      if [ "${{ github.event_name }}" == "push" ]; then
-        git log -1 --pretty="%s" | grep -qE "^(feat|fix|docs|perf|build|ci)-"
-      elif [ "${{ github.event_name }}" == "pull_request" ]; then
-        echo "ignore me lol" | grep -qE "^(feat|fix|docs|perf|build|ci)-"
-      fi
-      test $? -eq 0
     steps:
       - uses: actions/checkout@v4
+      - name: Check commit or pull request title
+        run: |
+          COMMIT_PATTERN='^(feat|fix|docs|perf|build|ci)-'
+          if [ "${{ github.event_name }}" == "push" ]; then
+            git log -1 --pretty="%s" | grep -qE "$COMMIT_PATTERN"
+          elif [ "${{ github.event_name }}" == "pull_request" ]; then
+            echo "ignore me lol" | grep -qE "$COMMIT_PATTERN"
+          fi
+          exit $?
       - name: Use Node.js 22.x
         uses: actions/setup-node@v4
+        if: success()
         with:
           node-version: 22.x
       - run: npm install -g pnpm
