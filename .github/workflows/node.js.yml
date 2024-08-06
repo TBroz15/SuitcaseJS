@@ -13,11 +13,10 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     if: |
-      COMMIT_PATTERN='^(feat|fix|docs|perf|build|ci)-'
       if [ "${{ github.event_name }}" == "push" ]; then
-        git log -1 --pretty="%s" | grep -qE "$COMMIT_PATTERN"
+        git log -1 --pretty="%s" | grep -qE "^(feat|fix|docs|perf|build|ci)-"
       elif [ "${{ github.event_name }}" == "pull_request" ]; then
-        echo "ignore me lol" | grep -qE "$COMMIT_PATTERN"
+        echo "ignore me lol" | grep -qE "^(feat|fix|docs|perf|build|ci)-"
       fi
       test $? -eq 0
     steps:
