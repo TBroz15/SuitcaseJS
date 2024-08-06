@@ -22,7 +22,6 @@ export const ThreadPool = (threads: number) => {
   for (let i = 0; i < threads; i++) {
     const worker = new Worker(resolve(__dirname, "worker.js"), {
       workerData: {
-        threads,
         temp: tempPack,
         cache: cache,
       },
@@ -75,26 +74,8 @@ export const ThreadPool = (threads: number) => {
       });
     });
 
-  const runArray = (
-    taskName: string,
-    fn: string,
-    array: unknown[],
-    data: object
-  ) =>
-    // eslint-disable-next-line no-async-promise-executor, @typescript-eslint/no-misused-promises
-    new Promise<void>(async (resolve) => {
-      const runningText = `${upFirstChar(taskName)}...`;
-      const afterText = `Finished ${lowFirstChar(taskName)}.`;
-
-      const spinner = newSpinner(runningText);
-
-      await Promise.all(
-        array.map((element) => runThread(fn, { ...data, element }))
-      );
-
-      resolve();
-      spinner("success", { text: afterText });
-    });
+  const runArray = (fn: string, array: unknown[], data: object) =>
+    Promise.all(array.map((element) => runThread(fn, { ...data, element })));
 
   const terminate = () => {
     for (let i = 0; i < threads; i++) {
