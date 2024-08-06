@@ -1,3 +1,10 @@
+## [1.2.4](https://github.com/TBroz15/SuitcaseJS/compare/v1.2.3...v1.2.4) (2024-08-06)
+
+
+### Performance Improvements
+
+* :zap: file gathering now happens on the main compiler instead of workers ([234e063](https://github.com/TBroz15/SuitcaseJS/commit/234e06329d174e135a4d4e066110d4919c041f1d))
+
 ## [1.2.3](https://github.com/TBroz15/SuitcaseJS/compare/v1.2.2...v1.2.3) (2024-08-05)
 
 
