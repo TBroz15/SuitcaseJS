@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/TBroz15/SuitcaseJS/compare/v1.3.0...v1.3.1) (2024-08-06)
+
+
+### Bug Fixes
+
+* :bug: input only the files' origin path instead of the temp path on error ([00cab33](https://github.com/TBroz15/SuitcaseJS/commit/00cab33f609092aa43b26212b4a1f03ffdc7146d))
+
 # [1.3.0](https://github.com/TBroz15/SuitcaseJS/compare/v1.2.4...v1.3.0) (2024-08-06)
 
 
