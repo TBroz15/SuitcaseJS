@@ -1,4 +1,4 @@
-interface Functions {
+export interface WorkerFunctions {
   copyEtc({
     inPath,
     element,

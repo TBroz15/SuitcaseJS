@@ -16,3 +16,5 @@ export const mkTempPack = () => {
   if (existsSync(tempPack)) rmSync(tempPack, { recursive: true, force: true });
   mkdirSync(tempPack);
 };
+
+export const clrErrorList = () => rmSync(errorListFile);

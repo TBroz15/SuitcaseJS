@@ -1,5 +1,11 @@
 import { cpus } from "node:os";
-import { createWriteStream, existsSync, rmSync, statSync } from "node:fs";
+import {
+  createWriteStream,
+  existsSync,
+  readFileSync,
+  rmSync,
+  statSync,
+} from "node:fs";
 import fastFolderSizeSync from "fast-folder-size/sync.js";
 import { newSpinner } from "./utils/spinner.js";
 import archiver from "archiver";
@@ -7,11 +13,18 @@ import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 
 import { ThreadPool } from "./workers/thread_pool.js";
-import { bold, green, italic, red } from "./utils/picocolors.js";
+import { bold, green, italic, red, warn } from "./utils/picocolors.js";
 import { fullCompileUsage, suitcaseUsage } from "./cli/onHelp.js";
-import { mkTemp, mkTempPack, tempPack } from "./utils/temp_folder.js";
+import {
+  clrErrorList,
+  errorListFile,
+  mkTemp,
+  mkTempPack,
+  tempPack,
+} from "./utils/temp_folder.js";
 import { getFiles } from "./utils/get_files.js";
 import { runPromises } from "./utils/run_promises.js";
+import type { JSONErrorList } from "./types/error_list.d.ts";
 
 const threads = cpus().length;
 
@@ -105,8 +118,24 @@ const compile = async () => {
    Now:  ${italic(`${packSize} KB`)}
   `);
   } catch (error) {
-    if (error)
-      console.log("  File Size Comparison is not available at that moment.");
+    if (!error) return;
+    // prettier-ignore
+    console.log(warn("\nFile Size Comparison is not available at that moment."));
+  }
+
+  if (existsSync(errorListFile)) {
+    const errorList = JSON.parse(
+      readFileSync(errorListFile, "utf-8")
+    ) as JSONErrorList;
+
+    console.log(warn("There are error(s) while minifying JSON Files."));
+
+    errorList.forEach(({ filePath, error }) => {
+      console.log(`${bold("Path :")} ${filePath}`);
+      console.log(`${bold("Error:")} ${error}\n`);
+    });
+
+    clrErrorList();
   }
 
   const clearTempSpinner = newSpinner("Clearing Temporary Files...");

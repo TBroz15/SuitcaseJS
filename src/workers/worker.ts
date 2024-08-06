@@ -5,6 +5,8 @@ import { createHash } from "node:crypto";
 import { errorListFile } from "../utils/temp_folder.js";
 import { removeComments } from "../utils/remove_comments.js";
 import { copyFile } from "node:fs/promises";
+import type { JSONErrorList } from "../types/error_list.d.ts";
+import type { WorkerFunctions } from "../types/workers.d.ts";
 
 const { cache, temp } = workerData as {
   threads: number;
@@ -12,7 +14,7 @@ const { cache, temp } = workerData as {
   temp: string;
 };
 
-const functions: Functions = {
+const functions: WorkerFunctions = {
   async copyEtc({ inPath, element: etc }) {
     // If array is empty, ignore it right away
     if (!etc[0]) return;
@@ -27,7 +29,7 @@ const functions: Functions = {
     // If array is empty, ignore it right away
     if (!JSONFiles[0]) return;
 
-    const errorList: unknown[] = [];
+    const errorList: JSONErrorList = [];
 
     const promises = JSONFiles.map((path) => {
       const filePath = join(temp, path);
@@ -44,22 +46,23 @@ const functions: Functions = {
         // This minifies the JSON, and at the same time check one error.
         // Far better to just lint it through any editor such as VSCode.
         data = JSON.stringify(JSON.parse(data));
+        writeFileSync(filePath, data);
+        return copyFile(filePath, cacheFile);
       } catch (error) {
-        errorList.push({ error, path });
+        errorList.push({ error: (error as Error).toString(), filePath });
       }
-
-      writeFileSync(filePath, data);
-      return copyFile(filePath, cacheFile);
     });
 
     await Promise.all(promises);
 
     if (errorList[0]) {
       if (!existsSync(errorListFile)) writeFileSync(errorListFile, "[]");
+
       const allErrors = JSON.parse(
         readFileSync(errorListFile, "utf-8")
-      ) as unknown[];
+      ) as JSONErrorList;
       allErrors.push(...errorList);
+
       writeFileSync(errorListFile, JSON.stringify(allErrors));
     }
   },
@@ -75,7 +78,7 @@ const receiveEncodedJSON = (buffer: ArrayBuffer) => {
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
 parentPort!.on("message", async ({ buffer }) => {
   const { fn, data } = receiveEncodedJSON(buffer as ArrayBuffer) as {
-    fn: keyof Functions;
+    fn: keyof WorkerFunctions;
     data: never;
   };
 
