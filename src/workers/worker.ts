@@ -1,120 +1,18 @@
 import { readFileSync, existsSync, writeFileSync } from "node:fs";
-import { extname, basename, join } from "node:path";
+import { join } from "node:path";
 import { parentPort, workerData } from "node:worker_threads";
-import { fdir } from "fdir";
 import { createHash } from "node:crypto";
 import { errorListFile } from "../utils/temp_folder.js";
 import { removeComments } from "../utils/remove_comments.js";
-import { splitArray } from "../utils/split_array.js";
-import { copyFile, mkdir } from "node:fs/promises";
-import { CONFIG_FILE_NAMES } from "../config/get_config.js";
-import Config from "../config/get_config.js";
+import { copyFile } from "node:fs/promises";
 
-const { threads, cache, temp } = workerData as {
+const { cache, temp } = workerData as {
   threads: number;
   cache: string;
   temp: string;
 };
 
 const functions: Functions = {
-  async getFiles({ inPath }) {
-    const directories: string[] = [];
-    const JSONFiles: string[] = [];
-    const etc: string[] = [];
-    let ignoreFolders: string[] = [];
-    let ignoreFiles: string[] = [];
-    let ignoreExtensions: string[] = [];
-
-    const arr = await new fdir({ includeDirs: true, includeBasePath: true })
-      .withRelativePaths()
-      .crawl(inPath)
-      .withPromise();
-
-    arr.shift();
-
-    const regexExt = /\.([^.]+)$/;
-    const config = new Config().load_config();
-
-    if (config) {
-      Object.entries(config).forEach(([key, value]) => {
-        switch (key) {
-          case "ignore_files":
-            if (ignoreFiles.length === 0)
-              ignoreFiles = value.toString().split(",");
-            break;
-          case "ignore_extensions":
-            if (ignoreExtensions.length === 0)
-              ignoreExtensions = value.toString().split(",");
-            break;
-          case "ignore_folders":
-            if (ignoreFolders.length === 0)
-              ignoreFolders = value.toString().split(",");
-            break;
-          default:
-            break;
-        }
-      });
-    }
-
-    arr.forEach((path) => {
-      /*
-        If a file name is empty such as ".gitignore," extname will return an empty string.
-        It will use a Regex instead as a fallback to get the true extension of that file.
-        Directories will return an empty string as well.
-
-        Note that using extname is more performant than a Regex. We use regex just incase.
-        - TBroz15
-      */
-
-      // If its a folder or extension and it's in the ignore list, ignore it
-      if (
-        ignoreFolders.includes(path.split("/")[0]) ||
-        ignoreExtensions.includes(extname(path))
-      )
-        return;
-
-      let ext = extname(path);
-
-      if (ext === "") {
-        const realExt = regexExt.exec(basename(path));
-
-        // If its a directory
-        if (realExt === null) return directories.push(path);
-
-        // If its a file and it's in the ignore list
-        if (ignoreFiles.includes(realExt[0])) return;
-
-        // or not...
-        ext = realExt[0];
-      }
-
-      // If its a suitcase config file, ignore it
-      if (CONFIG_FILE_NAMES.includes(path)) return;
-
-      // As more compressions for most files are offered, we'll switch to switch cases.
-      if (ext === ".json") {
-        return JSONFiles.push(path);
-      } else {
-        return etc.push(path);
-      }
-    });
-
-    const directoryPromises = directories.map((path) =>
-      mkdir(join(temp, path), { recursive: true })
-    );
-
-    // Distribute according to the amount of threads while making directories
-    const [splitJSONFiles, splitEtc] = await Promise.all([
-      splitArray(JSONFiles, threads),
-      splitArray(etc, threads),
-      ...directoryPromises,
-    ]);
-
-    return {
-      JSONFiles: splitJSONFiles,
-      etc: splitEtc,
-    };
-  },
   async copyEtc({ inPath, element: etc }) {
     // If array is empty, ignore it right away
     if (!etc[0]) return;
@@ -131,7 +29,7 @@ const functions: Functions = {
 
     const errorList: unknown[] = [];
 
-    const promises = JSONFiles.map(async (path) => {
+    const promises = JSONFiles.map((path) => {
       const filePath = join(temp, path);
       let data = readFileSync(join(inPath, path), "utf-8");
       const hash = createHash("md5").update(data).digest("hex");

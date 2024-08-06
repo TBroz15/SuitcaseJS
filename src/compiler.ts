@@ -10,6 +10,8 @@ import { ThreadPool } from "./workers/thread_pool.js";
 import { bold, green, italic, red } from "./utils/picocolors.js";
 import { fullCompileUsage, suitcaseUsage } from "./cli/onHelp.js";
 import { mkTemp, mkTempPack, tempPack } from "./utils/temp_folder.js";
+import { getFiles } from "./utils/get_files.js";
+import { runPromises } from "./utils/run_promises.js";
 
 const threads = cpus().length;
 
@@ -35,7 +37,7 @@ const compile = async () => {
     process.exit(-1);
   }
 
-  const { terminate, run, runArray } = ThreadPool(threads);
+  const { terminate, runArray } = ThreadPool(threads);
 
   console.log("Starting...");
 
@@ -44,14 +46,19 @@ const compile = async () => {
 
   const start = performance.now();
 
-  const { JSONFiles, etc } = (await run("Getting all files", "getFiles", {
-    inPath,
-  })) as { JSONFiles: string[]; etc: string[] };
+  const getFilesSpinner = newSpinner("Getting all files...");
+  const { JSONFiles, etc } = await getFiles({ inPath, threads });
+  getFilesSpinner("success", {
+    text: "Finished getting all files.",
+  });
 
-  await Promise.all([
-    runArray("Copying other files", "copyEtc", etc, { inPath }),
-    runArray("Minifying JSON files", "minifyJSON", JSONFiles, { inPath }),
-  ]);
+  await runPromises(
+    [
+      runArray("copyEtc", etc, { inPath }),
+      runArray("minifyJSON", JSONFiles, { inPath }),
+    ],
+    ["Copy other files", "Minify JSON files"]
+  );
 
   terminate();
 
