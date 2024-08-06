@@ -32,22 +32,25 @@ const functions: WorkerFunctions = {
     const errorList: JSONErrorList = [];
 
     const promises = JSONFiles.map((path) => {
-      const filePath = join(temp, path);
-      let data = readFileSync(join(inPath, path), "utf-8");
+      const tempPath = join(temp, path);
+      const filePath = join(inPath, path);
+
+      let data = readFileSync(filePath, "utf-8");
       const hash = createHash("md5").update(data).digest("hex");
 
       const cacheFile = join(cache, hash.concat(".json"));
       const cacheFileExists = existsSync(cacheFile);
 
-      if (cacheFileExists) return copyFile(cacheFile, filePath);
+      if (cacheFileExists) return copyFile(cacheFile, tempPath);
 
       try {
         data = removeComments(data);
         // This minifies the JSON, and at the same time check one error.
         // Far better to just lint it through any editor such as VSCode.
         data = JSON.stringify(JSON.parse(data));
-        writeFileSync(filePath, data);
-        return copyFile(filePath, cacheFile);
+
+        writeFileSync(tempPath, data);
+        return copyFile(tempPath, cacheFile);
       } catch (error) {
         errorList.push({ error: (error as Error).toString(), filePath });
       }
