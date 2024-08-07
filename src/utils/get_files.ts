@@ -16,6 +16,7 @@ export const getFiles = async ({
 }) => {
   const directories: string[] = [];
   const JSONFiles: string[] = [];
+  const PNGFiles: string[] = [];
   const etc: string[] = [];
   let ignoreFolders: string[] = [];
   let ignoreFiles: string[] = [];
@@ -87,11 +88,13 @@ export const getFiles = async ({
     // If its a suitcase config file, ignore it
     if (CONFIG_FILE_NAMES.includes(path)) return;
 
-    // As more compressions for most files are offered, we'll switch to switch cases.
-    if (ext === ".json") {
-      return JSONFiles.push(path);
-    } else {
-      return etc.push(path);
+    switch (ext) {
+      case ".json":
+        return JSONFiles.push(path);
+      case ".png":
+        return PNGFiles.push(path);
+      default:
+        return etc.push(path);
     }
   });
 
@@ -100,14 +103,16 @@ export const getFiles = async ({
   );
 
   // Distribute according to the amount of threads while making directories
-  const [splitJSONFiles, splitEtc] = await Promise.all([
+  const [splitJSONFiles, splitPNG, splitETC] = await Promise.all([
     splitArray(JSONFiles, threads),
+    splitArray(PNGFiles, threads),
     splitArray(etc, threads),
     ...directoryPromises,
   ]);
 
   return {
     JSONFiles: splitJSONFiles,
-    etc: splitEtc,
+    PNGFiles: splitPNG,
+    etc: splitETC,
   };
 };

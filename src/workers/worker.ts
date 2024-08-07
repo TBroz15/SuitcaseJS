@@ -1,4 +1,4 @@
-import { readFileSync, existsSync, writeFileSync } from "node:fs";
+import { readFileSync, existsSync, writeFileSync, copyFileSync } from "node:fs";
 import { join } from "node:path";
 import { parentPort, workerData } from "node:worker_threads";
 import { createHash } from "node:crypto";
@@ -7,12 +7,16 @@ import { removeComments } from "../utils/remove_comments.js";
 import { copyFile } from "node:fs/promises";
 import type { JSONErrorList } from "../types/error_list.d.ts";
 import type { WorkerFunctions } from "../types/workers.d.ts";
+import sharp from "sharp";
+import { PNG } from "../utils/default_config.js";
 
 const { cache, temp } = workerData as {
   threads: number;
   cache: string;
   temp: string;
 };
+
+// TODO: Reduce some repeated code
 
 const functions: WorkerFunctions = {
   async copyEtc({ inPath, element: etc }) {
@@ -69,6 +73,30 @@ const functions: WorkerFunctions = {
       writeFileSync(errorListFile, JSON.stringify(allErrors));
     }
   },
+  async compressPNG({ inPath, element: PNGFiles }) {
+    // If array is empty, ignore it right away
+    if (!PNGFiles[0]) return;
+
+    const promises = PNGFiles.map(async (path) => {
+      const tempPath = join(temp, path);
+      const filePath = join(inPath, path);
+
+      const buffer = readFileSync(filePath);
+      const hash = createHash("md5").update(buffer).digest("hex");
+
+      const cacheFile = join(cache, hash.concat(".png"));
+      const cacheFileExists = existsSync(cacheFile);
+
+      if (cacheFileExists) return copyFileSync(cacheFile, tempPath);
+
+      await sharp(filePath).png(PNG).toFile(tempPath);
+
+      return copyFile(tempPath, cacheFile);
+    });
+
+    await Promise.all(promises);
+  },
+  // async compressJPG({ inPath, element: PNGFiles }) {},
 };
 
 const decoder = new TextDecoder();

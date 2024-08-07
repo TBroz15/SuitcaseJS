@@ -1,3 +1,3 @@
 {
-  "conventionalCommits.scopes": ["types"]
+  "conventionalCommits.scopes": ["types", "asset"]
 }

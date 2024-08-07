@@ -4,6 +4,7 @@ import { newSpinner } from "../utils/spinner.js";
 import { lowFirstChar, upFirstChar } from "../utils/first_char.js";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "url";
+import { FunctionNames } from "../types/workers.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -56,13 +57,13 @@ export const ThreadPool = (threads: number) => {
     });
   };
 
-  const runThread = (fn: string, data: unknown) =>
+  const runThread = (fn: FunctionNames, data: unknown) =>
     new Promise((resolve, reject) => {
       requestQueue.push({ fn, resolve, reject, data });
       processQueue();
     });
 
-  const run = (taskName: string, fn: string, data: unknown) =>
+  const run = (taskName: FunctionNames, fn: FunctionNames, data: unknown) =>
     new Promise((resolve) => {
       const runningText = `${upFirstChar(taskName)}...`;
       const afterText = `Finished ${lowFirstChar(taskName)}.`;
@@ -74,7 +75,7 @@ export const ThreadPool = (threads: number) => {
       });
     });
 
-  const runArray = (fn: string, array: unknown[], data: object) =>
+  const runArray = (fn: FunctionNames, array: unknown[], data: object) =>
     Promise.all(array.map((element) => runThread(fn, { ...data, element })));
 
   const terminate = () => {

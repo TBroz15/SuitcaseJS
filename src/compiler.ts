@@ -60,7 +60,7 @@ const compile = async () => {
   const start = performance.now();
 
   const getFilesSpinner = newSpinner("Getting all files...");
-  const { JSONFiles, etc } = await getFiles({ inPath, threads });
+  const { JSONFiles, PNGFiles, etc } = await getFiles({ inPath, threads });
   getFilesSpinner("success", {
     text: "Finished getting all files.",
   });
@@ -69,8 +69,9 @@ const compile = async () => {
     [
       runArray("copyEtc", etc, { inPath }),
       runArray("minifyJSON", JSONFiles, { inPath }),
+      runArray("compressPNG", PNGFiles, { inPath }),
     ],
-    ["Copy other files", "Minify JSON files"]
+    ["Copy other files", "Minify JSON files", "Compress PNG files"]
   );
 
   terminate();
