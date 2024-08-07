@@ -32,7 +32,7 @@ export const runCommands = async (cmds) => {
   let isFail = false;
 
   const promises = await Promise.allSettled(
-    cmds.map(([cmd, ...args]) => spawnPromise(cmd, args))
+    cmds.map(([cmd, ...args]) => spawnPromise(cmd, args, { shell: true }))
   );
 
   promises.forEach((value, i) => {
