@@ -1,3 +1,15 @@
+# [1.4.0](https://github.com/TBroz15/SuitcaseJS/compare/v1.3.1...v1.4.0) (2024-08-08)
+
+
+### Features
+
+* **asset:** :sparkles: add png compression ([7731eed](https://github.com/TBroz15/SuitcaseJS/commit/7731eed22879c3af125ec2f712a9c178de223bf6))
+
+
+### Performance Improvements
+
+* **compression:** :zap: replace archiver with adm-zip for faster compress ([df0b2bd](https://github.com/TBroz15/SuitcaseJS/commit/df0b2bd03d6939169937f3f6c68ea7f5857d88f8))
+
 ## [1.3.1](https://github.com/TBroz15/SuitcaseJS/compare/v1.3.0...v1.3.1) (2024-08-06)
 
 
