@@ -1,3 +1,11 @@
+## [1.4.1](https://github.com/TBroz15/SuitcaseJS/compare/v1.4.0...v1.4.1) (2024-08-08)
+
+
+### Bug Fixes
+
+* :adhesive_bandage: fs rm wont freeze spinner ([93f0ecf](https://github.com/TBroz15/SuitcaseJS/commit/93f0ecf599e72d7da70106ac677aa1160cf2cdd9))
+* **compiler: compression:** :adhesive_bandage: create non-existent dir to prevent potential bug ([19f8710](https://github.com/TBroz15/SuitcaseJS/commit/19f8710b3dfd4d260684de9736f15f207ec04a3b))
+
 # [1.4.0](https://github.com/TBroz15/SuitcaseJS/compare/v1.3.1...v1.4.0) (2024-08-08)
 
 
