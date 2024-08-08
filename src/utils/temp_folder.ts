@@ -1,6 +1,7 @@
-import { existsSync, mkdirSync, rmSync } from "node:fs";
+import { existsSync, rmSync } from "node:fs";
+import { mkdir } from "node:fs/promises";
 import { homedir } from "node:os";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 
 export const tempFolder = join(homedir(), ".suitcase");
 
@@ -9,12 +10,24 @@ export const tempPack = join(tempFolder, "temp");
 export const errorListFile = join(tempFolder, "error_list.json");
 
 export const mkTemp = () => {
-  if (!existsSync(cache)) mkdirSync(cache);
+  if (!existsSync(cache)) return mkdir(cache);
 };
 
 export const mkTempPack = () => {
   if (existsSync(tempPack)) rmSync(tempPack, { recursive: true, force: true });
-  mkdirSync(tempPack);
+  return mkdir(tempPack);
+};
+
+/**
+ * I know the name of the function is weird...
+ *
+ * This creates a directory that was not existed. To prevent potential errors on compression.
+ *
+ * *Now chill the living being out!* -TBroz15.
+ */
+export const mkOut = (path: string) => {
+  const dir = dirname(path);
+  if (!existsSync(dir)) return mkdir(dir, { recursive: true });
 };
 
 export const clrErrorList = () => rmSync(errorListFile);

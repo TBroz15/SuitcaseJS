@@ -1,5 +1,5 @@
 import { cpus } from "node:os";
-import { existsSync, readFileSync, rmSync, statSync } from "node:fs";
+import { existsSync, readFileSync, statSync } from "node:fs";
 import fastFolderSizeSync from "fast-folder-size/sync.js";
 import { newSpinner } from "./utils/spinner.js";
 import yargs from "yargs";
@@ -11,6 +11,7 @@ import { fullCompileUsage, suitcaseUsage } from "./cli/onHelp.js";
 import {
   clrErrorList,
   errorListFile,
+  mkOut,
   mkTemp,
   mkTempPack,
   tempPack,
@@ -19,6 +20,7 @@ import { getFiles } from "./utils/get_files.js";
 import { runPromises } from "./utils/run_promises.js";
 import type { JSONErrorList } from "./types/error_list.d.ts";
 import AdmZip from "adm-zip";
+import { rm } from "node:fs/promises";
 
 const threads = cpus().length;
 
@@ -48,8 +50,7 @@ const compile = async () => {
 
   console.log("Starting...");
 
-  mkTemp();
-  mkTempPack();
+  await Promise.all([mkOut(outPath), mkTemp(), mkTempPack()]);
 
   const start = performance.now();
 
@@ -122,7 +123,7 @@ const compile = async () => {
   }
 
   const clearTempSpinner = newSpinner("Clearing Temporary Files...");
-  rmSync(tempPack, { recursive: true, force: true });
+  await rm(tempPack, { recursive: true, force: true });
   clearTempSpinner("success", {
     text: "Cleared temporary files",
   });
