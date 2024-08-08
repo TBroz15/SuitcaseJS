@@ -2,13 +2,13 @@ import { readFileSync, existsSync, writeFileSync, copyFileSync } from "node:fs";
 import { join } from "node:path";
 import { parentPort, workerData } from "node:worker_threads";
 import { createHash } from "node:crypto";
-import { errorListFile } from "../utils/temp_folder.js";
-import { removeComments } from "../utils/remove_comments.js";
+import { errorListFile } from "../utils/compiler/temp_folder.js";
+import { removeComments } from "../utils/compiler/remove_comments.js";
 import { copyFile } from "node:fs/promises";
 import type { JSONErrorList } from "../types/error_list.d.ts";
 import type { WorkerFunctions } from "../types/workers.d.ts";
 import sharp from "sharp";
-import { PNG } from "../utils/default_config.js";
+import { PNG } from "../utils/compiler/default_config.js";
 
 const { cache, temp } = workerData as {
   threads: number;

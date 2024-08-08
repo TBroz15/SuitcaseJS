@@ -1,12 +1,12 @@
 import { cpus } from "node:os";
 import { existsSync, readFileSync, statSync } from "node:fs";
 import fastFolderSizeSync from "fast-folder-size/sync.js";
-import { newSpinner } from "./utils/spinner.js";
+import { newSpinner } from "./utils/cli/spinner.js";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 
 import { ThreadPool } from "./workers/thread_pool.js";
-import { bold, green, italic, red, warn } from "./utils/picocolors.js";
+import { bold, green, italic, red, warn } from "./utils/cli/picocolors.js";
 import { fullCompileUsage, suitcaseUsage } from "./cli/onHelp.js";
 import {
   clrErrorList,
@@ -15,9 +15,9 @@ import {
   mkTemp,
   mkTempPack,
   tempPack,
-} from "./utils/temp_folder.js";
-import { getFiles } from "./utils/get_files.js";
-import { runPromises } from "./utils/run_promises.js";
+} from "./utils/compiler/temp_folder.js";
+import { getFiles } from "./utils/compiler/get_files.js";
+import { runPromises } from "./utils/compiler/run_promises.js";
 import type { JSONErrorList } from "./types/error_list.d.ts";
 import AdmZip from "adm-zip";
 import { rm } from "node:fs/promises";

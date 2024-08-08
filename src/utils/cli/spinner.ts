@@ -15,6 +15,7 @@ const newSpinner = (text: string, options?: Options) => {
       case "clear":
       case "spin":
         return spinner[instance]();
+      case "success":
       default: {
         const end = (performance.now() - start).toFixed(2);
         options.text += ` (${italic(end)}ms)`;

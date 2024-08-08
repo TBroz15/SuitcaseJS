@@ -1,5 +1,5 @@
-import { bold } from "./picocolors.js";
-import { newSpinner } from "./spinner.js";
+import { bold } from "../cli/picocolors.js";
+import { newSpinner } from "../cli/spinner.js";
 
 /*
     To be honest,

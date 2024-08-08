@@ -1,7 +1,7 @@
 import { Worker } from "node:worker_threads";
-import { cache, tempPack } from "../utils/temp_folder.js";
-import { newSpinner } from "../utils/spinner.js";
-import { lowFirstChar, upFirstChar } from "../utils/first_char.js";
+import { cache, tempPack } from "../utils/compiler/temp_folder.js";
+import { newSpinner } from "../utils/cli/spinner.js";
+import { lowFirstChar, upFirstChar } from "../utils/cli/first_char.js";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "url";
 import { FunctionNames } from "../types/workers.js";
