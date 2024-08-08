@@ -5,7 +5,7 @@
 import { compile } from "./compiler.js";
 import { onHelp } from "./cli/onHelp.js";
 import { italic } from "./utils/cli/picocolors.js";
-import { getRuntime } from "./utils/cli/check_version.js";
+import { getRuntime } from "./utils/cli/get_runtime.js";
 import { readFileSync } from "fs";
 import { fileURLToPath } from "url";
 import { dirname, resolve } from "path";
