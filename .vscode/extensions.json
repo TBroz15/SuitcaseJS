@@ -1,0 +1,13 @@
+{
+  "recommendations": [
+    "alefragnani.Bookmarks",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "YoavBls.pretty-ts-errors",
+    "aaron-bond.better-comments",
+    "bierner.github-markdown-preview",
+    "christian-kohler.npm-intellisense",
+    "christian-kohler.path-intellisense",
+    "vivaxy.vscode-conventional-commits"
+  ]
+}
