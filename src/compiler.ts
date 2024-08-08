@@ -1,14 +1,7 @@
 import { cpus } from "node:os";
-import {
-  createWriteStream,
-  existsSync,
-  readFileSync,
-  rmSync,
-  statSync,
-} from "node:fs";
+import { existsSync, readFileSync, rmSync, statSync } from "node:fs";
 import fastFolderSizeSync from "fast-folder-size/sync.js";
 import { newSpinner } from "./utils/spinner.js";
-import archiver from "archiver";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 
@@ -25,6 +18,7 @@ import {
 import { getFiles } from "./utils/get_files.js";
 import { runPromises } from "./utils/run_promises.js";
 import type { JSONErrorList } from "./types/error_list.d.ts";
+import AdmZip from "adm-zip";
 
 const threads = cpus().length;
 
@@ -76,23 +70,11 @@ const compile = async () => {
 
   terminate();
 
-  const outputFolder = createWriteStream(outPath, { autoClose: true });
-
-  const archive = archiver("zip", {
-    zlib: {
-      level: 9,
-      windowBits: 15,
-      memLevel: 9,
-    },
-    statConcurrency: threads,
-  });
-
-  archive.pipe(outputFolder);
-
-  archive.directory(tempPack, false);
+  const archive = new AdmZip();
 
   const compressFolderSpinner = newSpinner("Compressing Packs...");
-  await archive.finalize();
+  archive.addLocalFolder(tempPack);
+  await archive.writeZipPromise(outPath, {});
   compressFolderSpinner("success", {
     text: "Successfully compressed packs.",
   });
