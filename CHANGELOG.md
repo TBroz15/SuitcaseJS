@@ -1,3 +1,11 @@
+## [1.4.2](https://github.com/TBroz15/SuitcaseJS/compare/v1.4.1...v1.4.2) (2024-08-12)
+
+
+### Performance Improvements
+
+* **compiler <other>:** :zap: copying files is done through promises ([8cb257a](https://github.com/TBroz15/SuitcaseJS/commit/8cb257a8387429b03f5c5407039d4514fd9582d9))
+* **compiler <other>:** :zap: ignore potential empty array to be sent to threads ([c7d7e64](https://github.com/TBroz15/SuitcaseJS/commit/c7d7e64f63a2059e14280e4820fd7ab2df7b8228))
+
 ## [1.4.1](https://github.com/TBroz15/SuitcaseJS/compare/v1.4.0...v1.4.1) (2024-08-08)
 
 
