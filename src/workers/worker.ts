@@ -1,4 +1,4 @@
-import { readFileSync, existsSync, writeFileSync, copyFileSync } from "node:fs";
+import { readFileSync, existsSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { parentPort, workerData } from "node:worker_threads";
 import { createHash } from "node:crypto";
@@ -45,19 +45,19 @@ const functions: WorkerFunctions = {
       const cacheFile = join(cache, hash.concat(".json"));
       const cacheFileExists = existsSync(cacheFile);
 
-      if (cacheFileExists) return copyFile(cacheFile, tempPath);
+      if (!cacheFileExists)
+        try {
+          data = removeComments(data);
+          // This minifies the JSON, and at the same time check one error.
+          // Far better to just lint it through any editor such as VSCode.
+          data = JSON.stringify(JSON.parse(data));
 
-      try {
-        data = removeComments(data);
-        // This minifies the JSON, and at the same time check one error.
-        // Far better to just lint it through any editor such as VSCode.
-        data = JSON.stringify(JSON.parse(data));
+          writeFileSync(cacheFile, data);
+        } catch (error) {
+          errorList.push({ error: (error as Error).toString(), filePath });
+        }
 
-        writeFileSync(tempPath, data);
-        return copyFile(tempPath, cacheFile);
-      } catch (error) {
-        errorList.push({ error: (error as Error).toString(), filePath });
-      }
+      return copyFile(cacheFile, tempPath);
     });
 
     await Promise.all(promises);
@@ -87,11 +87,9 @@ const functions: WorkerFunctions = {
       const cacheFile = join(cache, hash.concat(".png"));
       const cacheFileExists = existsSync(cacheFile);
 
-      if (cacheFileExists) return copyFileSync(cacheFile, tempPath);
+      if (!cacheFileExists) await sharp(filePath).png(PNG).toFile(cacheFile);
 
-      await sharp(filePath).png(PNG).toFile(tempPath);
-
-      return copyFile(tempPath, cacheFile);
+      return copyFile(cacheFile, tempPath);
     });
 
     await Promise.all(promises);
