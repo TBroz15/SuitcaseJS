@@ -14,5 +14,5 @@ export const splitArray = (array: unknown[], arrayNumber: number) => {
     if (i === arrayNumber) i = 0;
   }
 
-  return newArr;
+  return newArr.filter((value) => typeof value[0] !== "undefined");
 };
