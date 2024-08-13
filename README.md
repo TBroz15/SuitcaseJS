@@ -46,8 +46,6 @@ For usages, benchmarks, and tips, please check out the [**Suitcase.js** wiki pag
 
 ## Contributing
 
-As of now, contributing to **Suitcase.js** is quite limited. You can contribute through looking for issues or suggest a feature/enhancement.
+Check out [CONTRIBUTING.md](https://github.com/TBroz15/SuitcaseJS/blob/main/CONTRIBUTING.md) for more information to contribute in this project.
 
 [A donation is well appreciated to make this project matter!](https://www.buymeacoffee.com/tbroz15)
-
-_If there is a problem when installing or running_ **_Suitcase.js_**, _please report an issue right away. Thanks!_
