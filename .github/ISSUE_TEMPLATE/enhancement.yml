@@ -7,7 +7,7 @@ body:
     attributes:
       value: |
         > [!IMPORTANT]  
-        > Before submitting a Enhancement/Suggestion, please read this after contributing.
+        > [Read this before submission!](https://github.com/TBroz15/SuitcaseJS/blob/main/CONTRIBUTING.md)
 
   - type: textarea
     id: problem

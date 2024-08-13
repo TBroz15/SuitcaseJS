@@ -3,6 +3,12 @@ description: Is something unexpected happen? A error? A crash? You've come to a 
 labels: ["ISSUE/PR: To Be Handled", "TYPE: Bug"]
 title: "[🐞]"
 body:
+  - type: markdown
+    attributes:
+      value: |
+        > [!IMPORTANT]  
+        > [Read this before submission!](https://github.com/TBroz15/SuitcaseJS/blob/main/CONTRIBUTING.md)
+
   - type: dropdown
     id: component
     attributes:
