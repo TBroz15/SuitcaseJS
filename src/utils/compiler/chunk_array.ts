@@ -5,8 +5,6 @@ export const chunkArray = (array: unknown[], arrayNumber: number) => {
 
   const chunkedArray: Array<unknown>[] = [];
 
-  for (let i = 0; i < arrayNumber; i++) chunkedArray[i] = [];
-
   const size = array.length / arrayNumber;
 
   // Round the number if its a float.
