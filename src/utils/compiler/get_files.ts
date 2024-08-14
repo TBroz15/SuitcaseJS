@@ -2,7 +2,7 @@ import { fdir } from "fdir";
 import { mkdir } from "fs/promises";
 import { extname, basename, join } from "path";
 import Config, { CONFIG_FILE_NAMES } from "../../config/get_config.js";
-import { splitArray } from "./split_array.js";
+import { chunkArray } from "./chunk_array.js";
 import { tempPack } from "./temp_folder.js";
 
 const temp = tempPack;
@@ -104,9 +104,9 @@ export const getFiles = async ({
 
   // Distribute according to the amount of threads while making directories
   const [splitJSONFiles, splitPNG, splitETC] = await Promise.all([
-    splitArray(JSONFiles, threads),
-    splitArray(PNGFiles, threads),
-    splitArray(etc, threads),
+    chunkArray(JSONFiles, threads),
+    chunkArray(PNGFiles, threads),
+    chunkArray(etc, threads),
     ...directoryPromises,
   ]);
 
