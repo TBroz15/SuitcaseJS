@@ -1,3 +1,10 @@
+## [1.4.4](https://github.com/TBroz15/SuitcaseJS/compare/v1.4.3...v1.4.4) (2024-08-14)
+
+
+### Bug Fixes
+
+* **compiler@other:** :adhesive_bandage: remove unnecessary array creation ([ba83f90](https://github.com/TBroz15/SuitcaseJS/commit/ba83f90accc743d5a4fd3228fb37e40234c382fd))
+
 ## [1.4.3](https://github.com/TBroz15/SuitcaseJS/compare/v1.4.2...v1.4.3) (2024-08-14)
 
 
