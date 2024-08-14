@@ -1,3 +1,10 @@
+## [1.4.3](https://github.com/TBroz15/SuitcaseJS/compare/v1.4.2...v1.4.3) (2024-08-14)
+
+
+### Performance Improvements
+
+* **compiler@other:** :zap: optimize array chunking ([d3bfab7](https://github.com/TBroz15/SuitcaseJS/commit/d3bfab79d8bfbc85c47d69baf7b6a2ef8756cb48))
+
 ## [1.4.2](https://github.com/TBroz15/SuitcaseJS/compare/v1.4.1...v1.4.2) (2024-08-12)
 
 
