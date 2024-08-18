@@ -2,8 +2,6 @@ import { cpus } from "node:os";
 import { existsSync, readFileSync, statSync } from "node:fs";
 import fastFolderSizeSync from "fast-folder-size/sync.js";
 import { newSpinner } from "./utils/cli/spinner.js";
-import yargs from "yargs";
-import { hideBin } from "yargs/helpers";
 
 import { ThreadPool } from "./workers/thread_pool.js";
 import { bold, green, italic, red, warn } from "./utils/cli/picocolors.js";
@@ -24,14 +22,7 @@ import { rm } from "node:fs/promises";
 
 const threads = cpus().length;
 
-const compile = async () => {
-  const { in: inPath, out: outPath } = await yargs(hideBin(process.argv))
-    .options({
-      in: { type: "string", alias: "i" },
-      out: { type: "string", alias: "o" },
-    })
-    .parseAsync();
-
+const compile = async (inPath: string, outPath: string) => {
   if (!inPath || !outPath) {
     console.log(
       `  ${red(

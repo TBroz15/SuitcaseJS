@@ -20,7 +20,6 @@
     "@types/adm-zip": "^0.5.5",
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^22.0.2",
-    "@types/yargs": "^17.0.32",
     "cz-conventional-changelog": "^3.3.0",
     "esbuild": "^0.23.0",
     "eslint": "^9.8.0",
@@ -63,11 +62,11 @@
     "fast-folder-size": "^2.2.0",
     "fdir": "^6.2.0",
     "js-yaml": "^4.1.0",
+    "mri": "^1.2.0",
     "nanospinner": "^1.1.0",
     "picocolors": "^1.0.1",
     "sharp": "^0.33.4",
-    "strip-ansi": "^7.1.0",
-    "yargs": "^17.1.1-candidate.0"
+    "strip-ansi": "^7.1.0"
   },
   "trustedDependencies": [
     "fast-folder-size"
