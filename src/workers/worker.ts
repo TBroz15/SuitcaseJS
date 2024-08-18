@@ -9,6 +9,7 @@ import type { JSONErrorList } from "../types/error_list.d.ts";
 import type { WorkerFunctions } from "../types/workers.d.ts";
 import sharp from "sharp";
 import { PNG } from "../utils/compiler/default_config.js";
+import { promiseAllUnhandled } from "../utils/compiler/promise_all_unhandled.js";
 
 const { cache, temp } = workerData as {
   threads: number;
@@ -27,7 +28,7 @@ const functions: WorkerFunctions = {
       copyFile(join(inPath, path), join(temp, path))
     );
 
-    await Promise.all(promises);
+    await promiseAllUnhandled(promises);
   },
   async minifyJSON({ inPath, element: JSONFiles }) {
     // If array is empty, ignore it right away
@@ -60,7 +61,7 @@ const functions: WorkerFunctions = {
       return copyFile(cacheFile, tempPath);
     });
 
-    await Promise.all(promises);
+    await promiseAllUnhandled(promises);
 
     if (errorList[0]) {
       if (!existsSync(errorListFile)) writeFileSync(errorListFile, "[]");
@@ -92,7 +93,7 @@ const functions: WorkerFunctions = {
       return copyFile(cacheFile, tempPath);
     });
 
-    await Promise.all(promises);
+    await promiseAllUnhandled(promises);
   },
   // async compressJPG({ inPath, element: PNGFiles }) {},
 };
