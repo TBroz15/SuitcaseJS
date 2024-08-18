@@ -1,3 +1,10 @@
+## [1.4.5](https://github.com/TBroz15/SuitcaseJS/compare/v1.4.4...v1.4.5) (2024-08-18)
+
+
+### Bug Fixes
+
+* **compiler@other:** :adhesive_bandage: fix a potential error when writing cache with the same hash ([cdd2e52](https://github.com/TBroz15/SuitcaseJS/commit/cdd2e529c37ce0588ae5fc66297e53d9fff83c9f))
+
 ## [1.4.4](https://github.com/TBroz15/SuitcaseJS/compare/v1.4.3...v1.4.4) (2024-08-14)
 
 
