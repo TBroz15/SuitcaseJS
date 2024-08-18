@@ -1,3 +1,10 @@
+## [1.4.6](https://github.com/TBroz15/SuitcaseJS/compare/v1.4.5...v1.4.6) (2024-08-18)
+
+
+### Performance Improvements
+
+* **cli:** :zap: :package: substitute mri for yargs ([79e1905](https://github.com/TBroz15/SuitcaseJS/commit/79e1905bc135143add7133109d1c0c94b38dc0e0))
+
 ## [1.4.5](https://github.com/TBroz15/SuitcaseJS/compare/v1.4.4...v1.4.5) (2024-08-18)
 
 
