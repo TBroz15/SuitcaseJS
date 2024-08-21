@@ -1,6 +1,5 @@
 import { cpus } from "node:os";
 import { existsSync, readFileSync, statSync } from "node:fs";
-import fastFolderSizeSync from "fast-folder-size/sync.js";
 import { newSpinner } from "./utils/cli/spinner.js";
 
 import { ThreadPool } from "./workers/thread_pool.js";
@@ -19,6 +18,7 @@ import { runPromises } from "./utils/compiler/run_promises.js";
 import type { JSONErrorList } from "./types/error_list.d.ts";
 import AdmZip from "adm-zip";
 import { rm } from "node:fs/promises";
+import getDirSize from "fdir-size";
 
 const threads = cpus().length;
 
@@ -80,7 +80,7 @@ const compile = async (inPath: string, outPath: string) => {
   );
 
   try {
-    const folderPackSize = (fastFolderSizeSync(inPath) as number) / 1000;
+    const folderPackSize = (await getDirSize(inPath)) / 1000;
     const packSize = statSync(outPath).size / 1000;
 
     const howSmall = (folderPackSize / packSize).toFixed(2);
