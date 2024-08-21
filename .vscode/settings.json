@@ -8,6 +8,7 @@
     "compiler@config",
     "compiler@compression",
     "compiler@other",
-    "publish"
+    "publish",
+    "deps"
   ]
 }
