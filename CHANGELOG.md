@@ -1,3 +1,10 @@
+## [1.4.7](https://github.com/TBroz15/SuitcaseJS/compare/v1.4.6...v1.4.7) (2024-08-21)
+
+
+### Performance Improvements
+
+* **compiler@other:** :zap: faster dir size calculation ([0581f64](https://github.com/TBroz15/SuitcaseJS/commit/0581f646efcad116be26080752787f7383c4ffca))
+
 ## [1.4.6](https://github.com/TBroz15/SuitcaseJS/compare/v1.4.5...v1.4.6) (2024-08-18)
 
 
