@@ -3,6 +3,7 @@ ci/
 src/
 esbuild.log
 .releaserc.json
+dist/suitcasejs-*
 
 # GitHub
 .github/
@@ -16,3 +17,4 @@ SuitcaseJS_Logo.png
 .vscode/
 tsconfig.json
 .prettierignore
+eslint.config.mjs
