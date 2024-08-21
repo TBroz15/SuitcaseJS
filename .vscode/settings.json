@@ -9,6 +9,7 @@
     "compiler@compression",
     "compiler@other",
     "publish",
-    "deps"
+    "deps",
+    "dev@deps"
   ]
 }
