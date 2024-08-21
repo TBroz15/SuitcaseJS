@@ -1,3 +1,10 @@
+## [1.4.8](https://github.com/TBroz15/SuitcaseJS/compare/v1.4.7...v1.4.8) (2024-08-21)
+
+
+### Bug Fixes
+
+* **publish:** :construction_worker: ignore unnecessary files ([50b38a5](https://github.com/TBroz15/SuitcaseJS/commit/50b38a5dcc7c36da8f60e7275e1664caf436caf0))
+
 ## [1.4.7](https://github.com/TBroz15/SuitcaseJS/compare/v1.4.6...v1.4.7) (2024-08-21)
 
 
