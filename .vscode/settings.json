@@ -7,6 +7,7 @@
     "compiler@asset",
     "compiler@config",
     "compiler@compression",
-    "compiler@other"
+    "compiler@other",
+    "publish"
   ]
 }
