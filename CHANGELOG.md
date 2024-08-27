@@ -1,3 +1,10 @@
+## [1.4.9](https://github.com/TBroz15/SuitcaseJS/compare/v1.4.8...v1.4.9) (2024-08-27)
+
+
+### Bug Fixes
+
+* **compiler@other:** :adhesive_bandage: create temp dir before compilation ([c91960f](https://github.com/TBroz15/SuitcaseJS/commit/c91960fb58e4a1bea17dba87ab712b81bff7124d))
+
 ## [1.4.8](https://github.com/TBroz15/SuitcaseJS/compare/v1.4.7...v1.4.8) (2024-08-21)
 
 
