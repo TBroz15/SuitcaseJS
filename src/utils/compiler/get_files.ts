@@ -54,14 +54,8 @@ export const getFiles = async ({
   }
 
   arr.forEach((path) => {
-    /*
-        If a file name is empty such as ".gitignore," extname will return an empty string.
-        It will use a Regex instead as a fallback to get the true extension of that file.
-        Directories will return an empty string as well.
-
-        Note that using extname is more performant than a Regex. We use regex just incase.
-        - TBroz15
-      */
+    // Use extname unless if its a directory or a file with only the extension itself then use Regex.
+    // -TBroz15
 
     // If its a folder or extension and it's in the ignore list, ignore it
     if (
