@@ -54,9 +54,6 @@ export const getFiles = async ({
   }
 
   arr.forEach((path) => {
-    // Use extname unless if its a directory or a file with only the extension itself then use Regex.
-    // -TBroz15
-
     // If its a folder or extension and it's in the ignore list, ignore it
     if (
       ignoreFolders.includes(path.split("/")[0]) ||
@@ -66,6 +63,8 @@ export const getFiles = async ({
 
     let ext = extname(path);
 
+    // When using extname to a file with only the ext. or a directory, it will return nothing.
+    // Regex will be the fallback to get the real path.
     if (ext === "") {
       const realExt = regexExt.exec(basename(path));
 
