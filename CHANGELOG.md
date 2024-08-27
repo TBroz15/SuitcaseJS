@@ -1,3 +1,10 @@
+## [1.4.10](https://github.com/TBroz15/SuitcaseJS/compare/v1.4.9...v1.4.10) (2024-08-27)
+
+
+### Bug Fixes
+
+* **deps:** :adhesive_bandage: update micromatch to fix vulnerability ([05346cc](https://github.com/TBroz15/SuitcaseJS/commit/05346ccba5ae3b753233b6b93fbfe609bef20b07))
+
 ## [1.4.9](https://github.com/TBroz15/SuitcaseJS/compare/v1.4.8...v1.4.9) (2024-08-27)
 
 
