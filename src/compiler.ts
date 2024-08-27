@@ -41,7 +41,8 @@ const compile = async (inPath: string, outPath: string) => {
 
   console.log("Starting...");
 
-  await Promise.all([mkOut(outPath), mkTemp(), mkTempPack()]);
+  await mkTemp();
+  await Promise.all([mkOut(outPath), mkTempPack()]);
 
   const start = performance.now();
 

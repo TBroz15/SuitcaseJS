@@ -10,7 +10,7 @@ export const tempPack = join(tempFolder, "temp");
 export const errorListFile = join(tempFolder, "error_list.json");
 
 export const mkTemp = () => {
-  if (!existsSync(cache)) return mkdir(cache);
+  if (!existsSync(cache)) return mkdir(cache, { recursive: true });
 };
 
 export const mkTempPack = () => {
