@@ -1,19 +1,24 @@
-ignore_folders:
-- "node_modules"
-- ".git"
-- ".vscode"
-- ".github"
+ignore:
+  directories:
+    - "node_modules"
+    - ".git"
+    - ".vscode"
+    - ".github"
 
-ignore_files:
-- ".gitignore"
-- ".gitattributes"
-- ".suitcaserc.yaml"
-- ".suitcaserc.json"
-- ".suitcaserc.toml"
+  extensions:
+    - ".mjs"
+    - ".cjs"
+    - ".yaml"
+    - ".yml"
+    - ".toml"
 
-ignore_extensions:
-- ".mjs"
-- ".cjs"
-- ".yaml"
-- ".yml"
-- ".toml"
+  files:
+    - ".gitignore"
+    - ".gitattributes"
+    - ".suitcaserc.yaml"
+    - ".suitcaserc.json"
+    - ".suitcaserc.toml"
+
+compiler:
+  JSON:
+    errorChecking: true

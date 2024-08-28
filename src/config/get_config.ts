@@ -1,63 +1,74 @@
 import { load as parseYaml } from "js-yaml";
-import fs from "node:fs";
-import path from "node:path";
+import { readFileSync, statSync } from "node:fs";
+import { join } from "node:path";
+import { defaultSuitcaseConfig } from "./default.js";
+import { SuitcaseConfig } from "../types/config.js";
+
+const currentDir = process.cwd();
 
 export const CONFIG_FILE_NAMES = [
   ".suitcaserc",
-  ".suitcaserc.yaml",
   ".suitcaserc.yml",
-  "suitcase.config.yaml",
-  "suitcase.config.yml",
+  ".suitcaserc.yaml",
+  ".suitcaserc.json",
+  ".suitcase.config.yaml",
+  ".suitcase.config.yml",
+  ".suitcase.config.json",
 ];
 
 class Config {
-  get_config = () => {
-    const files: string[] = [];
-    CONFIG_FILE_NAMES.forEach((name) => {
-      if (this.isFile(process.cwd() + "/" + name)) {
-        files.push(name);
-      }
-    });
-    return files;
-  };
+  get(): string[] {
+    return CONFIG_FILE_NAMES.filter((name) =>
+      this.isFile(join(currentDir, name))
+    );
+  }
 
-  load_config = (): string | undefined => {
-    const config = this.get_config();
+  load(): SuitcaseConfig {
+    const config = this.get();
     let configFile;
+
     config.forEach((name) => {
-      const { ext: extension } = path.parse(name);
-      const loader = loaders[extension];
-      if (loader) configFile = loader(name);
+      configFile = configLoader(name);
     });
-    return configFile;
-  };
+
+    if (!configFile) {
+      console.error("✖ No valid config found, using default config.");
+      return defaultSuitcaseConfig;
+    } else return configFile;
+  }
 
   isFile(path: string) {
     try {
-      fs.statSync(path);
-      return true;
+      return statSync(path).isFile();
     } catch (error) {
       if (error) return false;
     }
   }
 }
 
-const loaders: Record<string, (path: string) => unknown> = {
-  ".yaml"(path: string): unknown {
-    const content = fs.readFileSync(path, "utf8");
-    try {
-      return parseYaml(content);
-    } catch (error: unknown) {
-      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      console.error(`Error parsing ${path} as YAML: ${error}`);
-    }
-  },
-  ".yml"(path: string): unknown {
-    return loaders[".yaml"](path);
-  },
-  ""(path: string): unknown {
-    return loaders[".yaml"](path);
-  },
+const tryLoadJSON = (content: string): unknown => {
+  try {
+    return JSON.parse(content);
+  } catch (error: unknown) {
+    if (!error) return;
+    return false;
+  }
+};
+
+const tryLoadYAML = (path: string, content: string): unknown => {
+  try {
+    return parseYaml(content);
+  } catch (error: unknown) {
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    console.warn(`⚠️ Error parsing "${path}" as YAML:\n\n${error}`);
+    return false;
+  }
+};
+
+const configLoader = (path: string) => {
+  const configContent = readFileSync(path, "utf8");
+
+  return tryLoadJSON(configContent) || tryLoadYAML(path, configContent);
 };
 
 export default Config;

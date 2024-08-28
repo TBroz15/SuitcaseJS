@@ -5,6 +5,7 @@ import { lowFirstChar, upFirstChar } from "../utils/cli/first_char.js";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "url";
 import { FunctionNames } from "../types/workers.js";
+import type { CompilerConf } from "../types/config.d.ts";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -15,7 +16,7 @@ interface Thread {
   busy: boolean;
 }
 
-export const ThreadPool = (threads: number) => {
+export const ThreadPool = (threads: number, compilerConfig: CompilerConf) => {
   const encoder = new TextEncoder();
 
   const threadPool: Thread[] = [];
@@ -23,6 +24,7 @@ export const ThreadPool = (threads: number) => {
   for (let i = 0; i < threads; i++) {
     const worker = new Worker(resolve(__dirname, "worker.js"), {
       workerData: {
+        compilerConfig,
         temp: tempPack,
         cache: cache,
       },

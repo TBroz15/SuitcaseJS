@@ -6,16 +6,12 @@ import { errorListFile } from "../utils/compiler/temp_folder.js";
 import { removeComments } from "../utils/compiler/remove_comments.js";
 import { copyFile } from "node:fs/promises";
 import type { JSONErrorList } from "../types/error_list.d.ts";
-import type { WorkerFunctions } from "../types/workers.d.ts";
+import type { WorkerData, WorkerFunctions } from "../types/workers.d.ts";
 import sharp from "sharp";
 import { PNG } from "../utils/compiler/default_config.js";
 import { promiseAllUnhandled } from "../utils/compiler/promise_all_unhandled.js";
 
-const { cache, temp } = workerData as {
-  threads: number;
-  cache: string;
-  temp: string;
-};
+const { cache, temp } = workerData as WorkerData;
 
 // TODO: Reduce some repeated code
 

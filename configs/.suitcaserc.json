@@ -1,0 +1,14 @@
+{
+  "ignore": {
+    "directories": ["node_modules", ".git", ".vscode", ".github"],
+    "extensions": [".mjs", ".cjs", ".yaml", ".yml", ".toml"],
+    "files": [
+      ".gitignore",
+      ".gitattributes",
+      ".suitcaserc.yaml",
+      ".suitcaserc.json",
+      ".suitcaserc.toml"
+    ]
+  },
+  "compiler": { "JSON": { "errorChecking": true } }
+}

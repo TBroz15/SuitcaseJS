@@ -19,6 +19,7 @@ import type { JSONErrorList } from "./types/error_list.d.ts";
 import AdmZip from "adm-zip";
 import { rm } from "node:fs/promises";
 import getDirSize from "fdir-size";
+import Config from "./config/get_config.js";
 
 const threads = cpus().length;
 
@@ -37,7 +38,9 @@ const compile = async (inPath: string, outPath: string) => {
     process.exit(-1);
   }
 
-  const { terminate, runArray } = ThreadPool(threads);
+  const { compiler, ignore } = new Config().load();
+
+  const { terminate, runArray } = ThreadPool(threads, compiler);
 
   console.log("Starting...");
 
@@ -47,7 +50,11 @@ const compile = async (inPath: string, outPath: string) => {
   const start = performance.now();
 
   const getFilesSpinner = newSpinner("Getting all files...");
-  const { JSONFiles, PNGFiles, etc } = await getFiles({ inPath, threads });
+  const { JSONFiles, PNGFiles, etc } = await getFiles({
+    inPath,
+    threads,
+    ignore,
+  });
   getFilesSpinner("success", {
     text: "Finished getting all files.",
   });
