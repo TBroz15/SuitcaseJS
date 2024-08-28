@@ -59,8 +59,8 @@
   "type": "module",
   "dependencies": {
     "adm-zip": "^0.5.15",
-    "fdir": "^6.2.0",
-    "fdir-size": "^1.0.0",
+    "fdir": "^6.3.0",
+    "fdir-size": "^1.0.2",
     "js-yaml": "^4.1.0",
     "mri": "^1.2.0",
     "nanospinner": "^1.1.0",
