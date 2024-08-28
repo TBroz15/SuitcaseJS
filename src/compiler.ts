@@ -38,11 +38,11 @@ const compile = async (inPath: string, outPath: string) => {
     process.exit(-1);
   }
 
+  console.log(`${bold("Compiling")} ${italic(inPath)}...\n`);
+
   const { compiler, ignore } = new Config().load();
 
   const { terminate, runArray } = ThreadPool(threads, compiler);
-
-  console.log("Starting...");
 
   await mkTemp();
   await Promise.all([mkOut(outPath), mkTempPack()]);
