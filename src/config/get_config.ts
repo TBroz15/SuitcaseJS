@@ -32,7 +32,7 @@ class Config {
     });
 
     if (!configFile) {
-      console.error("✖ No valid config found, using default config.");
+      console.warn("⚠️ No valid config found, using default config.");
       return defaultSuitcaseConfig;
     } else return configFile;
   }
