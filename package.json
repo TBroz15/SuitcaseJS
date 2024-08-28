@@ -67,8 +67,5 @@
     "picocolors": "^1.0.1",
     "sharp": "^0.33.4",
     "strip-ansi": "^7.1.0"
-  },
-  "trustedDependencies": [
-    "fast-folder-size"
-  ]
+  }
 }
