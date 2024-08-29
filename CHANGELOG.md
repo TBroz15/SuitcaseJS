@@ -1,3 +1,18 @@
+# [1.5.0](https://github.com/TBroz15/SuitcaseJS/compare/v1.4.10...v1.5.0) (2024-08-29)
+
+
+### Bug Fixes
+
+* **compiler@config:** :adhesive_bandage: "no valid config" message now warns instead of error ([15b7139](https://github.com/TBroz15/SuitcaseJS/commit/15b71397265b1fe694631cc7738665b79c11c723))
+* **deps:** :arrow_up: upgrade fdir to 6.3.0 and fdir-size to 1.0.2 ([9657de3](https://github.com/TBroz15/SuitcaseJS/commit/9657de30cadcf3a37935e998273d771b65a1395d))
+
+
+### Features
+
+* **compiler@config:** :fire: handle js-yaml as an optional package ([d2ff69e](https://github.com/TBroz15/SuitcaseJS/commit/d2ff69eefd54fb156b698d1dcdb7ff54b9aa67db))
+* **compiler@config:** :sparkles: :wrench: config overhaul! ([61e9b1d](https://github.com/TBroz15/SuitcaseJS/commit/61e9b1d978e1f2a5e3adbfb73a2d58e39c1ee046))
+* **compiler@json:** :sparkles: :zap: add JSON errorChecking option to config ([d8d043d](https://github.com/TBroz15/SuitcaseJS/commit/d8d043deeaba594068842d4593897df7afadf9be))
+
 ## [1.4.10](https://github.com/TBroz15/SuitcaseJS/compare/v1.4.9...v1.4.10) (2024-08-27)
 
 
