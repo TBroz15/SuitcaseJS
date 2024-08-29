@@ -3,15 +3,15 @@ import { join } from "node:path";
 import { parentPort, workerData } from "node:worker_threads";
 import { createHash } from "node:crypto";
 import { errorListFile } from "../utils/compiler/temp_folder.js";
-import { removeComments } from "../utils/compiler/remove_comments.js";
 import { copyFile } from "node:fs/promises";
 import type { JSONErrorList } from "../types/error_list.d.ts";
 import type { WorkerData, WorkerFunctions } from "../types/workers.d.ts";
 import sharp from "sharp";
 import { PNG } from "../utils/compiler/default_config.js";
 import { promiseAllUnhandled } from "../utils/compiler/promise_all_unhandled.js";
+import JSONC from "jsonc-parser";
 
-const { cache, temp } = workerData as WorkerData;
+const { cache, temp, compilerConfig } = workerData as WorkerData;
 
 // TODO: Reduce some repeated code
 
@@ -42,33 +42,39 @@ const functions: WorkerFunctions = {
       const cacheFile = join(cache, hash.concat(".json"));
       const cacheFileExists = existsSync(cacheFile);
 
-      if (!cacheFileExists)
-        try {
-          data = removeComments(data);
-          // This minifies the JSON, and at the same time check one error.
-          // Far better to just lint it through any editor such as VSCode.
-          data = JSON.stringify(JSON.parse(data));
-
-          writeFileSync(cacheFile, data);
-        } catch (error) {
-          errorList.push({ error: (error as Error).toString(), filePath });
+      if (!cacheFileExists) {
+        if (compilerConfig.JSON?.errorChecking) {
+          try {
+            data = JSONC.stripComments(data);
+            data = JSON.parse(data) as unknown as string; // epic bypass
+          } catch (error) {
+            errorList.push({
+              error: (error as Error).toString(),
+              filePath,
+            });
+          }
+        } else {
+          data = JSONC.parse(data) as unknown as string; // epic bypass 2: Electric Boogaloo
         }
+
+        writeFileSync(cacheFile, JSON.stringify(data));
+      }
 
       return copyFile(cacheFile, tempPath);
     });
 
     await promiseAllUnhandled(promises);
 
-    if (errorList[0]) {
-      if (!existsSync(errorListFile)) writeFileSync(errorListFile, "[]");
+    if (!(compilerConfig.JSON?.errorChecking && errorList[0])) return;
 
-      const allErrors = JSON.parse(
-        readFileSync(errorListFile, "utf-8")
-      ) as JSONErrorList;
-      allErrors.push(...errorList);
+    if (!existsSync(errorListFile)) writeFileSync(errorListFile, "[]");
 
-      writeFileSync(errorListFile, JSON.stringify(allErrors));
-    }
+    const allErrors = JSON.parse(
+      readFileSync(errorListFile, "utf-8")
+    ) as JSONErrorList;
+    allErrors.push(...errorList);
+
+    writeFileSync(errorListFile, JSON.stringify(allErrors));
   },
   async compressPNG({ inPath, element: PNGFiles }) {
     // If array is empty, ignore it right away
