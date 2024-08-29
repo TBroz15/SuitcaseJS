@@ -61,11 +61,21 @@
     "adm-zip": "^0.5.15",
     "fdir": "^6.3.0",
     "fdir-size": "^1.0.2",
-    "js-yaml": "^4.1.0",
     "mri": "^1.2.0",
     "nanospinner": "^1.1.0",
     "picocolors": "^1.0.1",
     "sharp": "^0.33.4",
     "strip-ansi": "^7.1.0"
+  },
+  "optionalDependencies": {
+    "js-yaml": "^4.1.0"
+  },
+  "peerDependencies": {
+    "js-yaml": "^4.1.0"
+  },
+  "peerDependenciesMeta": {
+    "js-yaml": {
+      "optional": true
+    }
   }
 }
