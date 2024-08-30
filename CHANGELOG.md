@@ -1,3 +1,16 @@
+# [2.0.0](https://github.com/TBroz15/SuitcaseJS/compare/v1.5.0...v2.0.0) (2024-08-30)
+
+
+### Features
+
+* **compiler@config:** force breaking changes about config ([859647a](https://github.com/TBroz15/SuitcaseJS/commit/859647a4b59eefbec29b7a2a02cc0ea3636dc2c4))
+
+
+### BREAKING CHANGES
+
+* **compiler@config:** js-yaml is now optional to install and the structure of the config file has
+changes.
+
 # [1.5.0](https://github.com/TBroz15/SuitcaseJS/compare/v1.4.10...v1.5.0) (2024-08-29)
 
 
