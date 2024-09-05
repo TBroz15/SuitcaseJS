@@ -15,7 +15,7 @@
 
 ## Why?
 
-<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Large packs contain lengthy characters, unnecessary whitespaces, and uncompressed files, scripts, and assets. Downloading these packs would be a pain for the users due to slow internet issues. <b>Suitcase.js</b> fixes this by making it compact as much as possible, reducing the bandwidth need to download a specific pack and gives micro-optimizations <i>vs. the original pack.</i></p>
+<p align="justify">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Large packs contain lengthy characters, unnecessary whitespaces, and uncompressed files, scripts, and assets. Downloading these packs would be a pain for the users due to slow internet issues. <b>SuitcaseJS</b> fixes this by making it compact as much as possible, reducing the bandwidth need to download a specific pack and gives micro-optimizations <i>vs. the original pack.</i></p>
 
 ## How To Install?
 
@@ -28,7 +28,7 @@
 _You can install it locally as you want to, **but you have to include npx**._
 
 1. Install **SuitcaseJS** using your package manager. For this case in NPM, run `npm install -g suitcasejs`.
-2. Reopen the terminal, run `suitcase --version` to check if **Suitcase.js** has been installed. _If reopening the terminal and running the command won't work, try restarting your computer._
+2. Reopen the terminal, run `suitcase --version` to check if **SuitcaseJS** has been installed. _If reopening the terminal and running the command won't work, try restarting your computer._
 
 ## Example Usage
 
@@ -42,7 +42,7 @@ _For more commands, please run `suitcase --help`._
 
 ## [Wiki](https://github.com/TBroz15/SuitcaseJS/wiki)
 
-For usages, benchmarks, and tips, please check out the [**Suitcase.js** wiki page](https://github.com/TBroz15/SuitcaseJS/wiki)!
+For usages, benchmarks, and tips, please check out the [**SuitcaseJS** wiki page](https://github.com/TBroz15/SuitcaseJS/wiki)!
 
 ## Contributing
 
