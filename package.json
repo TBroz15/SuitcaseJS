@@ -53,7 +53,7 @@
     "build": "node ci/build",
     "test": "node ci/build && node ./dist/cli.js",
     "semantic-release": "semantic-release --branches main",
-    "commit": "git-cz",
+    "commit": "pnpx git-cz",
     "lint": "node ci/lint"
   },
   "type": "module",
