@@ -1,15 +1,17 @@
 {
   "conventionalCommits.scopes": [
     "cli",
+    "deps",
+    "publish",
+
+    "dev@deps",
     "dev@types",
     "dev@other",
+
     "compiler@json",
     "compiler@asset",
     "compiler@config",
     "compiler@compression",
-    "compiler@other",
-    "publish",
-    "deps",
-    "dev@deps"
+    "compiler@other"
   ]
 }
