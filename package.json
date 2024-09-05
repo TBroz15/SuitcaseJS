@@ -78,5 +78,6 @@
     "js-yaml": {
       "optional": true
     }
-  }
+  },
+  "packageManager": "pnpm@9.9.0"
 }
