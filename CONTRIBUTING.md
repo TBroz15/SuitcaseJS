@@ -12,6 +12,7 @@ Thank you for contributing to SuitcaseJS! These are the guidelines if you are wi
 
 ### Prerequisites
 
+- Git
 - Visual Studio Code
 - NodeJS 18 or above
 - PNPM (install through `pnpm i -g pnpm`)
@@ -20,12 +21,14 @@ Thank you for contributing to SuitcaseJS! These are the guidelines if you are wi
 
 1. Fork this repository
 2. In your repository, create a new branch of any name.
-3. Create some changes for your PR.
-4. Use `pnpm run test -- ` to test out the cli. For example: `pnpm run test -- -c -i ./in/ -o ./out.mcpack`
-5. Run the script `pnpm run lint` to check your code.
-6. Use the provided `pnpm run commit` or [Conventional Commits](https://marketplace.visualstudio.com/items?itemName=vivaxy.vscode-conventional-commits) to create a proper commit message.
-7. Push your branch to GitHub through `git push origin (your branch name)`
-8. Finally send your pull request to main. _It is recommended to draft your PR first if you are not sure with your code._
+3. Clone your fork to your computer.
+4. Run `pnpm i` to install packages.
+5. Create some changes for your PR.
+6. Use `pnpm run test -- ` to test out the cli. For example: `pnpm run test -- -c -i ./in/ -o ./out.mcpack`
+7. Run the script `pnpm run lint` to check your code.
+8. Use the provided `pnpm run commit` or [Conventional Commits](https://marketplace.visualstudio.com/items?itemName=vivaxy.vscode-conventional-commits) to create a proper commit message.
+9. Push your branch to GitHub through `git push origin (your branch name)`
+10. Finally send your pull request to main. _It is recommended to draft your PR first if you are not sure with your code._
 
 > [!IMPORTANT]
 >
