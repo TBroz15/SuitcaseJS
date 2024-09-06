@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/TBroz15/SuitcaseJS/compare/v2.0.0...v2.0.1) (2024-09-06)
+
+
+### Performance Improvements
+
+* **compiler@other:** :zap: update fdir-size ([33f440c](https://github.com/TBroz15/SuitcaseJS/commit/33f440ca6dd0ce145cbd764412536b45fb442263))
+
 # [2.0.0](https://github.com/TBroz15/SuitcaseJS/compare/v1.5.0...v2.0.0) (2024-08-30)
 
 
