@@ -42,7 +42,7 @@ const compile = async (inPath: string, outPath: string) => {
 
   const { compiler, ignore } = new Config().load();
 
-  const { terminate, runArray } = ThreadPool(threads, compiler);
+  const { terminatePool, runArray } = ThreadPool(threads, compiler);
 
   await mkTemp();
   await Promise.all([mkOut(outPath), mkTempPack()]);
@@ -68,7 +68,7 @@ const compile = async (inPath: string, outPath: string) => {
     ["Copy other files", "Minify JSON files", "Compress PNG files"]
   );
 
-  terminate();
+  terminatePool();
 
   const archive = new AdmZip();
 

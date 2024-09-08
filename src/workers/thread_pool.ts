@@ -80,11 +80,11 @@ export const ThreadPool = (threads: number, compilerConfig: CompilerConf) => {
   const runArray = (fn: FunctionNames, array: unknown[], data: object) =>
     Promise.all(array.map((element) => runThread(fn, { ...data, element })));
 
-  const terminate = () => {
+  const terminatePool = () => {
     for (let i = 0; i < threads; i++) {
       void threadPool[i].worker.terminate();
     }
   };
 
-  return { terminate, runArray, run };
+  return { terminatePool, runArray, run };
 };
