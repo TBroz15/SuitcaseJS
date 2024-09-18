@@ -1,22 +1,20 @@
 import { readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { defaultSuitcaseConfig } from "./default.js";
-import { SuitcaseConfig } from "../types/config.js";
+import { Options } from "../types/config.js";
 import { italic } from "../utils/cli/picocolors.js";
-
-// h
 
 let yaml: typeof import("js-yaml");
 
-await import("js-yaml")
-  .then((module) => {
-    yaml = module;
-  })
-  .catch(() => {});
+try {
+  yaml = await import("js-yaml");
+} catch (error) {
+  void error;
+}
 
 const currentDir = process.cwd();
 
-export const CONFIG_FILE_NAMES = [
+export const CONFIG_FILE_NAMES = new Set([
   ".suitcaserc",
   ".suitcaserc.yml",
   ".suitcaserc.yaml",
@@ -24,27 +22,28 @@ export const CONFIG_FILE_NAMES = [
   ".suitcase.config.yaml",
   ".suitcase.config.yml",
   ".suitcase.config.json",
-];
+]);
 
 class Config {
   get(): string[] {
-    return CONFIG_FILE_NAMES.filter((name) =>
+    return Array.from(CONFIG_FILE_NAMES).filter((name) =>
       this.isFile(join(currentDir, name))
     );
   }
 
-  load(): SuitcaseConfig {
+  load(doLogErrors: boolean = false): Options {
     const config = this.get();
     let configFile;
 
     config.forEach((name) => {
-      configFile = configLoader(name);
+      configFile = configLoader(name, doLogErrors);
     });
 
-    if (!configFile) {
+    if (configFile) return configFile;
+
+    if (doLogErrors)
       console.warn("⚠️ No valid config found, using default config.\n");
-      return defaultSuitcaseConfig;
-    } else return configFile;
+    return defaultSuitcaseConfig;
   }
 
   isFile(path: string) {
@@ -56,27 +55,35 @@ class Config {
   }
 }
 
-const tryLoadJSON = (content: string): unknown => {
+const tryLoadJSON = (
+  path: string,
+  content: string,
+  doLogErrors: boolean
+): unknown => {
   try {
     return JSON.parse(content);
   } catch (error: unknown) {
-    if (!error) return;
+    if (doLogErrors)
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+      console.warn(`⚠️ Error parsing "${path}" as YAML:\n\n${error}`);
     return false;
   }
 };
 
-const tryLoadYAML = (path: string, content: string): unknown => {
+const tryLoadYAML = (
+  path: string,
+  content: string,
+  doLogErrors: boolean
+): unknown => {
   try {
-    if (!yaml) {
-      // prettier-ignore
+    if (yaml) return yaml.load(content);
+    if (doLogErrors)
       console.warn(
         `⚠️ Module "js-yaml" does not exist, can't parse "${path}"\n  Install it by running ${italic(
           `"npm install js-yaml"`
         )}\n`
       );
-      return false;
-    }
-    return yaml.load(content);
+    return false;
   } catch (error: unknown) {
     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     console.warn(`⚠️ Error parsing "${path}" as YAML:\n\n${error}`);
@@ -84,10 +91,13 @@ const tryLoadYAML = (path: string, content: string): unknown => {
   }
 };
 
-const configLoader = (path: string) => {
+export const configLoader = (path: string, doLogErrors: boolean = false) => {
   const configContent = readFileSync(path, "utf8");
 
-  return tryLoadJSON(configContent) || tryLoadYAML(path, configContent);
+  return (
+    tryLoadJSON(path, configContent, doLogErrors) ||
+    tryLoadYAML(path, configContent, doLogErrors)
+  );
 };
 
 export default Config;
