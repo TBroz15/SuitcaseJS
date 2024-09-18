@@ -1,6 +1,17 @@
-import type { SuitcaseConfig } from "../types/config.js";
+import type { Options } from "../types/config.js";
 
-export const defaultSuitcaseConfig: SuitcaseConfig = {
-  ignore: { directories: [], extensions: [], files: [] },
-  compiler: { JSON: { errorChecking: true } },
+export const defaultSuitcaseConfig: Options = {
+  ignore: {
+    directories: [],
+    extensions: [],
+    files: [],
+    globs: [],
+  },
+  compiler: {
+    JSON: { minify: true, errorChecking: true },
+    LANG: { minify: true },
+    PNG: { compress: true },
+    JPG: { compress: true },
+    withCaching: true,
+  },
 };

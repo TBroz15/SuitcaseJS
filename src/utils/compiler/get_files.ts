@@ -1,5 +1,5 @@
-import { fdir } from "fdir";
-import { mkdir } from "fs/promises";
+import { fdir as FDir } from "fdir";
+import { copyFile, mkdir } from "fs/promises";
 import { extname, basename, join } from "path";
 import { CONFIG_FILE_NAMES } from "../../config/get_config.js";
 import { chunkArray } from "./chunk_array.js";
@@ -7,32 +7,47 @@ import { tempPack } from "./temp_folder.js";
 import type { IgnoreConf } from "../../types/config.d.ts";
 
 const temp = tempPack;
+const fdir = new FDir({
+  includeDirs: true,
+  includeBasePath: true,
+}).withRelativePaths();
+
+export interface IgnoreSet {
+  directories?: Set<string>;
+  extensions?: Set<string>;
+  files?: Set<string>;
+}
 
 export const getFiles = async ({
   inPath,
   threads,
-  ignore,
+  _ignore,
 }: {
   inPath: string;
   threads: number;
-  ignore: IgnoreConf;
+  _ignore: IgnoreConf;
 }) => {
   const directories: string[] = [];
   const JSONFiles: string[] = [];
   const PNGFiles: string[] = [];
   const etc: string[] = [];
 
-  const arr = await new fdir({ includeDirs: true, includeBasePath: true })
-    .withRelativePaths()
-    .crawl(inPath)
-    .withPromise();
+  const ignore: IgnoreSet = {};
+
+  for (const key in _ignore) {
+    const typedKey = key as keyof typeof _ignore;
+    ignore[typedKey] = new Set(_ignore[typedKey]);
+  }
+
+  const arr = await fdir.crawl(inPath).withPromise();
 
   arr.shift();
 
   const regexExt = /\.([^.]+)$/;
 
   arr.forEach((path) => {
-    if (ignore.directories.includes(path.split("/")[0])) return;
+    const currentDir = path.split("/")[0];
+    if (ignore.directories && ignore.directories.has(currentDir)) return;
 
     let ext = extname(path);
 
@@ -45,16 +60,16 @@ export const getFiles = async ({
       if (realExt === null) return directories.push(path);
 
       // If its a file and it's in the ignore list
-      if (ignore.files.includes(realExt[0])) return;
+      if (ignore.files && ignore.files.has(realExt[0])) return;
 
       // or not...
       ext = realExt[0];
     }
 
     // If its a suitcase config file, ignore it
-    if (CONFIG_FILE_NAMES.includes(path)) return;
+    if (CONFIG_FILE_NAMES.has(path)) return;
 
-    if (ignore.extensions.includes(ext)) return;
+    if (ignore.extensions && ignore.extensions.has(ext)) return;
 
     switch (ext) {
       case ".json":
@@ -69,18 +84,16 @@ export const getFiles = async ({
   const directoryPromises = directories.map((path) =>
     mkdir(join(temp, path), { recursive: true })
   );
+  void (await Promise.all(directoryPromises));
 
-  // Distribute according to the amount of threads while making directories
-  const [splitJSONFiles, splitPNG, splitETC] = await Promise.all([
-    chunkArray(JSONFiles, threads),
-    chunkArray(PNGFiles, threads),
-    chunkArray(etc, threads),
-    ...directoryPromises,
-  ]);
+  const copyPromises = etc.map((path) =>
+    copyFile(join(inPath, path), join(temp, path))
+  );
+  void (await Promise.all(copyPromises));
 
+  // Distribute according to the amount of threads
   return {
-    JSONFiles: splitJSONFiles,
-    PNGFiles: splitPNG,
-    etc: splitETC,
+    JSONFiles: chunkArray(JSONFiles, threads),
+    PNGFiles: chunkArray(PNGFiles, threads),
   };
 };
