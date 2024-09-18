@@ -16,6 +16,7 @@ export interface IgnoreSet {
   directories?: Set<string>;
   extensions?: Set<string>;
   files?: Set<string>;
+  globs?: Set<string>;
 }
 
 export const getFiles = async ({
@@ -39,7 +40,18 @@ export const getFiles = async ({
     ignore[typedKey] = new Set(_ignore[typedKey]);
   }
 
-  const arr = await fdir.crawl(inPath).withPromise();
+  // Check if globbing is enabled and picomatch exists.
+  const isGoForGlob =
+    typeof ignore.globs !== "undefined" &&
+    ignore.globs?.size !== 0 &&
+    import.meta.resolve("picomatch");
+
+  const arr = await (isGoForGlob
+    ? fdir.glob(...(ignore.globs as Set<string>))
+    : fdir
+  )
+    .crawl(inPath)
+    .withPromise();
 
   arr.shift();
 
