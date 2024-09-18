@@ -19,15 +19,11 @@ export interface IgnoreSet {
   globs?: Set<string>;
 }
 
-export const getFiles = async ({
-  inPath,
-  threads,
-  _ignore,
-}: {
-  inPath: string;
-  threads: number;
-  _ignore: IgnoreConf;
-}) => {
+export const getFiles = async (
+  inPath: string,
+  threads: number,
+  _ignore: IgnoreConf
+) => {
   const directories: string[] = [];
   const JSONFiles: string[] = [];
   const PNGFiles: string[] = [];
