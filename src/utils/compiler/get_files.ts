@@ -42,20 +42,20 @@ export const getFiles = async (
     ignore.globs?.size !== 0 &&
     import.meta.resolve("picomatch");
 
-  const arr = await (isGoForGlob
+  const files = await (isGoForGlob
     ? fdir.glob(...(ignore.globs as Set<string>))
     : fdir
   )
     .crawl(inPath)
     .withPromise();
 
-  arr.shift();
+  files.shift();
 
   const regexExt = /\.([^.]+)$/;
 
-  arr.forEach((path) => {
+  for (const path of files) {
     const currentDir = path.split("/")[0];
-    if (ignore.directories && ignore.directories.has(currentDir)) return;
+    if (ignore.directories && ignore.directories.has(currentDir)) continue;
 
     let ext = extname(path);
 
@@ -65,29 +65,38 @@ export const getFiles = async (
       const realExt = regexExt.exec(basename(path));
 
       // If its a directory
-      if (realExt === null) return directories.push(path);
+      if (realExt === null) {
+        directories.push(path);
+        continue;
+      }
 
       // If its a file and it's in the ignore list
-      if (ignore.files && ignore.files.has(realExt[0])) return;
+      if (ignore.files && ignore.files.has(realExt[0])) continue;
 
       // or not...
       ext = realExt[0];
     }
 
     // If its a suitcase config file, ignore it
-    if (CONFIG_FILE_NAMES.has(path)) return;
+    if (CONFIG_FILE_NAMES.has(path)) continue;
 
-    if (ignore.extensions && ignore.extensions.has(ext)) return;
+    if (ignore.extensions && ignore.extensions.has(ext)) continue;
 
     switch (ext) {
-      case ".json":
-        return JSONFiles.push(path);
-      case ".png":
-        return PNGFiles.push(path);
-      default:
-        return etc.push(path);
+      case ".json": {
+        JSONFiles.push(path);
+        continue;
+      }
+      case ".png": {
+        PNGFiles.push(path);
+        continue;
+      }
+      default: {
+        etc.push(path);
+        continue;
+      }
     }
-  });
+  }
 
   const directoryPromises = directories.map((path) =>
     mkdir(join(temp, path), { recursive: true })
