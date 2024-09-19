@@ -1,4 +1,4 @@
-import type { CompilerConf } from "./config.d.ts";
+import type { Options } from "./config.d.ts";
 
 export type FN = ({
   inPath,
@@ -9,9 +9,12 @@ export type FN = ({
 }) => Promise<void>;
 
 export type WorkerData = {
-  compilerConfig: CompilerConf;
-  cache: string;
-  temp: string;
+  compilerConfig: Options;
+  inPath: string;
+  files: {
+    JSON: string[];
+    PNG: string[];
+  };
 };
 
 export type FunctionNames = "copyEtc" | "minifyJSON" | "compressPNG";
