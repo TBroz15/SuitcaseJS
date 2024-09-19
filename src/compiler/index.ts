@@ -4,8 +4,10 @@ import getDirSize from "fdir-size";
 import { cpus } from "os";
 import { rm, stat } from "fs/promises";
 import { existsSync, statSync } from "fs";
-import { ThreadPool } from "./workers/thread_pool.js";
+
 import { getFiles } from "./utils/get_files.js";
+import { ThreadPool } from "./workers/thread_pool.js";
+import { defaultSuitcaseConfig } from "./config/default.js";
 import Config, { configLoader } from "./config/get_config.js";
 
 import { mkOut, mkTemp, mkTempPack, tempPack } from "./utils/temp_folder.js";
@@ -40,16 +42,7 @@ export class Suitcase {
 
   private files: { JSONFiles?: unknown[][]; PNGFiles?: unknown[][] } = {};
 
-  private options: Options = {
-    ignore: {},
-    compiler: {
-      JSON: { minify: true, errorChecking: true },
-      LANG: { minify: true },
-      PNG: { compress: true, compressionLevel: 9, quality: 100 },
-      JPG: { compress: true, quality: 100 },
-      withCaching: true,
-    },
-  };
+  private options: Options = defaultSuitcaseConfig;
 
   constructor(inPath: string) {
     if (!inPath) throw new Error("inPath is undefined!");
