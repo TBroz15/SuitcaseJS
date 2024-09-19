@@ -3,11 +3,10 @@
     "cli",
     "deps",
     "publish",
-
     "dev@deps",
     "dev@types",
     "dev@other",
-
+    "compiler@api",
     "compiler@json",
     "compiler@asset",
     "compiler@config",
