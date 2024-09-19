@@ -31,7 +31,7 @@ switch (process.argv[2]) {
       alias: {
         in: "i",
         out: "o",
-        "bare-bones": "-b",
+        "bare-bones": "b",
       },
     }) as { in: string; out: string; "bare-bones": boolean };
 
