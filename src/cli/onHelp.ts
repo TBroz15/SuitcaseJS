@@ -29,8 +29,14 @@ const clearCacheUsage = usage(
 
 const compileUsage = usage(
     ["--compile", "-c"],
-    `Starts the compilation process according to the flags.`,
+    "Starts the compilation process according to the flags.",
     true, 4
+);
+
+const bareBonesUsage = usage(
+    ["--bare-bones", "-b"],
+    `If included, it non-graphically compiles the pack. ${italic("May speed up the compilation process.")}`,
+    false, 6
 );
 
 const inUsage = usage(
@@ -46,9 +52,10 @@ const outUsage = usage(
 );
 
 export const fullCompileUsage =
-`${compileUsage}
-${inUsage      }
-${outUsage     }`
+`${compileUsage }
+${bareBonesUsage}
+${inUsage       }
+${outUsage      }`
 
 export const onHelp = () => console.log(
 `${green(" ──Usage── ")}

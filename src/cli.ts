@@ -2,13 +2,14 @@
 
 // pain -TBroz15
 
-import { compile } from "./compiler.js";
+import { compile } from "./compiler/compiler.js";
 import { onHelp } from "./cli/onHelp.js";
 import { italic } from "./utils/cli/picocolors.js";
 import { getRuntime } from "./utils/cli/get_runtime.js";
 import { clearCache } from "./cli/clear_cache.js";
 import { version } from "./utils/cli/get_version.js";
 import mri from "mri";
+import { bareBones } from "./compiler/bare_bones.js";
 
 console.log(`
  💼 Suitcase.js ${italic(`v${version}`)}
@@ -30,6 +31,19 @@ switch (process.argv[2]) {
     }) as { in: string; out: string };
 
     await compile(inPath, outPath);
+    break;
+  }
+
+  case "-b":
+  case "--bare-bones": {
+    const { in: inPath, out: outPath } = mri(process.argv.slice(2), {
+      alias: {
+        in: "i",
+        out: "o",
+      },
+    }) as { in: string; out: string };
+
+    await bareBones(inPath, outPath);
     break;
   }
 
