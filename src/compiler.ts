@@ -1,131 +1,203 @@
-import { cpus } from "node:os";
-import { existsSync, readFileSync, statSync } from "node:fs";
-import { newSpinner } from "./utils/cli/spinner.js";
+import AdmZip from "adm-zip";
+import getDirSize from "fdir-size";
 
+import { cpus } from "os";
+import { rm, stat } from "fs/promises";
+import { existsSync, statSync } from "fs";
 import { ThreadPool } from "./workers/thread_pool.js";
-import { bold, green, italic, red, warn } from "./utils/cli/picocolors.js";
-import { fullCompileUsage, suitcaseUsage } from "./cli/onHelp.js";
+import { getFiles } from "./utils/compiler/get_files.js";
+import Config, { configLoader } from "./config/get_config.js";
+
 import {
-  clrErrorList,
-  errorListFile,
   mkOut,
   mkTemp,
   mkTempPack,
   tempPack,
 } from "./utils/compiler/temp_folder.js";
-import { getFiles } from "./utils/compiler/get_files.js";
-import { runPromises } from "./utils/compiler/run_promises.js";
-import type { JSONErrorList } from "./types/error_list.d.ts";
-import AdmZip from "adm-zip";
-import { rm } from "node:fs/promises";
-import getDirSize from "fdir-size";
-import Config from "./config/get_config.js";
+
+import type {
+  JSONOptions,
+  Options,
+  JPGOptions,
+  LANGOptions,
+  PNGOptions,
+} from "./types/config.d.ts";
 
 const threads = cpus().length;
 
-const compile = async (inPath: string, outPath: string) => {
-  if (!inPath || !outPath) {
-    console.log(
-      `  ${red(
-        '"You forgot the pickles!"'
-      )}\n\n${suitcaseUsage}\n${fullCompileUsage}`
-    );
-    process.exit(-1);
+interface FinalStats {
+  compileTime: number;
+  outPath: string;
+  inPath: string;
+
+  before?: number;
+  after?: number;
+}
+
+export class Suitcase {
+  protected inPath: string;
+  protected outPath!: string;
+  protected stats: FinalStats = {
+    compileTime: 0,
+    outPath: "",
+    inPath: "",
+  };
+
+  private files: { JSONFiles?: unknown[][]; PNGFiles?: unknown[][] } = {};
+
+  private options: Options = {
+    ignore: {},
+    compiler: {
+      JSON: { minify: true, errorChecking: true },
+      LANG: { minify: true },
+      PNG: { compress: true, compressionLevel: 9, quality: 100 },
+      JPG: { compress: true, compressionLevel: 9, quality: 100 },
+      withCaching: true,
+    },
+  };
+
+  constructor(inPath: string) {
+    if (!inPath) throw new Error("inPath is undefined!");
+    this.inPath = inPath;
   }
 
-  if (!existsSync(inPath)) {
-    console.log(`  ${red("Directory does not exist!")}\n`);
-    process.exit(-1);
+  ignoreDirectories(paths: string[]) {
+    this.options.ignore.directories = paths;
+    return this;
   }
 
-  console.log(`${bold("Compiling")} ${italic(inPath)}...\n`);
-
-  const { compiler, ignore } = new Config().load();
-
-  const { terminatePool, runArray } = ThreadPool(threads, compiler);
-
-  await mkTemp();
-  await Promise.all([mkOut(outPath), mkTempPack()]);
-
-  const start = performance.now();
-
-  const getFilesSpinner = newSpinner("Getting all files...");
-  const { JSONFiles, PNGFiles, etc } = await getFiles({
-    inPath,
-    threads,
-    ignore,
-  });
-  getFilesSpinner("success", {
-    text: "Finished getting all files.",
-  });
-
-  await runPromises(
-    [
-      runArray("copyEtc", etc, { inPath }),
-      runArray("minifyJSON", JSONFiles, { inPath }),
-      runArray("compressPNG", PNGFiles, { inPath }),
-    ],
-    ["Copy other files", "Minify JSON files", "Compress PNG files"]
-  );
-
-  terminatePool();
-
-  const archive = new AdmZip();
-
-  const compressFolderSpinner = newSpinner("Compressing Packs...");
-  archive.addLocalFolder(tempPack);
-  await archive.writeZipPromise(outPath, {});
-  compressFolderSpinner("success", {
-    text: "Successfully compressed packs.",
-  });
-
-  console.log(
-    bold(
-      `${green("✔")} Successfully compiled pack in ${(
-        performance.now() - start
-      ).toFixed(2)}ms.`
-    )
-  );
-
-  try {
-    const folderPackSize = (await getDirSize(inPath)) / 1000;
-    const packSize = statSync(outPath).size / 1000;
-
-    const howSmall = (folderPackSize / packSize).toFixed(2);
-
-    // prettier-ignore
-    console.log(`
-📉 Your pack is now ${italic(`${howSmall}x smaller`)}!
-
-   Then: ${italic(`${folderPackSize} KB`)}
-   Now:  ${italic(`${packSize} KB`)}
-  `);
-  } catch (error) {
-    if (!error) return;
-    // prettier-ignore
-    console.log(warn("\nFile Size Comparison is not available at that moment."));
+  ignoreExtensions(paths: string[]) {
+    this.options.ignore.extensions = paths;
+    return this;
   }
 
-  if (existsSync(errorListFile)) {
-    const errorList = JSON.parse(
-      readFileSync(errorListFile, "utf-8")
-    ) as JSONErrorList;
-
-    console.log(warn("There are error(s) while minifying JSON Files."));
-
-    errorList.forEach(({ filePath, error }) => {
-      console.log(`${bold("Path :")} ${filePath}`);
-      console.log(`${bold("Error:")} ${error}\n`);
-    });
-
-    clrErrorList();
+  ignoreFiles(paths: string[]) {
+    this.options.ignore.files = paths;
+    return this;
   }
 
-  const clearTempSpinner = newSpinner("Clearing Temporary Files...");
-  await rm(tempPack, { recursive: true, force: true });
-  clearTempSpinner("success", {
-    text: "Cleared temporary files",
-  });
-};
+  ignoreGlobs(paths: string[]) {
+    this.options.ignore.globs = paths;
+    return this;
+  }
 
-export { compile };
+  JSON(options: JSONOptions) {
+    this.options.compiler.JSON = { ...this.options.compiler.JSON, ...options };
+    return this;
+  }
+
+  LANG(options: LANGOptions) {
+    this.options.compiler.LANG = { ...this.options.compiler.LANG, ...options };
+    return this;
+  }
+
+  PNG(options: PNGOptions) {
+    this.options.compiler.PNG = { ...this.options.compiler.PNG, ...options };
+    return this;
+  }
+
+  JPG(options: JPGOptions) {
+    this.options.compiler.JPG = { ...this.options.compiler.JPG, ...options };
+    return this;
+  }
+
+  withCaching(caching: boolean) {
+    this.options.compiler.withCaching = caching;
+    return this;
+  }
+
+  setOptions(options: Options) {
+    this.options = { ...this.options, ...options };
+    return this;
+  }
+
+  readConfig(path?: string, doLogErrors: boolean = false) {
+    this.options = {
+      ...this.options,
+
+      // If path is defined, file exists, and its a file, let it load.
+      // Or else let it automatically find a valid config.
+      ...((path && existsSync(path) && statSync(path).isFile()
+        ? configLoader(path, doLogErrors)
+        : new Config().load(doLogErrors)) as Options),
+    };
+
+    return this;
+  }
+
+  /** # DO NOT USE! FOR CLI ONLY.*/
+  async setup(outPath: string) {
+    if (!outPath) throw new Error("outPath is undefined!");
+    this.outPath = outPath;
+
+    this.stats.outPath = outPath;
+    this.stats.compileTime = performance.now();
+
+    await mkTemp();
+    const [files] = await Promise.all([
+      getFiles(this.inPath, threads, this.options.ignore),
+      mkOut(outPath),
+      mkTempPack(),
+    ]);
+
+    this.files = files;
+    return this;
+  }
+
+  /** # DO NOT USE! FOR CLI ONLY.*/
+  async compileFiles() {
+    await new ThreadPool(
+      threads,
+      this.inPath,
+      this.files as { JSONFiles: unknown[][]; PNGFiles: unknown[][] },
+      this.options
+    ).finalize();
+    return this;
+  }
+
+  /** # DO NOT USE! FOR CLI ONLY.*/
+  zipFolder() {
+    const archive = new AdmZip();
+    archive.addLocalFolder(tempPack);
+    archive.writeZip(this.outPath);
+    archive.addZipComment("Made with love by SuitcaseJS!");
+    return this;
+  }
+
+  /** # DO NOT USE! FOR CLI ONLY.*/
+  finalize() {
+    this.stats.compileTime = performance.now() - this.stats.compileTime;
+    this.stats.inPath = this.inPath;
+
+    return new AfterCompilation(this.stats);
+  }
+
+  async compile(outPath: string) {
+    await this.setup(outPath);
+    await this.compileFiles();
+    this.zipFolder();
+    return this.finalize();
+  }
+}
+
+class AfterCompilation {
+  private stat: FinalStats;
+
+  constructor(stat: FinalStats) {
+    this.stat = stat;
+  }
+
+  private getStats = async () => {
+    const beforeBytes = await getDirSize(this.stat.inPath);
+    const afterBytes = (await stat(this.stat.outPath)).size;
+
+    this.stat.before = beforeBytes;
+    this.stat.after = afterBytes;
+    return this.stat;
+  };
+
+  async finish() {
+    await rm(tempPack, { recursive: true });
+    return this.getStats;
+  }
+}
