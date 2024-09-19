@@ -23,27 +23,24 @@ switch (process.argv[2]) {
 
   case "-c":
   case "--compile": {
-    const { in: inPath, out: outPath } = mri(process.argv.slice(2), {
+    const {
+      in: inPath,
+      out: outPath,
+      "bare-bones": isBareBones,
+    } = mri(process.argv.slice(2), {
       alias: {
         in: "i",
         out: "o",
+        "bare-bones": "-b",
       },
-    }) as { in: string; out: string };
+    }) as { in: string; out: string; "bare-bones": boolean };
+
+    if (isBareBones) {
+      await bareBones(inPath, outPath);
+      break;
+    }
 
     await compile(inPath, outPath);
-    break;
-  }
-
-  case "-b":
-  case "--bare-bones": {
-    const { in: inPath, out: outPath } = mri(process.argv.slice(2), {
-      alias: {
-        in: "i",
-        out: "o",
-      },
-    }) as { in: string; out: string };
-
-    await bareBones(inPath, outPath);
     break;
   }
 
