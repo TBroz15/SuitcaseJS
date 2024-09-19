@@ -1,7 +1,7 @@
 import { existsSync } from "node:fs";
 import { Suitcase } from "../../../index.js";
 import { newSpinner } from "../../utils/spinner.js";
-import { fullCompileUsage, suitcaseUsage } from "../../onHelp.js";
+import { fullCompileUsage, suitcaseUsage } from "../on_help.js";
 import { bold, green, italic, red } from "../../utils/picocolors.js";
 
 export const compile = async (inPath: string, outPath: string) => {

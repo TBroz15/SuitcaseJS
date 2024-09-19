@@ -1,7 +1,7 @@
 // "help me" -TBroz15
 
-import { italic, green } from "./utils/picocolors.js";
-import { usage } from "./utils/usage.js";
+import { italic, green } from "../utils/picocolors.js";
+import { usage } from "../utils/usage.js";
 
 export const suitcaseUsage = usage(
   "suitcase",
