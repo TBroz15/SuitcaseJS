@@ -79,6 +79,7 @@ function minifyJSON() {
 function compressPNG() {
   if (files.PNG.length === 0) return;
   const PNGConfig = compiler.PNG;
+  delete PNGConfig.compress;
 
   const promises = files.PNG.map(async (path) => {
     const tempPath = join(tempPack, path);
