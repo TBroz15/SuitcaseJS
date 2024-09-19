@@ -17,6 +17,7 @@ export type WorkerData = {
   files: {
     JSON: string[];
     PNG: string[];
+    JPG: string[];
   };
 };
 
@@ -107,5 +108,36 @@ function compressPNG() {
   return promiseAllUnhandled(promises);
 }
 
-void (await Promise.all([minifyJSON(), compressPNG()]));
+function compressJPG() {
+  if (files.JPG.length === 0) return;
+  const JPGConfig = { ...compiler.JPG, ...{ mozjpeg: true } };
+  delete JPGConfig.compress;
+
+  const promises = files.JPG.map(async (path) => {
+    const tempPath = join(tempPack, path);
+    const filePath = join(inPath, path);
+
+    const buffer = readFileSync(filePath);
+    const hash = createHash("md5").update(buffer).digest("hex");
+
+    const cacheFile = join(cache, hash.concat(".png"));
+    const cacheFileExists = existsSync(cacheFile);
+
+    if (!cacheFileExists) {
+      if (!compiler.withCaching)
+        return sharp(filePath).jpeg(JPGConfig).toFile(tempPath);
+
+      await sharp(filePath).jpeg(JPGConfig).toFile(cacheFile);
+    }
+
+    return copyFile(cacheFile, tempPath);
+  });
+
+  // @ts-expect-error Help out garbage collector
+  files.JPG = null;
+
+  return promiseAllUnhandled(promises);
+}
+
+void (await Promise.all([minifyJSON(), compressPNG(), compressJPG()]));
 parentPort?.postMessage(errorList);

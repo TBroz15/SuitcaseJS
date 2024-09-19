@@ -46,7 +46,7 @@ export class Suitcase {
       JSON: { minify: true, errorChecking: true },
       LANG: { minify: true },
       PNG: { compress: true, compressionLevel: 9, quality: 100 },
-      JPG: { compress: true, compressionLevel: 9, quality: 100 },
+      JPG: { compress: true, quality: 100 },
       withCaching: true,
     },
   };
@@ -130,7 +130,7 @@ export class Suitcase {
 
     await mkTemp();
     const [files] = await Promise.all([
-      getFiles(this.inPath, threads, this.options.ignore),
+      getFiles(this.inPath, threads, this.options),
       mkOut(outPath),
       mkTempPack(),
     ]);
@@ -144,7 +144,11 @@ export class Suitcase {
     await new ThreadPool(
       threads,
       this.inPath,
-      this.files as { JSONFiles: unknown[][]; PNGFiles: unknown[][] },
+      this.files as {
+        JSONFiles: unknown[][];
+        PNGFiles: unknown[][];
+        JPGFiles: unknown[][];
+      },
       this.options
     ).finalize();
     return this;

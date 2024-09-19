@@ -4,7 +4,8 @@ import { extname, basename, join } from "path";
 import { CONFIG_FILE_NAMES } from "../config/get_config.js";
 import { chunkArray } from "./chunk_array.js";
 import { tempPack } from "./temp_folder.js";
-import type { IgnoreConf } from "../config/config.js";
+
+import type { Options } from "../config/config.js";
 
 const temp = tempPack;
 const fdir = new FDir({
@@ -22,18 +23,19 @@ export interface IgnoreSet {
 export const getFiles = async (
   inPath: string,
   threads: number,
-  _ignore: IgnoreConf
+  config: Options
 ) => {
   const directories: string[] = [];
   const JSONFiles: string[] = [];
   const PNGFiles: string[] = [];
+  const JPGFiles: string[] = [];
   const etc: string[] = [];
 
   const ignore: IgnoreSet = {};
 
-  for (const key in _ignore) {
-    const typedKey = key as keyof typeof _ignore;
-    ignore[typedKey] = new Set(_ignore[typedKey]);
+  for (const key in config.ignore) {
+    const typedKey = key as keyof typeof config.ignore;
+    ignore[typedKey] = new Set(config.ignore[typedKey]);
   }
 
   // Check if globbing is enabled and picomatch exists.
@@ -84,18 +86,30 @@ export const getFiles = async (
 
     switch (ext) {
       case ".json": {
-        JSONFiles.push(path);
-        continue;
+        if (config.compiler.JSON.minify) {
+          JSONFiles.push(path);
+          continue;
+        }
+        break;
       }
       case ".png": {
-        PNGFiles.push(path);
-        continue;
+        if (config.compiler.PNG.compress) {
+          PNGFiles.push(path);
+          continue;
+        }
+        break;
       }
-      default: {
-        etc.push(path);
-        continue;
+      case ".jpg":
+      case ".jpeg": {
+        if (config.compiler.JPG.compress) {
+          JPGFiles.push(path);
+          continue;
+        }
+        break;
       }
     }
+
+    etc.push(path);
   }
 
   const directoryPromises = directories.map((path) =>
@@ -112,5 +126,6 @@ export const getFiles = async (
   return {
     JSONFiles: chunkArray(JSONFiles, threads),
     PNGFiles: chunkArray(PNGFiles, threads),
+    JPGFiles: chunkArray(JPGFiles, threads),
   };
 };

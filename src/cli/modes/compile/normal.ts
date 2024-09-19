@@ -1,9 +1,8 @@
 import { existsSync } from "node:fs";
-import { newSpinner } from "../utils/spinner.js";
-
-import { bold, green, italic, red } from "../utils/picocolors.js";
-import { fullCompileUsage, suitcaseUsage } from "../onHelp.js";
-import { Suitcase } from "../../index.js";
+import { Suitcase } from "../../../index.js";
+import { newSpinner } from "../../utils/spinner.js";
+import { fullCompileUsage, suitcaseUsage } from "../../onHelp.js";
+import { bold, green, italic, red } from "../../utils/picocolors.js";
 
 export const compile = async (inPath: string, outPath: string) => {
   if (!inPath || !outPath) {

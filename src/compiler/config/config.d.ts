@@ -24,7 +24,6 @@ export interface PNGOptions {
 }
 
 export interface JPGOptions {
-  compressionLevel?: NumberRange<0, 9>;
   quality?: NumberRange<1, 100>;
   compress?: boolean;
 }

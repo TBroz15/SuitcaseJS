@@ -14,7 +14,11 @@ export class ThreadPool {
   constructor(
     threads: number,
     inPath: string,
-    files: { JSONFiles: unknown[][]; PNGFiles: unknown[][] },
+    files: {
+      JSONFiles: unknown[][];
+      PNGFiles: unknown[][];
+      JPGFiles: unknown[][];
+    },
     compilerConfig: Options
   ) {
     const workerFile = resolve(import.meta.dirname, "worker.js");
@@ -26,6 +30,7 @@ export class ThreadPool {
           files: {
             JSON: files.JSONFiles[i] ?? [],
             PNG: files.PNGFiles[i] ?? [],
+            JPG: files.JPGFiles[i] ?? [],
           },
           compilerConfig,
         },
