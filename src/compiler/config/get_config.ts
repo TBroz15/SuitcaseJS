@@ -1,9 +1,9 @@
 import { join } from "node:path";
 import { readFileSync, statSync } from "node:fs";
-import { italic } from "../utils/cli/picocolors.js";
+import { italic } from "../../cli/utils/picocolors.js";
 import { defaultSuitcaseConfig } from "./default.js";
 
-import type { Options } from "../types/config.d.js";
+import type { Options } from "./config.d.js";
 
 let yaml: typeof import("js-yaml");
 

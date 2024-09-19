@@ -1,5 +1,5 @@
-import { newSpinner } from "../utils/cli/spinner.js";
-import { cache } from "../utils/compiler/temp_folder.js";
+import { newSpinner } from "../utils/spinner.js";
+import { cache } from "../../compiler/utils/temp_folder.js";
 import { rm } from "fs/promises";
 
 export const clearCache = async () => {

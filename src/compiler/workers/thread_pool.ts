@@ -1,7 +1,7 @@
 import { resolve } from "path";
 import { Worker } from "node:worker_threads";
 
-import type { Options } from "../types/config.js";
+import type { Options } from "../config/config.d.ts";
 
 // interface ThreadError {
 //   error: string;

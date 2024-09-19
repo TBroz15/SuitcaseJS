@@ -1,8 +1,8 @@
 import { existsSync } from "fs";
-import { red } from "../utils/cli/picocolors.js";
-import { suitcaseUsage, fullCompileUsage } from "../cli/onHelp.js";
-import { Suitcase } from "../index.js";
-import { bold, green } from "../utils/cli/picocolors.js";
+import { red } from "../utils/picocolors.js";
+import { suitcaseUsage, fullCompileUsage } from "../onHelp.js";
+import { Suitcase } from "../../index.js";
+import { bold, green } from "../utils/picocolors.js";
 
 export const bareBones = async (inPath: string, outPath: string) => {
   if (!inPath || !outPath) {

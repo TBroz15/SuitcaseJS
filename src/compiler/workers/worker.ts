@@ -3,14 +3,22 @@ import { join } from "path";
 import JSONC from "jsonc-parser";
 import { createHash } from "crypto";
 import { copyFile, writeFile } from "fs/promises";
-import { PNG } from "../utils/compiler/default_config.js";
 import { existsSync, readFileSync, writeFileSync } from "fs";
 import { workerData as _WD, parentPort } from "worker_threads";
 
-import { tempPack, cache } from "../utils/compiler/temp_folder.js";
-import { promiseAllUnhandled } from "../utils/compiler/promise_all_unhandled.js";
+import { tempPack, cache } from "../utils/temp_folder.js";
+import { promiseAllUnhandled } from "../utils/promise_all_unhandled.js";
 
-import type { WorkerData } from "../types/workers.d.ts";
+import type { Options } from "../config/config.d.ts";
+
+export type WorkerData = {
+  compilerConfig: Options;
+  inPath: string;
+  files: {
+    JSON: string[];
+    PNG: string[];
+  };
+};
 
 // For proper type checking and to nullify some data...
 const {
@@ -70,6 +78,7 @@ function minifyJSON() {
 
 function compressPNG() {
   if (files.PNG.length === 0) return;
+  const PNGConfig = compiler.PNG;
 
   const promises = files.PNG.map(async (path) => {
     const tempPath = join(tempPack, path);
@@ -83,9 +92,9 @@ function compressPNG() {
 
     if (!cacheFileExists) {
       if (!compiler.withCaching)
-        return sharp(filePath).png(PNG).toFile(tempPath);
+        return sharp(filePath).png(PNGConfig).toFile(tempPath);
 
-      await sharp(filePath).png(PNG).toFile(cacheFile);
+      await sharp(filePath).png(PNGConfig).toFile(cacheFile);
     }
 
     return copyFile(cacheFile, tempPath);

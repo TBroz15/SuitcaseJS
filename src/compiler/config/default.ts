@@ -1,4 +1,4 @@
-import type { Options } from "../types/config.js";
+import type { Options } from "../config/config.d.ts";
 
 export const defaultSuitcaseConfig: Options = {
   ignore: {

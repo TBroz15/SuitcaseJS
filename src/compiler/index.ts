@@ -5,15 +5,10 @@ import { cpus } from "os";
 import { rm, stat } from "fs/promises";
 import { existsSync, statSync } from "fs";
 import { ThreadPool } from "./workers/thread_pool.js";
-import { getFiles } from "./utils/compiler/get_files.js";
+import { getFiles } from "./utils/get_files.js";
 import Config, { configLoader } from "./config/get_config.js";
 
-import {
-  mkOut,
-  mkTemp,
-  mkTempPack,
-  tempPack,
-} from "./utils/compiler/temp_folder.js";
+import { mkOut, mkTemp, mkTempPack, tempPack } from "./utils/temp_folder.js";
 
 import type {
   JSONOptions,
@@ -21,7 +16,7 @@ import type {
   JPGOptions,
   LANGOptions,
   PNGOptions,
-} from "./types/config.d.ts";
+} from "./config/config.d.ts";
 
 const threads = cpus().length;
 
