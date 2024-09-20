@@ -1,3 +1,10 @@
+## [2.1.2](https://github.com/TBroz15/SuitcaseJS/compare/v2.1.1...v2.1.2) (2024-09-20)
+
+
+### Bug Fixes
+
+* **hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh:** :clown_face: force release to minor version ([8192aa7](https://github.com/TBroz15/SuitcaseJS/commit/8192aa714fbf3016d37de783d00f729ffade7956))
+
 ## [2.1.1](https://github.com/TBroz15/SuitcaseJS/compare/v2.1.0...v2.1.1) (2024-09-20)
 
 
