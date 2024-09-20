@@ -10,12 +10,14 @@ import { tempPack, cache } from "../utils/temp_folder.js";
 import { promiseAllUnhandled } from "../utils/promise_all_unhandled.js";
 
 import type { Options } from "../config/config.d.ts";
+import { cleanLANG } from "../utils/minify.js";
 
 export type WorkerData = {
   compilerConfig: Options;
   inPath: string;
   files: {
     JSON: string[];
+    LANG: string[];
     PNG: string[];
     JPG: string[];
   };
@@ -62,10 +64,11 @@ function minifyJSON() {
 
       if (!parsedJSON) return;
 
-      if (!compiler.withCaching)
-        return writeFile(tempPath, JSON.stringify(data));
+      const compiledJSON = JSON.stringify(parsedJSON);
 
-      writeFileSync(cacheFile, JSON.stringify(parsedJSON));
+      if (!compiler.withCaching) return writeFile(tempPath, compiledJSON);
+
+      writeFileSync(cacheFile, compiledJSON);
     }
 
     return copyFile(cacheFile, tempPath);
@@ -93,10 +96,10 @@ function compressPNG() {
     const cacheFileExists = existsSync(cacheFile);
 
     if (!cacheFileExists) {
-      if (!compiler.withCaching)
-        return sharp(filePath).png(PNGConfig).toFile(tempPath);
+      const sharpPNG = sharp(filePath).png(PNGConfig);
 
-      await sharp(filePath).png(PNGConfig).toFile(cacheFile);
+      if (!compiler.withCaching) return sharpPNG.toFile(tempPath);
+      await sharpPNG.toFile(cacheFile);
     }
 
     return copyFile(cacheFile, tempPath);
@@ -120,13 +123,13 @@ function compressJPG() {
     const buffer = readFileSync(filePath);
     const hash = createHash("md5").update(buffer).digest("hex");
 
-    const cacheFile = join(cache, hash.concat(".png"));
+    const cacheFile = join(cache, hash.concat(".jpg"));
     const cacheFileExists = existsSync(cacheFile);
 
     if (!cacheFileExists) {
-      if (!compiler.withCaching)
-        return sharp(filePath).jpeg(JPGConfig).toFile(tempPath);
+      const sharpJPG = sharp(filePath).jpeg(JPGConfig);
 
+      if (!compiler.withCaching) return sharpJPG.toFile(tempPath);
       await sharp(filePath).jpeg(JPGConfig).toFile(cacheFile);
     }
 
@@ -139,5 +142,39 @@ function compressJPG() {
   return promiseAllUnhandled(promises);
 }
 
-void (await Promise.all([minifyJSON(), compressPNG(), compressJPG()]));
+function minifyLANG() {
+  if (files.LANG.length === 0) return;
+
+  const promises = files.LANG.map((path) => {
+    const tempPath = join(tempPack, path);
+    const filePath = join(inPath, path);
+
+    const data = readFileSync(filePath, "utf-8");
+    const hash = createHash("md5").update(data).digest("hex");
+
+    const cacheFile = join(cache, hash.concat(".json"));
+    const cacheFileExists = existsSync(cacheFile);
+
+    if (!cacheFileExists) {
+      const compiledLANG = cleanLANG(data);
+
+      if (!compiler.withCaching) return writeFile(tempPath, compiledLANG);
+      writeFileSync(cacheFile, compiledLANG);
+    }
+
+    return copyFile(cacheFile, tempPath);
+  });
+
+  // @ts-expect-error Help out garbage collector
+  files.LANG = null;
+
+  return promiseAllUnhandled(promises);
+}
+
+void (await Promise.all([
+  minifyJSON(),
+  compressPNG(),
+  minifyLANG(),
+  compressJPG(),
+]));
 parentPort?.postMessage(errorList);

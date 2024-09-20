@@ -26,6 +26,7 @@ export interface PNGOptions {
 export interface JPGOptions {
   quality?: NumberRange<1, 100>;
   compress?: boolean;
+  progressive?: boolean;
 }
 
 export interface IgnoreConf {

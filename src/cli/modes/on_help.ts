@@ -31,6 +31,13 @@ const clearCacheUsage = usage(
   4
 );
 
+const initConfigUsage = usage(
+  ["--init", "-i"],
+  "Creates a config through prompts.",
+  false,
+  4
+);
+
 const compileUsage = usage(
   ["--compile", "-c"],
   "Starts the compilation process according to the flags.",
@@ -72,10 +79,11 @@ export const onHelp = () =>
   console.log(
     `${green(" ──Usage── ")}
 
-${suitcaseUsage}
-${helpUsage}
-${versionUsage}
-${clearCacheUsage}
+${suitcaseUsage   }
+${helpUsage       }
+${versionUsage    }
+${clearCacheUsage }
+${initConfigUsage }
 ${fullCompileUsage}
 `
   );

@@ -40,7 +40,12 @@ export class Suitcase {
     inPath: "",
   };
 
-  private files: { JSONFiles?: unknown[][]; PNGFiles?: unknown[][] } = {};
+  private files: {
+    JSONFiles?: unknown[][];
+    LANGFiles?: unknown[][];
+    PNGFiles?: unknown[][];
+    JPGFiles?: unknown[][];
+  } = {};
 
   private options: Options = defaultSuitcaseConfig;
 
@@ -139,6 +144,7 @@ export class Suitcase {
       this.inPath,
       this.files as {
         JSONFiles: unknown[][];
+        LANGFiles: unknown[][];
         PNGFiles: unknown[][];
         JPGFiles: unknown[][];
       },

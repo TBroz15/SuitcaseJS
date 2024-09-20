@@ -27,6 +27,7 @@ export const getFiles = async (
 ) => {
   const directories: string[] = [];
   const JSONFiles: string[] = [];
+  const LANGFiles: string[] = [];
   const PNGFiles: string[] = [];
   const JPGFiles: string[] = [];
   const etc: string[] = [];
@@ -92,6 +93,13 @@ export const getFiles = async (
         }
         break;
       }
+      case ".lang": {
+        if (config.compiler.LANG.minify) {
+          LANGFiles.push(path);
+          continue;
+        }
+        break;
+      }
       case ".png": {
         if (config.compiler.PNG.compress) {
           PNGFiles.push(path);
@@ -125,6 +133,7 @@ export const getFiles = async (
   // Distribute according to the amount of threads
   return {
     JSONFiles: chunkArray(JSONFiles, threads),
+    LANGFiles: chunkArray(LANGFiles, threads),
     PNGFiles: chunkArray(PNGFiles, threads),
     JPGFiles: chunkArray(JPGFiles, threads),
   };

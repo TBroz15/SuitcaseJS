@@ -11,6 +11,7 @@ import { compile } from "./modes/compile/normal.js";
 import { bareBones } from "./modes/compile/bare_bones.js";
 
 import mri from "mri";
+import { initConfig } from "./modes/init_config.js";
 
 console.log(`
  💼 Suitcase.js ${italic(`v${version}`)}
@@ -20,6 +21,11 @@ switch (process.argv[2]) {
   case "-v":
   case "--version":
     console.log(` Using ${getRuntime()}\n`);
+    break;
+
+  case "-i":
+  case "--init":
+    await initConfig();
     break;
 
   case "-c":

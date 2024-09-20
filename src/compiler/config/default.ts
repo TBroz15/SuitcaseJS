@@ -11,7 +11,7 @@ export const defaultSuitcaseConfig: Options = {
     JSON: { minify: true, errorChecking: true },
     LANG: { minify: true },
     PNG: { compress: true, compressionLevel: 9, quality: 100 },
-    JPG: { compress: true, quality: 100 },
+    JPG: { compress: true, progressive: true, quality: 100 },
     withCaching: true,
   },
 };

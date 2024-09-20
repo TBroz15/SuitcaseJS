@@ -16,6 +16,7 @@ export class ThreadPool {
     inPath: string,
     files: {
       JSONFiles: unknown[][];
+      LANGFiles: unknown[][];
       PNGFiles: unknown[][];
       JPGFiles: unknown[][];
     },
@@ -29,6 +30,7 @@ export class ThreadPool {
           inPath,
           files: {
             JSON: files.JSONFiles[i] ?? [],
+            LANG: files.LANGFiles[i] ?? [],
             PNG: files.PNGFiles[i] ?? [],
             JPG: files.JPGFiles[i] ?? [],
           },
