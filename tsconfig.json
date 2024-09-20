@@ -8,11 +8,12 @@
     "strict": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "noEmit": true,
     "alwaysStrict": true,
     "strictNullChecks": true,
     "strictFunctionTypes": true,
-    "rootDir": "src"
+    "rootDir": "src",
+    "outDir": "dist",
+    "declaration": true
   },
   "exclude": ["node_modules/**/*", "ci/*.js", "dist/**/*"]
 }

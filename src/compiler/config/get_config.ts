@@ -3,7 +3,7 @@ import { readFileSync, statSync } from "node:fs";
 import { italic } from "../../cli/utils/picocolors.js";
 import { defaultSuitcaseConfig } from "./default.js";
 
-import type { Options } from "./config.d.js";
+import type { Options } from "./config.ts";
 
 let yaml: typeof import("js-yaml");
 
