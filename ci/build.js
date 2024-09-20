@@ -34,8 +34,8 @@ arr.forEach((path) => {
   if (ext === ".ts") {
     const splitPath = path.split(".");
 
-    // if file is a suspected .d.ts, ignore.
-    if (splitPath[1] === "d") return;
+    // if file is a suspected .d.ts, copy.
+    if (splitPath[1] === "d") etc.push(path);
 
     return TSFiles.push(srcPath);
   } else {
