@@ -3,13 +3,13 @@
 
 ### Bug Fixes
 
-* **cli:** :sparkles: add "bare bones" compilation ([514cb62](https://github.com/TBroz15/SuitcaseJS/commit/514cb620d0196457fcec10854936f347a915a41b))
 * **compiler@asset:** :adhesive_bandage: exclude compress on PNG ([d388670](https://github.com/TBroz15/SuitcaseJS/commit/d388670bd8950239e4c9c35b98cf5bb5694dcbd1))
 * **compiler@other:** :thread: default to 4 threads when there is no available CPU info ([e4b7eb4](https://github.com/TBroz15/SuitcaseJS/commit/e4b7eb4469af0e7688a20ced2597117ebf7a217f))
 
 
 ### Features
 
+* **cli:** :sparkles: add "bare bones" compilation ([514cb62](https://github.com/TBroz15/SuitcaseJS/commit/514cb620d0196457fcec10854936f347a915a41b))
 * **cli:** :wrench: add config initializer ([f967f95](https://github.com/TBroz15/SuitcaseJS/commit/f967f950465e91b50e6f2ebb3f53bba3020f27c3))
 * **compiler@api:** :sparkles: add api support yippee! ([1121825](https://github.com/TBroz15/SuitcaseJS/commit/1121825a4355992263a4c0bb9d7e09b3ab62479f))
 * **compiler@config:** :sparkles: add globbing ([93a8623](https://github.com/TBroz15/SuitcaseJS/commit/93a86230fb2a874ff42556a5b973293ce82fb51e))
