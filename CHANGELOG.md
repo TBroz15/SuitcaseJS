@@ -1,3 +1,10 @@
+## [2.1.1](https://github.com/TBroz15/SuitcaseJS/compare/v2.1.0...v2.1.1) (2024-09-20)
+
+
+### Bug Fixes
+
+* **compiler@api:** :ambulance: add main index ([c09a56d](https://github.com/TBroz15/SuitcaseJS/commit/c09a56dc8c9b4121f46f49219d70aec973629f3b))
+
 # [2.1.0](https://github.com/TBroz15/SuitcaseJS/compare/v2.0.1...v2.1.0) (2024-09-20)
 
 
