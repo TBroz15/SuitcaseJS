@@ -1,3 +1,26 @@
+# [2.1.0](https://github.com/TBroz15/SuitcaseJS/compare/v2.0.1...v2.1.0) (2024-09-20)
+
+
+### Bug Fixes
+
+* **cli:** :sparkles: add "bare bones" compilation ([514cb62](https://github.com/TBroz15/SuitcaseJS/commit/514cb620d0196457fcec10854936f347a915a41b))
+* **compiler@asset:** :adhesive_bandage: exclude compress on PNG ([d388670](https://github.com/TBroz15/SuitcaseJS/commit/d388670bd8950239e4c9c35b98cf5bb5694dcbd1))
+* **compiler@other:** :thread: default to 4 threads when there is no available CPU info ([e4b7eb4](https://github.com/TBroz15/SuitcaseJS/commit/e4b7eb4469af0e7688a20ced2597117ebf7a217f))
+
+
+### Features
+
+* **cli:** :wrench: add config initializer ([f967f95](https://github.com/TBroz15/SuitcaseJS/commit/f967f950465e91b50e6f2ebb3f53bba3020f27c3))
+* **compiler@api:** :sparkles: add api support yippee! ([1121825](https://github.com/TBroz15/SuitcaseJS/commit/1121825a4355992263a4c0bb9d7e09b3ab62479f))
+* **compiler@config:** :sparkles: add globbing ([93a8623](https://github.com/TBroz15/SuitcaseJS/commit/93a86230fb2a874ff42556a5b973293ce82fb51e))
+* **compiler@config:** :sparkles: add option to log errors in getting config ([5ab19d3](https://github.com/TBroz15/SuitcaseJS/commit/5ab19d3e813d34da7a4530e3d83fd6dcc922c7c6))
+* **compiler@other:** :sparkles: add JSON, PNG, LANG, JPG and caching config ([25b5489](https://github.com/TBroz15/SuitcaseJS/commit/25b54896f7a70049262b326202b2ce8a04d02f84))
+
+
+### Performance Improvements
+
+* **compiler@other:** :zap: full multithreading rewrite! ([35c9277](https://github.com/TBroz15/SuitcaseJS/commit/35c92771c411450a693c35d9b1ca65ab9b0dd452))
+
 ## [2.0.1](https://github.com/TBroz15/SuitcaseJS/compare/v2.0.0...v2.0.1) (2024-09-06)
 
 
