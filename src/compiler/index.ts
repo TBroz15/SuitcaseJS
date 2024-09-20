@@ -20,7 +20,8 @@ import type {
   PNGOptions,
 } from "./config/config.d.ts";
 
-const threads = cpus().length;
+const availCPUs = cpus().length;
+const threads = availCPUs === 0 ? 4 : availCPUs;
 
 interface FinalStats {
   compileTime: number;
