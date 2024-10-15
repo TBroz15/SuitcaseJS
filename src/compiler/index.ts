@@ -188,12 +188,12 @@ class AfterCompilation {
     this.stat = stat;
   }
 
-  async getStats() {
+  getStats = async () => {
     const beforeBytes = await getDirSize(this.stat.inPath);
     const afterBytes = (await stat(this.stat.outPath)).size;
 
     this.stat.before = beforeBytes;
     this.stat.after = afterBytes;
     return this.stat;
-  }
+  };
 }

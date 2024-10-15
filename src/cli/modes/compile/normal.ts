@@ -40,7 +40,7 @@ export const compile = async (inPath: string, outPath: string) => {
   });
 
   const clearTempSpinner = newSpinner("Clearing temporary files...");
-  const getStats = await sc.finalize().finish();
+  const { getStats } = await sc.finalize();
   clearTempSpinner("success", {
     text: "Cleared temporary files",
   });

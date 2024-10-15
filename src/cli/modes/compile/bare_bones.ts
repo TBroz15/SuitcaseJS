@@ -20,9 +20,8 @@ export const bareBones = async (inPath: string, outPath: string) => {
   }
 
   const sc = await new Suitcase(inPath).readConfig().compile(outPath);
-  const getStats = await sc.finish();
 
-  const { compileTime } = await getStats();
+  const { compileTime } = await sc.getStats();
 
   const log = `${green(
     "✔"
