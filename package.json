@@ -27,7 +27,9 @@
     "typescript-eslint": "^8.0.0"
   },
   "bin": {
-    "suitcase": "/dist/cli/index.js"
+    "suitcasejs": "/dist/cli/index.js",
+    "suitcase": "/dist/cli/index.js",
+    "sjs": "/dist/cli/index.js"
   },
   "bugs": {
     "url": "https://github.com/TBroz15/SuitcaseJS/issues"
@@ -50,7 +52,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "test": "node ci/build && node ./dist/cli/index.js",
+    "test": "tsc && node ./dist/cli/index.js",
     "semantic-release": "semantic-release --branches main",
     "commit": "pnpx git-cz",
     "lint": "node ci/lint"
