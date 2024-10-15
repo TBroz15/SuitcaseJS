@@ -34,16 +34,18 @@ switch (process.argv[2]) {
       in: inPath,
       out: outPath,
       "bare-bones": isBareBones,
+      config,
     } = mri(process.argv.slice(2), {
       alias: {
         in: "i",
         out: "o",
         "bare-bones": "b",
+        config: "c",
       },
-    }) as { in: string; out: string; "bare-bones": boolean };
+    }) as { in: string; out: string; "bare-bones": boolean; config?: string };
 
     if (isBareBones) {
-      await bareBones(inPath, outPath);
+      await bareBones(inPath, outPath, config);
       break;
     }
 

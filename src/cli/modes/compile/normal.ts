@@ -4,7 +4,11 @@ import { newSpinner } from "../../utils/spinner.js";
 import { fullCompileUsage, suitcaseUsage } from "../on_help.js";
 import { bold, green, italic, red } from "../../utils/picocolors.js";
 
-export const compile = async (inPath: string, outPath: string) => {
+export const compile = async (
+  inPath: string,
+  outPath: string,
+  configPath?: string
+) => {
   if (!inPath || !outPath) {
     console.log(
       `  ${red(
@@ -21,7 +25,7 @@ export const compile = async (inPath: string, outPath: string) => {
 
   console.log(`${bold("Compiling")} ${italic(inPath)}...\n`);
 
-  const sc = new Suitcase(inPath).readConfig(undefined, true);
+  const sc = new Suitcase(inPath).readConfig(configPath, true);
 
   const getFilesSpinner = newSpinner("Getting all files...");
   await sc.setup(outPath);

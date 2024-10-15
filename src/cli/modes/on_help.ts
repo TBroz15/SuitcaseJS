@@ -45,15 +45,6 @@ const compileUsage = usage(
   4
 );
 
-const bareBonesUsage = usage(
-  ["--bare-bones", "-b"],
-  `If included, it non-graphically compiles the pack. ${italic(
-    "May speed up the compilation process."
-  )}`,
-  false,
-  6
-);
-
 const inUsage = usage(
   ["--in", "-i"],
   "Specify a directory of packs to be compiled.",
@@ -64,16 +55,32 @@ const inUsage = usage(
 const outUsage = usage(
   ["--out", "-o"],
   `Specify where will the output mcpack/zip file will be. ${italic(
-    "Always include the file extension."
+    "Always include the (.mcpack/.zip) file extension."
   )}`,
-  "path to directory",
+  "path to mcpack/zip",
   6
 );
 
+const configUsage = usage(
+  ["--config", "-c"],
+  `Specify the path to the config.`,
+  "path to config",
+  6, true
+);
+
+const bareBonesUsage = usage(
+  ["--bare-bones", "-b"],
+  `Non-graphically compiles the pack. ${italic(
+    "May speed up the compilation process."
+  )}`,
+  false, 6, true
+);
+
 export const fullCompileUsage = `${compileUsage}
-${bareBonesUsage}
 ${inUsage}
-${outUsage}`;
+${outUsage}
+${configUsage}
+${bareBonesUsage}`;
 
 export const onHelp = () =>
   console.log(

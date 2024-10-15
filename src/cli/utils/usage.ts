@@ -1,4 +1,4 @@
-import { cmdStyle, italic, blue } from "./picocolors.js";
+import { cmdStyle, italic, blue, gray } from "./picocolors.js";
 import { wrapText } from "./wrap_text.js";
 
 /* CLI READABILITY 100 */
@@ -7,7 +7,8 @@ export const usage = (
   cmds: string[] | string,
   description: string,
   flags?: string[] | string | boolean,
-  indentCount: number = 0
+  indentCount: number = 0,
+  isOptional: boolean = false
 ) => {
   let usageText = "";
 
@@ -36,6 +37,10 @@ export const usage = (
     }
 
     usageText += `]`;
+  }
+
+  if (isOptional) {
+    usageText += gray(italic(` (optional)`));
   }
 
   usageText += `\n${description}`;

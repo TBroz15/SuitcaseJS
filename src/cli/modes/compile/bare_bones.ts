@@ -4,7 +4,11 @@ import { red } from "../../utils/picocolors.js";
 import { bold, green } from "../../utils/picocolors.js";
 import { suitcaseUsage, fullCompileUsage } from "../on_help.js";
 
-export const bareBones = async (inPath: string, outPath: string) => {
+export const bareBones = async (
+  inPath: string,
+  outPath: string,
+  configPath?: string
+) => {
   if (!inPath || !outPath) {
     console.log(
       `  ${red(
@@ -19,7 +23,7 @@ export const bareBones = async (inPath: string, outPath: string) => {
     process.exit(-1);
   }
 
-  const sc = await new Suitcase(inPath).readConfig().compile(outPath);
+  const sc = await new Suitcase(inPath).readConfig(configPath).compile(outPath);
 
   const { compileTime } = await sc.getStats();
 
