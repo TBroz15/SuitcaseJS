@@ -1,3 +1,24 @@
+# [3.0.0](https://github.com/TBroz15/SuitcaseJS/compare/v2.1.2...v3.0.0) (2024-10-15)
+
+
+### Bug Fixes
+
+* **compiler@api:** :adhesive_bandage: remove .finish() ([8d66e88](https://github.com/TBroz15/SuitcaseJS/commit/8d66e8896a1b31aa2523bfd2b7a932ec8c633818))
+
+
+### Features
+
+* 🎸 changed structure of class ([5887b9b](https://github.com/TBroz15/SuitcaseJS/commit/5887b9be0c125aecb5fa11e5f83f1b3b00af5baa))
+* 🎸 remove dashes on commands ([a7d4eda](https://github.com/TBroz15/SuitcaseJS/commit/a7d4edad06452bdc77c30ced4551e572d5eea846))
+* **cli:** add "sjs" as alias for cli ([6415b00](https://github.com/TBroz15/SuitcaseJS/commit/6415b00175c8805f5b6f3f98c597c755525e5cd2))
+* **cli:** add config flag for command "compile" ([9e6964f](https://github.com/TBroz15/SuitcaseJS/commit/9e6964faab7f48af4d394802e68bf222e0cd0c26))
+
+
+### BREAKING CHANGES
+
+* 🧨 Renamed the commands
+* 🧨 AfterCompilation.finish() removed
+
 ## [2.1.2](https://github.com/TBroz15/SuitcaseJS/compare/v2.1.1...v2.1.2) (2024-09-20)
 
 
