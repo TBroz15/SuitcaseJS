@@ -164,9 +164,11 @@ export class Suitcase {
   }
 
   /** # DO NOT USE! FOR CLI ONLY.*/
-  finalize() {
+  async finalize() {
     this.stats.compileTime = performance.now() - this.stats.compileTime;
     this.stats.inPath = this.inPath;
+
+    await rm(tempPack, { recursive: true });
 
     return new AfterCompilation(this.stats);
   }
@@ -175,7 +177,7 @@ export class Suitcase {
     await this.setup(outPath);
     await this.compileFiles();
     this.zipFolder();
-    return this.finalize();
+    return await this.finalize();
   }
 }
 
@@ -186,17 +188,12 @@ class AfterCompilation {
     this.stat = stat;
   }
 
-  private getStats = async () => {
+  async getStats() {
     const beforeBytes = await getDirSize(this.stat.inPath);
     const afterBytes = (await stat(this.stat.outPath)).size;
 
     this.stat.before = beforeBytes;
     this.stat.after = afterBytes;
     return this.stat;
-  };
-
-  async finish() {
-    await rm(tempPack, { recursive: true });
-    return this.getStats;
   }
 }
