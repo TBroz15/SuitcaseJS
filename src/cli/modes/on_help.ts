@@ -4,42 +4,42 @@ import { italic, green } from "../utils/picocolors.js";
 import { usage } from "../utils/usage.js";
 
 export const suitcaseUsage = usage(
-  "suitcase",
+  ["suitcasejs", "suitcase", "sjs"],
   "Used for compiling packs.",
   true,
   2
 );
 
 const helpUsage = usage(
-  ["--help", "-h"],
+  ["help", "h"],
   "Lists all of the commands and its functions.",
   false,
   4
 );
 
 const versionUsage = usage(
-  ["--version", "-v"],
+  ["version", "v"],
   "Shows the current version of SuitcaseJS and your runtime.",
   false,
   4
 );
 
 const clearCacheUsage = usage(
-  ["--clear-cache", "-clr-c"],
+  ["clear-cache", "clr-c"],
   "Clears all of the cached files.",
   false,
   4
 );
 
 const initConfigUsage = usage(
-  ["--init", "-i"],
+  ["init", "i"],
   "Creates a config through prompts.",
   false,
   4
 );
 
 const compileUsage = usage(
-  ["--compile", "-c"],
+  ["compile", "c"],
   "Starts the compilation process according to the flags.",
   true,
   4

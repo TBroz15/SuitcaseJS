@@ -18,18 +18,18 @@ console.log(`
 `);
 
 switch (process.argv[2]) {
-  case "-v":
-  case "--version":
+  case "v":
+  case "version":
     console.log(` Using ${getRuntime()}\n`);
     break;
 
-  case "-i":
-  case "--init":
+  case "i":
+  case "init":
     await initConfig();
     break;
 
-  case "-c":
-  case "--compile": {
+  case "c":
+  case "compile": {
     const {
       in: inPath,
       out: outPath,
@@ -51,13 +51,13 @@ switch (process.argv[2]) {
     break;
   }
 
-  case "-clr-c":
-  case "--clear-cache":
+  case "clr-c":
+  case "clear-cache":
     await clearCache();
     break;
 
-  case "-h":
-  case "--help":
+  case "h":
+  case "help":
   default:
     onHelp();
     break;
