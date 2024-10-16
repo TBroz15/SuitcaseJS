@@ -35,7 +35,7 @@ You can exclude argument `-g` if you are willing to compile by API or by `npx`.
 
 ### Compile through CLI
 
-This is an example on how to compile your pack through `npx`.
+This is an example on how to compile your pack.
 
 ```powershell
 sjs compile -i ./packs/ -o ./out.mcpack -c ./.suitcaserc
