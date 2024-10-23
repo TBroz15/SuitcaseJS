@@ -1,3 +1,15 @@
+# [3.1.0](https://github.com/TBroz15/SuitcaseJS/compare/v3.0.0...v3.1.0) (2024-10-23)
+
+
+### Features
+
+* **compiler@config:** :fire: remove JSON.errorChecking ([96a11f6](https://github.com/TBroz15/SuitcaseJS/commit/96a11f63fb36f8a94c6ccc6282a2187bb3ca0175))
+
+
+### Performance Improvements
+
+* **compiler@json:** :zap: replace jsonc-parser with @std/jsonc ([d426477](https://github.com/TBroz15/SuitcaseJS/commit/d426477a60667636a2219a991b48bd7f50dac2ad))
+
 # [3.0.0](https://github.com/TBroz15/SuitcaseJS/compare/v2.1.2...v3.0.0) (2024-10-15)
 
 
