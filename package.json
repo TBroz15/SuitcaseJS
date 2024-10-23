@@ -60,10 +60,10 @@
   "type": "module",
   "dependencies": {
     "@clack/prompts": "^0.7.0",
-    "@std/jsonc": "npm:@jsr/std__jsonc@^1.0.1",
     "adm-zip": "^0.5.15",
     "fdir": "^6.3.0",
     "fdir-size": "^1.0.3",
+    "jsonc-parser": "^3.3.1",
     "mri": "^1.2.0",
     "nanospinner": "^1.1.0",
     "picocolors": "^1.0.1",

@@ -25,6 +25,14 @@ export const initConfig = async () => {
     message: "Enable minification?",
   });
 
+  if (config.compiler.JSON.minify) {
+    config.compiler.JSON.errorChecking = await confirm({
+      message: `Enable JSON error checking? ${italic(
+        "May improve performance in minification."
+      )}`,
+    });
+  }
+
   info("LANG Files");
   config.compiler.LANG.minify = await confirm({
     message: "Enable minification?",

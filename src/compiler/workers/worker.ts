@@ -1,6 +1,6 @@
 import sharp from "sharp";
 import { join } from "path";
-import { parse as parseJSONC } from "@std/jsonc";
+import JSONC from "jsonc-parser";
 import { createHash } from "crypto";
 import { copyFile, writeFile } from "fs/promises";
 import { existsSync, readFileSync, writeFileSync } from "fs";
@@ -33,7 +33,7 @@ const errorList: unknown[] = [];
 
 const checkParseJSON = (data: string, filePath: string): unknown => {
   try {
-    return parseJSONC(data);
+    return JSON.parse(JSONC.stripComments(data));
   } catch (error) {
     errorList.push({
       error: (error as Error).toString(),
@@ -45,6 +45,8 @@ const checkParseJSON = (data: string, filePath: string): unknown => {
 
 function minifyJSON() {
   if (files.JSON.length === 0) return;
+  const { errorChecking } = compiler.JSON ?? { errorChecking: false };
+
   const promises = files.JSON.map((path) => {
     const tempPath = join(tempPack, path);
     const filePath = join(inPath, path);
@@ -56,7 +58,9 @@ function minifyJSON() {
     const cacheFileExists = existsSync(cacheFile);
 
     if (!cacheFileExists) {
-      const parsedJSON: unknown = checkParseJSON(data, filePath);
+      const parsedJSON: unknown = errorChecking
+        ? checkParseJSON(data, filePath)
+        : JSONC.parse(data);
 
       if (!parsedJSON) return;
 
