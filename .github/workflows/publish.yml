@@ -20,7 +20,8 @@ jobs:
       contains(github.event.head_commit.message, 'docs') ||
       contains(github.event.head_commit.message, 'perf') ||
       contains(github.event.head_commit.message, 'build') ||
-      contains(github.event.head_commit.message, 'ci')
+      contains(github.event.head_commit.message, 'ci') ||
+      contains(github.event_name, 'workflow_dispatch')
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js 22.x
