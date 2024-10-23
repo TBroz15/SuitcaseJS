@@ -1,3 +1,10 @@
+# [3.2.0](https://github.com/TBroz15/SuitcaseJS/compare/v3.1.0...v3.2.0) (2024-10-23)
+
+
+### Features
+
+* **bruh:** :clown_face: crap go back ([ddcb674](https://github.com/TBroz15/SuitcaseJS/commit/ddcb674dd4bfda62519397f0b6b7d79427bedc95))
+
 # [3.1.0](https://github.com/TBroz15/SuitcaseJS/compare/v3.0.0...v3.1.0) (2024-10-23)
 
 
