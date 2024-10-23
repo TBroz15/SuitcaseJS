@@ -11,7 +11,6 @@ export type NumberRange<F extends number, T extends number> =
 
 export interface JSONOptions {
   minify?: boolean;
-  errorChecking?: boolean;
 }
 export interface LANGOptions {
   minify?: boolean;
