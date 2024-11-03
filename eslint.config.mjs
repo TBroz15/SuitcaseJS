@@ -10,7 +10,7 @@ export default tselint.config(
       "*.mjs",
       "ci/*.js",
       "dist/**/*",
-      "src/compiler/utils/JSONCParse/*.js",
+      "src/compiler/utils/JSONC/*.js",
     ],
     languageOptions: {
       parserOptions: {
