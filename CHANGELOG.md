@@ -1,3 +1,13 @@
+## [3.2.1](https://github.com/TBroz15/SuitcaseJS/compare/v3.2.0...v3.2.1) (2024-11-03)
+
+
+### Bug Fixes
+
+* **compiler@config:** :adhesive_bandage: don't log errors when to not ([a1f92b5](https://github.com/TBroz15/SuitcaseJS/commit/a1f92b56cda6bf58653b147c68d0589802b2b884))
+* **compiler@json:** now really remove JSONC error checking ([c10ad7d](https://github.com/TBroz15/SuitcaseJS/commit/c10ad7da7d04188e76ffc3fd6ffaf857d56069bf))
+* **compiler@json:** now really replace jsonc-parser with @std/jsonc ([c55b625](https://github.com/TBroz15/SuitcaseJS/commit/c55b625779bb72db3cf59d8830f6893c1f21a7ed))
+* man i wanna switch to deno ([797401b](https://github.com/TBroz15/SuitcaseJS/commit/797401bc01f7d79b0507251f29446137ec9413de))
+
 # [3.2.0](https://github.com/TBroz15/SuitcaseJS/compare/v3.1.0...v3.2.0) (2024-10-23)
 
 
