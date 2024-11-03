@@ -1,4 +1,4 @@
-import { newSpinner } from "../utils/spinner.js";
+import { newSpinner } from "../utils/newSpinner.js";
 import { cache } from "../../compiler/utils/temp_folder.js";
 import { rm } from "fs/promises";
 

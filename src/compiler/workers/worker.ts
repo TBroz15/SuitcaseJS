@@ -9,7 +9,7 @@ import { workerData as _WD, parentPort } from "worker_threads";
 import { tempPack, cache } from "../utils/temp_folder.js";
 import { promiseAllUnhandled } from "../utils/promise_all_unhandled.js";
 
-import type { Options } from "../config/config.d.ts";
+import type { Options } from "../config/types/Options.js";
 import { cleanLANG } from "../utils/minify.js";
 
 export type WorkerData = {

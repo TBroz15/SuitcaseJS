@@ -1,6 +1,6 @@
 import { number } from "../utils/clack.js";
 import { bgCyan, bold, italic } from "../utils/picocolors.js";
-import { defaultSuitcaseConfig } from "../../compiler/config/default.js";
+import { defaultSuitcaseConfig } from "../../compiler/config/defaultSuitcaseConfig.js";
 import {
   confirm as _confirm,
   ConfirmOptions,
@@ -9,7 +9,7 @@ import {
   outro,
 } from "@clack/prompts";
 
-import type { NumberRange } from "../../compiler/config/config.d.ts";
+import type { NumberRange } from "../../compiler/config/types/NumberRange.js";
 import { writeFile } from "fs/promises";
 
 const info = (text: string) => log.info(bold(text));

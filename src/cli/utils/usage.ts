@@ -1,5 +1,5 @@
 import { cmdStyle, italic, blue, gray } from "./picocolors.js";
-import { wrapText } from "./wrap_text.js";
+import { wrapText } from "./wrapText.js";
 
 /* CLI READABILITY 100 */
 

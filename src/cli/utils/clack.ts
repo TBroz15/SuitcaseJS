@@ -1,6 +1,6 @@
 import { text } from "@clack/prompts";
 import type { TextOptions } from "@clack/prompts";
-import type { NumberRange } from "../../compiler/config/config.d.ts";
+import type { NumberRange } from "../../compiler/config/types/NumberRange.js";
 
 const isInRange = (n: string | number, min: number, max: number) => {
   if (typeof n === "string") n = Number.parseInt(n);

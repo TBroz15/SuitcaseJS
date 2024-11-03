@@ -7,18 +7,16 @@ import { existsSync, statSync } from "fs";
 
 import { getFiles } from "./utils/get_files.js";
 import { ThreadPool } from "./workers/thread_pool.js";
-import { defaultSuitcaseConfig } from "./config/default.js";
-import Config, { configLoader } from "./config/get_config.js";
+import { defaultSuitcaseConfig } from "./config/defaultSuitcaseConfig.js";
+import Config, { configLoader } from "./config/Config.js";
 
 import { mkOut, mkTemp, mkTempPack, tempPack } from "./utils/temp_folder.js";
 
-import type {
-  JSONOptions,
-  Options,
-  JPGOptions,
-  LANGOptions,
-  PNGOptions,
-} from "./config/config.d.ts";
+import type { Options } from "./config/types/Options.js";
+import type { JPGOptions } from "./config/types/JPGOptions.js";
+import type { JSONOptions } from "./config/types/JSONOptions.js";
+import type { LANGOptions } from "./config/types/LANGOptions.js";
+import type { PNGOptions } from "./config/types/PNGOptions.js";
 
 const availCPUs = cpus().length;
 const threads = availCPUs === 0 ? 4 : availCPUs;

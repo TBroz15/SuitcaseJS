@@ -2,16 +2,16 @@
 
 // pain -TBroz15
 
-import { onHelp } from "./modes/on_help.js";
+import { onHelp } from "./commands/onHelp.js";
 import { italic } from "./utils/picocolors.js";
-import { version } from "./utils/get_version.js";
-import { getRuntime } from "./utils/get_runtime.js";
-import { clearCache } from "./modes/clear_cache.js";
-import { compile } from "./modes/compile/normal.js";
-import { bareBones } from "./modes/compile/bare_bones.js";
+import { version } from "./utils/getVersion.js";
+import { getRuntime } from "./utils/getRuntime.js";
+import { clearCache } from "./commands/clearCache.js";
+import { compile } from "./commands/compile/normal.js";
+import { bareBones } from "./commands/compile/bareBones.js";
 
 import mri from "mri";
-import { initConfig } from "./modes/init_config.js";
+import { initConfig } from "./commands/initConfig.js";
 
 console.log(`
  💼 Suitcase.js ${italic(`v${version}`)}

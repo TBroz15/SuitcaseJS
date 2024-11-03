@@ -2,7 +2,7 @@ import { existsSync } from "fs";
 import { Suitcase } from "../../../index.js";
 import { red } from "../../utils/picocolors.js";
 import { bold, green } from "../../utils/picocolors.js";
-import { suitcaseUsage, fullCompileUsage } from "../on_help.js";
+import { suitcaseUsage, fullCompileUsage } from "../onHelp.js";
 
 export const bareBones = async (
   inPath: string,
