@@ -64,9 +64,10 @@ const tryLoadJSON = (
   try {
     return JSON.parse(content);
   } catch (error: unknown) {
-    if (doLogErrors)
-      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      console.warn(`⚠️ Error parsing "${path}" as YAML:\n\n${error}`);
+    if (doLogErrors) return false;
+
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    console.warn(`⚠️ Error parsing "${path}" as YAML:\n\n${error}`);
     return false;
   }
 };
@@ -86,6 +87,8 @@ const tryLoadYAML = (
       );
     return false;
   } catch (error: unknown) {
+    if (doLogErrors) return false;
+
     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     console.warn(`⚠️ Error parsing "${path}" as YAML:\n\n${error}`);
     return false;
