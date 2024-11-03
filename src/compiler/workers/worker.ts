@@ -1,8 +1,8 @@
 import sharp from "sharp";
 import { join } from "path";
-import JSONC from "jsonc-parser";
 import { createHash } from "crypto";
 import { copyFile, writeFile } from "fs/promises";
+import * as JSONC from "../utils/JSONC/index.js";
 import { existsSync, readFileSync, writeFileSync } from "fs";
 import { workerData as _WD, parentPort } from "worker_threads";
 
@@ -33,7 +33,7 @@ const errorList: unknown[] = [];
 
 const checkParseJSON = (data: string, filePath: string): unknown => {
   try {
-    return JSON.parse(JSONC.stripComments(data));
+    return JSONC.parse(data);
   } catch (error) {
     errorList.push({
       error: (error as Error).toString(),
@@ -45,7 +45,6 @@ const checkParseJSON = (data: string, filePath: string): unknown => {
 
 function minifyJSON() {
   if (files.JSON.length === 0) return;
-  const { errorChecking } = compiler.JSON ?? { errorChecking: false };
 
   const promises = files.JSON.map((path) => {
     const tempPath = join(tempPack, path);
@@ -58,9 +57,7 @@ function minifyJSON() {
     const cacheFileExists = existsSync(cacheFile);
 
     if (!cacheFileExists) {
-      const parsedJSON: unknown = errorChecking
-        ? checkParseJSON(data, filePath)
-        : JSONC.parse(data);
+      const parsedJSON: unknown = checkParseJSON(data, filePath);
 
       if (!parsedJSON) return;
 

@@ -13,7 +13,13 @@
     "strictFunctionTypes": true,
     "rootDir": "src",
     "outDir": "dist",
-    "declaration": true
+    "declaration": true,
+    "allowJs": true
   },
-  "exclude": ["node_modules/**/*", "ci/*.js", "dist/**/*"]
+  "exclude": [
+    "node_modules/**/*",
+    "ci/*.js",
+    "dist/**/*",
+    "src/compiler/utils/JSONC/*.js"
+  ]
 }
