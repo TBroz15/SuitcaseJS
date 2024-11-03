@@ -2,7 +2,7 @@ import { fdir as FDir } from "fdir";
 import { copyFile, mkdir } from "fs/promises";
 import { extname, basename, join } from "path";
 import { CONFIG_FILE_NAMES } from "../config/Config.js";
-import { chunkArray } from "./chunk_array.js";
+import { chunkArray } from "./chunkArray.js";
 import { tempPack } from "./temp_folder.js";
 
 import type { Options } from "../config/types/Options.js";

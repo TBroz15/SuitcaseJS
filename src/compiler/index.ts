@@ -5,7 +5,7 @@ import { cpus } from "os";
 import { rm, stat } from "fs/promises";
 import { existsSync, statSync } from "fs";
 
-import { getFiles } from "./utils/get_files.js";
+import { getFiles } from "./utils/getFiles.js";
 import { ThreadPool } from "./workers/thread_pool.js";
 import { defaultSuitcaseConfig } from "./config/defaultSuitcaseConfig.js";
 import Config, { configLoader } from "./config/Config.js";
