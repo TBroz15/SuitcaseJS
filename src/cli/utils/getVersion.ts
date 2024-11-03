@@ -1,1 +1,3 @@
-export { version } from "../../../package.json" assert { type: "json" };
+const a = await import("./../../../package.json");
+console.log(a);
+export const version = 1;
