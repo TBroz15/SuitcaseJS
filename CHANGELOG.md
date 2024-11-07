@@ -1,3 +1,12 @@
+## [3.2.2](https://github.com/TBroz15/SuitcaseJS/compare/v3.2.1...v3.2.2) (2024-11-07)
+
+
+### Bug Fixes
+
+* **compiler@config:** properly ignore dir and files by glob ([86fca9f](https://github.com/TBroz15/SuitcaseJS/commit/86fca9f2b66009953859012466e9218860f37520))
+* **compiler@other:** :bug: ignore some directories ([f4ed361](https://github.com/TBroz15/SuitcaseJS/commit/f4ed361783aa84c09ad7341618520c8a605a633a))
+* **compiler@other:** properly handle optional modules ([86ddf7c](https://github.com/TBroz15/SuitcaseJS/commit/86ddf7cd4ed7b61a8ce013af5805f6e059892fd7))
+
 ## [3.2.1](https://github.com/TBroz15/SuitcaseJS/compare/v3.2.0...v3.2.1) (2024-11-03)
 
 
