@@ -1,9 +1,11 @@
 import { fdir as FDir } from "fdir";
-import { copyFile, mkdir } from "fs/promises";
+import { cp, mkdir } from "fs/promises";
 import { extname, basename, join } from "path";
 import { CONFIG_FILE_NAMES } from "../config/Config.js";
 import { chunkArray } from "./chunkArray.js";
 import { tempPack } from "./temp_folder.js";
+
+import { PicomatchOptions } from "picomatch";
 
 import type { Options } from "../config/types/Options.js";
 import { doesModuleExist } from "./doesModuleExist.js";
@@ -52,7 +54,9 @@ export const getFiles = async (
   const isGoForGlob = !isIgnoreGlobEmpty && isPicomatchExist;
 
   const files = await (isGoForGlob
-    ? fdir.glob(...(ignore.globs as Set<string>))
+    ? fdir.globWithOptions(["*", "*/**"], {
+        ignore: Array.from(ignore.globs ?? []),
+      } as PicomatchOptions)
     : fdir
   )
     .crawl(inPath)
@@ -132,7 +136,7 @@ export const getFiles = async (
   void (await Promise.all(directoryPromises));
 
   const copyPromises = etc.map((path) =>
-    copyFile(join(inPath, path), join(temp, path))
+    cp(join(inPath, path), join(temp, path), { recursive: true })
   );
   void (await Promise.all(copyPromises));
 
