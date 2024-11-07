@@ -16,10 +16,10 @@ importers:
         version: 0.5.15
       fdir:
         specifier: ^6.3.0
-        version: 6.3.0
+        version: 6.3.0(picomatch@4.0.2)
       fdir-size:
         specifier: ^1.0.3
-        version: 1.0.3
+        version: 1.0.3(picomatch@4.0.2)
       mri:
         specifier: ^1.2.0
         version: 1.2.0
@@ -39,6 +39,9 @@ importers:
       js-yaml:
         specifier: ^4.1.0
         version: 4.1.0
+      picomatch:
+        specifier: ^3 || ^4
+        version: 4.0.2
     devDependencies:
       '@eslint/js':
         specifier: ^9.8.0
@@ -61,6 +64,9 @@ importers:
       '@types/node':
         specifier: ^22.8.7
         version: 22.8.7
+      '@types/picomatch':
+        specifier: ^3.0.1
+        version: 3.0.1
       cz-conventional-changelog:
         specifier: ^3.3.0
         version: 3.3.0(@types/node@22.8.7)(typescript@5.6.3)
@@ -446,6 +452,9 @@ packages:
 
   '@types/normalize-package-data@2.4.4':
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
+
+  '@types/picomatch@3.0.1':
+    resolution: {integrity: sha512-1MRgzpzY0hOp9pW/kLRxeQhUWwil6gnrUYd3oEpeYBqp/FexhaCPv3F8LsYr47gtUU45fO2cm1dbwkSrHEo8Uw==}
 
   '@types/semver@7.5.8':
     resolution: {integrity: sha512-I8EUhyrgfLrcTkzV3TSsGyl1tSuPrEDzr0yd5m90UgNxQkyDXULk3b6MlQqTCpZpNtWe1K0hzclnZkTcLBe2UQ==}
@@ -1686,6 +1695,10 @@ packages:
     resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
     engines: {node: '>=8.6'}
 
+  picomatch@4.0.2:
+    resolution: {integrity: sha512-M7BAV6Rlcy5u+m6oPhAPFgJTzAioX/6B0DxyvDlo9l8+T3nLKbrczg2WLUyzd45L8RqfUMyGPzekbMvX2Ldkwg==}
+    engines: {node: '>=12'}
+
   pify@3.0.0:
     resolution: {integrity: sha512-C3FsVNH1udSEX48gGX1xfvwTWfsYWj5U+8/uK15BGzIGrKoUpghX8hWZwa/OFnakBiiVNmBvemTJR5mcy7iPcg==}
     engines: {node: '>=4'}
@@ -2525,6 +2538,8 @@ snapshots:
 
   '@types/normalize-package-data@2.4.4': {}
 
+  '@types/picomatch@3.0.1': {}
+
   '@types/semver@7.5.8': {}
 
   '@typescript-eslint/eslint-plugin@8.12.2(@typescript-eslint/parser@8.12.2(eslint@9.14.0(jiti@1.21.6))(typescript@5.6.3))(eslint@9.14.0(jiti@1.21.6))(typescript@5.6.3)':
@@ -3092,13 +3107,15 @@ snapshots:
     dependencies:
       reusify: 1.0.4
 
-  fdir-size@1.0.3:
+  fdir-size@1.0.3(picomatch@4.0.2):
     dependencies:
-      fdir: 6.3.0
+      fdir: 6.3.0(picomatch@4.0.2)
     transitivePeerDependencies:
       - picomatch
 
-  fdir@6.3.0: {}
+  fdir@6.3.0(picomatch@4.0.2):
+    optionalDependencies:
+      picomatch: 4.0.2
 
   figures@2.0.0:
     dependencies:
@@ -3716,6 +3733,9 @@ snapshots:
   picocolors@1.0.1: {}
 
   picomatch@2.3.1: {}
+
+  picomatch@4.0.2:
+    optional: true
 
   pify@3.0.0: {}
 
