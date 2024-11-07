@@ -2,7 +2,7 @@ import type { Options } from "../config/types/Options.js";
 
 export const defaultSuitcaseConfig: Options = {
   ignore: {
-    directories: [],
+    directories: ["node_modules", ".git", ".vscode", ".github"],
     extensions: [],
     files: [],
     globs: [],
