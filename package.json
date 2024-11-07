@@ -70,13 +70,18 @@
     "strip-ansi": "^7.1.0"
   },
   "optionalDependencies": {
-    "js-yaml": "^4.1.0"
+    "js-yaml": "^4.1.0",
+    "picomatch": "^1.0.1"
   },
   "peerDependencies": {
-    "js-yaml": "^4.1.0"
+    "js-yaml": "^4.1.0",
+    "picomatch": "^1.0.1"
   },
   "peerDependenciesMeta": {
     "js-yaml": {
+      "optional": true
+    },
+    "picomatch": {
       "optional": true
     }
   },

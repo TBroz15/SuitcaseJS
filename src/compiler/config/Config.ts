@@ -4,14 +4,11 @@ import { italic } from "../../cli/utils/picocolors.js";
 import { defaultSuitcaseConfig } from "./defaultSuitcaseConfig.js";
 
 import type { Options } from "./types/Options.js";
+import { doesModuleExist } from "../utils/doesModuleExist.js";
 
-let yaml: typeof import("js-yaml");
-
-try {
-  yaml = await import("js-yaml");
-} catch (error) {
-  void error;
-}
+const yaml: typeof import("js-yaml") | undefined = doesModuleExist("js-yaml")
+  ? await import("js-yaml")
+  : undefined;
 
 const currentDir = process.cwd();
 

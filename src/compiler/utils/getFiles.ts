@@ -6,6 +6,7 @@ import { chunkArray } from "./chunkArray.js";
 import { tempPack } from "./temp_folder.js";
 
 import type { Options } from "../config/types/Options.js";
+import { doesModuleExist } from "./doesModuleExist.js";
 
 const temp = tempPack;
 const fdir = new FDir({
@@ -39,11 +40,16 @@ export const getFiles = async (
     ignore[typedKey] = new Set(config.ignore[typedKey]);
   }
 
-  // Check if globbing is enabled and picomatch exists.
-  const isGoForGlob =
-    typeof ignore.globs !== "undefined" &&
-    ignore.globs?.size !== 0 &&
-    import.meta.resolve("picomatch");
+  const isIgnoreGlobEmpty = ignore.globs?.size === 0;
+  const isPicomatchExist = doesModuleExist("picomatch");
+
+  if (!isPicomatchExist && !isIgnoreGlobEmpty) {
+    console.warn(
+      "\n⚠️ Please install picomatch to ignore files through globbing."
+    );
+  }
+
+  const isGoForGlob = !isIgnoreGlobEmpty && isPicomatchExist;
 
   const files = await (isGoForGlob
     ? fdir.glob(...(ignore.globs as Set<string>))
