@@ -1,3 +1,5 @@
+### This project is deprecated. [What now?](#suitcasejs-is-no-longer-being-maintained)
+
 <p align="center">
     <img src="https://raw.githubusercontent.com/TBroz15/SuitcaseJS/main/SuitcaseJS_Logo.png" />
     <h3 align="center">State of the art Minecraft Bedrock Behavior and Resource Pack Compiler.</h3>
@@ -61,8 +63,6 @@ const pack = await new Suitcase("./packs/")
 console.log(await pack.getStats()); // returns object stats before and after compilation.
 ```
 
-## Contributing
+## SuitcaseJS is no longer being maintained.
 
-Check out [CONTRIBUTING.md](https://github.com/TBroz15/SuitcaseJS/blob/main/CONTRIBUTING.md) for more information to contribute in this project.
-
-[A donation is well appreciated to make this project matter!](https://www.buymeacoffee.com/tbroz15)
+Since there are no new updates for a few months and me not having some time to work on SuitcaseJS, this project is now archived. But don't worry! Between March and May, I'll be making a similar project as a successor to SuitcaseJS. This time, it will get its very own user-friendly UI! Alongside a possible Golang port for the compiler or not... _it depends ¯\\\_(ツ)\_/¯_. Yeah, that is pretty much it...
