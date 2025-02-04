@@ -1,3 +1,10 @@
+## [3.2.3](https://github.com/TBroz15/SuitcaseJS/compare/v3.2.2...v3.2.3) (2025-02-04)
+
+
+### Bug Fixes
+
+* **publish:** :fire: archive project ([b216963](https://github.com/TBroz15/SuitcaseJS/commit/b216963c782fbf4d456e32b17228dec737016131))
+
 ## [3.2.2](https://github.com/TBroz15/SuitcaseJS/compare/v3.2.1...v3.2.2) (2024-11-07)
 
 
