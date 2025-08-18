@@ -6,36 +6,16 @@
     "type": "git",
     "url": "https://github.com/TBroz15/SuitcaseJS.git"
   },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
-  },
-  "main": "./dist/index.js",
-  "devDependencies": {
-    "@eslint/js": "^9.8.0",
-    "@semantic-release/changelog": "^6.0.3",
-    "@semantic-release/git": "^10.0.1",
-    "@semantic-release/github": "^11.0.0",
-    "@types/adm-zip": "^0.5.5",
-    "@types/js-yaml": "^4.0.9",
-    "@types/node": "^22.8.7",
-    "@types/picomatch": "^3.0.1",
-    "cz-conventional-changelog": "^3.3.0",
-    "eslint": "^9.14.0",
-    "semantic-release": "^24.2.0",
-    "typescript": "^5.6.3",
-    "typescript-eslint": "^8.12.2"
-  },
+  "main": "./index.js",
   "bin": {
-    "suitcasejs": "/dist/cli/index.js",
-    "suitcase": "/dist/cli/index.js",
-    "sjs": "/dist/cli/index.js"
+    "suitcasejs": "/index.js",
+    "suitcase": "/index.js",
+    "sjs": "/index.js"
   },
   "bugs": {
     "url": "https://github.com/TBroz15/SuitcaseJS/issues"
   },
-  "description": "State of the art Minecraft Bedrock Behavior and Resource Pack Compiler.",
+  "description": "Please move to TesserPack!",
   "homepage": "https://github.com/TBroz15/SuitcaseJS#readme",
   "keywords": [
     "minecraft",
@@ -51,40 +31,6 @@
     "pack-compiler"
   ],
   "license": "MIT",
-  "scripts": {
-    "build": "tsc",
-    "test": "tsc && node ./dist/cli/index.js",
-    "semantic-release": "semantic-release --branches main",
-    "commit": "pnpx git-cz",
-    "lint": "node ci/lint"
-  },
   "type": "module",
-  "dependencies": {
-    "@clack/prompts": "^0.7.0",
-    "adm-zip": "^0.5.15",
-    "fdir": "^6.3.0",
-    "fdir-size": "^1.0.3",
-    "mri": "^1.2.0",
-    "nanospinner": "^1.1.0",
-    "picocolors": "^1.0.1",
-    "sharp": "^0.33.4",
-    "strip-ansi": "^7.1.0"
-  },
-  "optionalDependencies": {
-    "js-yaml": "^4.1.0",
-    "picomatch": "^3 || ^4"
-  },
-  "peerDependencies": {
-    "js-yaml": "^4.1.0",
-    "picomatch": "^3 || ^4"
-  },
-  "peerDependenciesMeta": {
-    "js-yaml": {
-      "optional": true
-    },
-    "picomatch": {
-      "optional": true
-    }
-  },
   "packageManager": "pnpm@9.9.0"
 }
